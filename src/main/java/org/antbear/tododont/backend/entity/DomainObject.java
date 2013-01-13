@@ -3,10 +3,10 @@ package org.antbear.tododont.backend.entity;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-public interface DomainObject extends Serializable {
+public interface DomainObject<PK> extends Serializable {
 
     @NotNull
-    Long getId();
+    PK getPK();
 
-    void setId(@NotNull final Long id);
+    void setPK(@NotNull final PK pk);
 }

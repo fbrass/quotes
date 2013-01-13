@@ -12,12 +12,14 @@
 
     <jdbc:embedded-database id="testingDatabase" type="H2">
         <jdbc:script encoding="utf-8" location="classpath:schema.sql"/>
-        <jdbc:script encoding="utf-8" location="classpath:sampledata.sql"/>
+        <jdbc:script encoding="utf-8" location="classpath:testdata.sql"/>
     </jdbc:embedded-database>
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
           p:dataSource-ref="testingDatabase"/>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <import resource="test-security-context.xml"/>
 
 </beans>
