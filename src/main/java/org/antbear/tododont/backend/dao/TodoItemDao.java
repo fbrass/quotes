@@ -4,6 +4,7 @@ import org.antbear.tododont.backend.entity.TodoItem;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.sql.ResultSet;
@@ -14,6 +15,7 @@ import java.util.List;
 @Repository
 public class TodoItemDao extends GenericDao<TodoItem, Long> {
 
+    @Transactional
     public List<TodoItem> findAllByListId(@NotNull final long listId) {
         return getJdbcTemplate().query("SELECT * FROM " + getTableName() + " WHERE todolist_id = :listid",
                 new MapSqlParameterSource("listid", listId),
