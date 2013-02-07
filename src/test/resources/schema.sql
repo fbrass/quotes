@@ -1,35 +1,36 @@
 -- created 2013-01-11 by mg
 
 create table users (
-  username varchar_ignorecase(50) not null primary key,
-  password varchar_ignorecase(80) not null,
-  enabled boolean not null
+  email             varchar_ignorecase(128) not null primary key,
+  password          varchar_ignorecase(80)  not null,
+  enabled           boolean                 not null default 1,
+  registrationtoken varchar(128)            default null
 );
 
 create table authorities (
-  username varchar_ignorecase(50) not null,
-  authority varchar_ignorecase(50) not null,
-  constraint fk_authorities_users foreign key (username) references users (username)
+  email     varchar_ignorecase(128) not null,
+  authority varchar_ignorecase(50)  not null,
+  constraint fk_authorities_users foreign key (email) references users (email)
 );
 
-create unique index idx_authorities_username on authorities (username, authority);
+create unique index idx_authorities_email on authorities (email, authority);
 
 create table persistent_logins (
-  username varchar(64) not null,
-  series varchar(64) primary key,
-  token varchar(64) not null,
+  email  varchar(128) not null,
+  series varchar(64)  primary key,
+  token  varchar(64)  not null,
   last_used timestamp not null
 );
 
 create table todolist (
   id bigint not null primary key auto_increment,
-  username varchar_ignorecase(50) not null,
+  user varchar_ignorecase(50) not null,
   listname varchar(64) not null,
   created timestamp not null default now(),
-  constraint fk_todolist_users foreign key (username) references users (username)
+  constraint fk_todolist_users foreign key (user) references users (email)
 );
 
-create unique index idx_todolist_username_listname on todolist (username, listname);
+create unique index idx_todolist_user_listname on todolist (user, listname);
 
 create table todoitem (
   id bigint not null primary key auto_increment,

@@ -22,4 +22,13 @@
 
     <import resource="test-security-context.xml"/>
 
+    <!-- Mail -->
+
+    <bean id="mailSender" class="org.antbear.tododont.util.TestMailSender"/>
+
+    <bean id="mailTemplateMessage" class="org.springframework.mail.SimpleMailMessage">
+        <property name="from" value="customerservice@mycompany.tld"/>
+        <property name="subject" value="Your login activation link"/>
+    </bean>
+
 </beans>

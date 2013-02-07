@@ -39,13 +39,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <slf4j.version>1.7.2</slf4j.version>
         <logback.version>1.0.7</logback.version>
-        <spring.version>3.1.3.RELEASE</spring.version>
+        <spring.version>3.2.1.RELEASE</spring.version>
         <spring.security.version>3.1.3.RELEASE</spring.security.version>
+        <javax.mail.veresion>1.4.5</javax.mail.veresion>
         <cglib.version>2.2.2</cglib.version>
         <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
         <javax.servlet-jstl.version>1.2</javax.servlet-jstl.version>
         <javax.validation.version>1.0.0.GA</javax.validation.version>
-        <hibernate.validator.version>4.3.0.Final</hibernate.validator.version>
+        <hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
         <c3p0.version>0.9.1.2</c3p0.version>
         <mysql.connector.java.version>5.1.21</mysql.connector.java.version>
         <h2database.version>1.3.168</h2database.version>
@@ -84,6 +85,19 @@
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
             <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <!-- Spring email support -->
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-logging</groupId>
@@ -157,6 +171,8 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Spring support -->
+
         <dependency>
             <!-- Required for spring autoproxy support of classes without interfaces -->
             <groupId>cglib</groupId>
@@ -165,11 +181,25 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Email support with spring -->
+
         <dependency>
-            <!-- Required to get JSR 250 annotations like @RolesAllowed -->
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>6.0</version>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>${javax.mail.veresion}</version>
+        </dependency>
+
+        <!-- Other dependencies -->
+
+        <dependency>
+            <!-- Required to get JSR 250 annotations like @RolesAllowed.
+                But javax:javaee-api:6.0 is a crippled file missing any implementation, sources, docs.
+                Instead we use a real implementation.
+                http://www.adam-bien.com/roller/abien/entry/trouble_with_crippled_java_ee
+                -->
+            <groupId>org.glassfish.extras</groupId>
+            <artifactId>glassfish-embedded-all</artifactId>
+            <version>3.1</version>
             <scope>provided</scope>
         </dependency>
 
@@ -192,6 +222,7 @@
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>${javax.validation.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

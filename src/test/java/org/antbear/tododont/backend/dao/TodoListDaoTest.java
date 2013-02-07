@@ -17,8 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/test-context.xml")
@@ -35,31 +34,31 @@ public class TodoListDaoTest {
 
     @Test
     public void testDumpUsers() {
-        final List<UserDetails> users = userDetailsService.getJdbcTemplate().query("SELECT * FROM users", new RowMapper<UserDetails>() {
+        final List<UserDetails> users = userDetailsService.getJdbcTemplate().query("SELECT email,password,enabled FROM users", new RowMapper<UserDetails>() {
             @Override
             public UserDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
-                String username = rs.getString(1);
+                String email = rs.getString(1);
                 String password = rs.getString(2);
                 boolean enabled = rs.getBoolean(3);
-                return new User(username, password, enabled, true, true, true, AuthorityUtils.NO_AUTHORITIES);
+                return new User(email, password, enabled, true, true, true, AuthorityUtils.NO_AUTHORITIES);
             }
         });
         for (final UserDetails user : users) {
             System.out.println(user + " with stored password '" + user.getPassword() + "'");
         }
-        assertEquals(1, users.size());
+        assertEquals(2, users.size());
     }
 
     @Test
     public void testFindAllByUsername() throws Exception {
-        final List<TodoList> lists = this.todoListDao.findAllByUsername("alice");
+        final List<TodoList> lists = this.todoListDao.findAllByUser("alice@nowhere.tld");
         assertNotNull(lists);
         assertEquals(2, lists.size());
     }
 
     @Test
     public void testFindByName() throws Exception {
-        final TodoList list = this.todoListDao.findByName("alice", "eins");
+        final TodoList list = this.todoListDao.findByName("alice@nowhere.tld", "eins");
         assertNotNull(list);
         final List<TodoItem> itemList = this.todoItemDao.findAllByListId(list.getPK());
         assertNotNull(itemList);

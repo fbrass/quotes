@@ -12,7 +12,9 @@
         <appender-ref ref="CONSOLE"/>
     </root>
 
-    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.springframework" level="DEBUG"/>
+    <logger name="org.springframework.security" level="WARN"/>
+    <logger name="org.springframework.web" level="DEBUG"/>
     <logger name="com.mchange" level="WARN"/>
 
     <logger name="org.antbear" level="DEBUG"/>

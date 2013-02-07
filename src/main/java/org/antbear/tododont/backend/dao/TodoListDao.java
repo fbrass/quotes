@@ -1,6 +1,6 @@
 package org.antbear.tododont.backend.dao;
 
-import com.google.common.collect.Maps;
+import com.google.common.collect.ImmutableMap;
 import org.antbear.tododont.backend.entity.TodoList;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -13,29 +13,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class TodoListDao extends GenericDao<TodoList, Long> {
 
     @NotNull
     @Transactional
-    public List<TodoList> findAllByUsername(@NotNull final String username) {
-        return getJdbcTemplate().query("SELECT * FROM " + getTableName() + " WHERE username = :username",
-                new MapSqlParameterSource("username", username),
+    public List<TodoList> findAllByUser(@NotNull final String login) {
+        return getJdbcTemplate().query("SELECT * FROM " + getTableName() + " WHERE user = :user",
+                new MapSqlParameterSource("user", login),
                 newRowMapper());
     }
 
     @Null
     @Transactional
-    public TodoList findByName(@NotNull final String username, @NotNull final String listName) {
-        final Map<String, Object> parameters = Maps.newHashMap();
-        parameters.put("username", username);
-        parameters.put("listname", listName);
-
+    public TodoList findByName(@NotNull final String login, @NotNull final String listName) {
         return getJdbcTemplate().queryForObject("SELECT * FROM " + getTableName()
-                + " WHERE username = :username AND listname = :listname",
-                new MapSqlParameterSource(parameters),
+                + " WHERE user = :user AND listname = :listname",
+                ImmutableMap.of("user", login, "listname", listName),
                 newRowMapper());
     }
 
@@ -54,13 +49,13 @@ public class TodoListDao extends GenericDao<TodoList, Long> {
         @Override
         public TodoList mapRow(final ResultSet rs, final int rowNum) throws SQLException {
             final long id = rs.getLong(1);
-            final String username = rs.getString(2);
+            final String user = rs.getString(2);
             final String listName = rs.getString(3);
             final Date created = rs.getTimestamp(4);
 
             final TodoList todoList = new TodoList();
             todoList.setPK(id);
-            todoList.setUsername(username);
+            todoList.setUser(user);
             todoList.setListName(listName);
             todoList.setCreated(created);
             return todoList;

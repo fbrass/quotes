@@ -6,12 +6,12 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- Uncomment to get debugging output from spring security -->
-    <debug/>
+    <!--<debug/>-->
 
     <global-method-security jsr250-annotations="enabled" secured-annotations="enabled" />
 
-
     <http auto-config="true">
+        <intercept-url pattern="/register*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/**" access="ROLE_USER"/>
 

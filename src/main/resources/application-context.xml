@@ -26,4 +26,23 @@
 
     <tx:annotation-driven transaction-manager="txManager"/>
 
+    <!-- Bean to create the initial application setup, e.g. initial default users -->
+    <bean class="org.antbear.tododont.util.InitialSetup" lazy-init="false" scope="singleton"
+          p:dataSource-ref="dataSource"
+          p:passwordEncoder-ref="passwordEncoder"/>
+
+    <!-- Mail -->
+
+    <bean id="mailSender" class="org.antbear.tododont.util.MailSenderImpl"
+          p:delegate-ref="mailSenderDelegate"/>
+
+    <bean id="mailSenderDelegate" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="mail.mycompany.com"/>
+    </bean>
+
+    <bean id="mailTemplateMessage" class="org.springframework.mail.SimpleMailMessage">
+        <property name="from" value="customerservice@mycompany.tld"/>
+        <property name="subject" value="Your login activation"/>
+    </bean>
+
 </beans>
