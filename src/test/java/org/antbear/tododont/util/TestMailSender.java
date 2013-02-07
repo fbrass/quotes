@@ -8,8 +8,15 @@ public class TestMailSender implements MailSender {
 
     private static final Logger log = LoggerFactory.getLogger(TestMailSender.class);
 
+    private SimpleMailMessage message;
+
     @Override
     public void send(final SimpleMailMessage message) {
         log.debug("Sending mail message {}", message);
+        this.message = message;
+    }
+
+    public SimpleMailMessage getMessage() {
+        return message;
     }
 }

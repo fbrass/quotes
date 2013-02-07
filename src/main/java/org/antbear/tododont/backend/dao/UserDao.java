@@ -1,6 +1,7 @@
 package org.antbear.tododont.backend.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,18 +19,22 @@ public class UserDao {
         return count > 0;
     }
 
-    public void createActiveUser(final String email, final String registrationToken) {
-        createUser(email, true, registrationToken);
+    public void createActiveUser(final String email, final String password, final String registrationToken) {
+        createUser(email, password, true, registrationToken);
     }
 
-    public void createInactiveUser(final String email, final String registrationToken) {
-        createUser(email, false, registrationToken);
+    public void createInactiveUser(final String email, final String password, final String registrationToken) {
+        createUser(email, password, false, registrationToken);
     }
 
-    public void createUser(final String email, final boolean enabled, final String registrationToken) {
+    public void createUser(final String email, final String password, final boolean enabled, final String registrationToken) {
         this.userDetailsService.getJdbcTemplate().update(
                 "INSERT INTO users (email,password,enabled,registrationtoken) VALUES (?,?,?,?)",
-                email, "DISABLED", enabled, registrationToken);
+                email, password, enabled, registrationToken);
+
+        this.userDetailsService.getJdbcTemplate().update(
+                "INSERT INTO authorities (email, authority) VALUES (?, ?)",
+                email, "ROLE_USER");
     }
 
     public String findRegistrationTokenByUser(final String email) {
@@ -41,5 +46,9 @@ public class UserDao {
     public boolean getActiveStateByUser(final String email) {
         final int enabled = this.userDetailsService.getJdbcTemplate().queryForInt("SELECT enabled FROM users WHERE email = ?", email);
         return enabled == 0 ? false : true;
+    }
+
+    public UserDetails findUser(final String email) {
+        return userDetailsService.loadUserByUsername(email);
     }
 }

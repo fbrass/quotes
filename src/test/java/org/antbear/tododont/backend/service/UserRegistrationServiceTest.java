@@ -23,13 +23,13 @@ public class UserRegistrationServiceTest {
 
     @Test(expected = UserRegistrationException.class)
     public void testRegisterExistingUser() throws Exception {
-        this.userRegistrationService.register(new UserRegistration("alice@nowhere.tld", ""));
+        this.userRegistrationService.register(new UserRegistration("alice@nowhere.tld", "secR3Tlf993"));
     }
 
     @Test
     public void testRegisterNewUser() throws Exception {
         final String email = "newuser134@nowhere.tld";
-        final String expectedToken = this.userRegistrationService.register(new UserRegistration(email, ""));
+        final String expectedToken = this.userRegistrationService.register(new UserRegistration(email, "secR3Tlf993"));
         final String actualToken = this.userDao.findRegistrationTokenByUser(email);
         assertEquals(expectedToken, actualToken);
         assertFalse(this.userDao.getActiveStateByUser(email));

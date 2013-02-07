@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.DatatypeConverter;
@@ -21,6 +22,8 @@ public class UserRegistrationService {
 
     private static final Logger log = LoggerFactory.getLogger(UserRegistrationService.class);
 
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
     private UserDao userDao;
 
@@ -32,17 +35,26 @@ public class UserRegistrationService {
 
     private final SecureRandom secureRandom = new SecureRandom();
 
+    @Autowired
+    public void setPasswordEncoder(final PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
     public String register(final UserRegistration userRegistration) throws UserRegistrationException {
         log.info("Registration attempt for {}", userRegistration);
         notNull(userRegistration, "UserRegistration");
         notNullOrEmpty(userRegistration.getEmail(), "UserRegistration.email");
+        notNullOrEmpty(userRegistration.getPassword(), "UserRegistration.password");
 
         if (this.userDao.exists(userRegistration.getEmail())) {
             throw new UserRegistrationException("User is already registered", userRegistration);
         }
 
+
         final String registrationToken = createRegistrationToken(userRegistration);
-        this.userDao.createInactiveUser(userRegistration.getEmail(), registrationToken);
+        this.userDao.createInactiveUser(userRegistration.getEmail(),
+                this.passwordEncoder.encode(userRegistration.getPassword()),
+                registrationToken);
 
         // TODO make URL configurable
         final String activationUrl = "http://localhost:8080/activate-user?" + registrationToken;

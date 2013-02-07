@@ -3,6 +3,7 @@ package org.antbear.tododont.backend.dao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -22,12 +23,25 @@ public class UserDaoTest {
 
     @Test
     public void testCreateUser() throws Exception {
-        this.userDao.createUser("newUser@nowhere.tld", false, "register-token");
+        final String email = "newUser@nowhere.tld";
+        final String password = "secure";
+        final boolean enabled = false;
+        final String registrationToken = "register-token";
+        this.userDao.createUser(email, password, enabled, registrationToken);
+
+        final UserDetails user = this.userDao.findUser(email);
+        assertNotNull(user);
+        assertEquals(email, user.getUsername());
+        assertEquals(password, user.getPassword());
+        assertEquals(enabled, !user.isAccountNonLocked());
+
+        final boolean active = this.userDao.getActiveStateByUser(email);
+        assertEquals(enabled, active);
     }
 
     @Test(expected = Exception.class)
     public void testCreateUserExisting() throws Exception {
-        this.userDao.createUser("alice@nowhere.tld", false, "register-token");
+        this.userDao.createUser("alice@nowhere.tld", "secure", false, "register-token");
     }
 
     @Test
