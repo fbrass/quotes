@@ -16,5 +16,6 @@ public class UserRegistrationMailSenderImpl implements UserRegistrationMailSende
     @Override
     public void sendRegistration(final UserRegistrationMail userRegistrationMail) {
         final SimpleMailMessage msg = new SimpleMailMessage(this.mailTemplateMessage);
+        throw new RuntimeException("not implemented"); // TODO missing logic to send mail
     }
 }
