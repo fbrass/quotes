@@ -1,5 +1,8 @@
 package org.antbear.tododont.web.controller.registration;
 
+import org.antbear.tododont.backend.dao.UserDao;
+import org.antbear.tododont.backend.service.userregistration.UserRegistrationMail;
+import org.antbear.tododont.backend.service.userregistration.UserRegistrationMailSenderTestSupport;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,9 +11,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.validation.BindingResult;
 
-import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.replay;
+import java.net.URLDecoder;
+
+import static org.easymock.EasyMock.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/test-context.xml")
@@ -19,7 +25,11 @@ public class UserRegistrationControllerTest {
     @Autowired
     private UserRegistrationController userRegistrationController;
 
+    @Autowired
+    private UserRegistrationMailSenderTestSupport userRegistrationMailSender;
 
+    @Autowired
+    private UserDao userDao;
 
     // mocked
     private BindingResult bindingResult;
@@ -30,10 +40,10 @@ public class UserRegistrationControllerTest {
     }
 
     @Test
-    public void testPerformResitration() throws Exception {
-
+    public void testPerformRegistration() throws Exception {
+        final String email = "new-test-user@nowhere.tld";
         final UserRegistration userRegistration = new UserRegistration();
-        userRegistration.setEmail("new-test-user@nowhere.tld");
+        userRegistration.setEmail(email);
         userRegistration.setPassword("pr3TtYS3c0R3");
 
         // create mock for springs BindingResult
@@ -42,9 +52,23 @@ public class UserRegistrationControllerTest {
         replay(this.bindingResult);
 
         // test user registration from controller
-        final String ignored = this.userRegistrationController.performResitration(userRegistration, this.bindingResult);
+        final String ignoredView = this.userRegistrationController.performRegistration(userRegistration, this.bindingResult);
 
+        // A mail should have been sent
+        final UserRegistrationMail userRegistrationMail = this.userRegistrationMailSender.getUserRegistrationMail();
+        assertNotNull(userRegistrationMail);
+        assertEquals(email, userRegistrationMail.getEmail());
+        final String activationUrl = userRegistrationMail.getActivationUrl();
+        assertNotNull(activationUrl);
 
+        final String decodedUrl = URLDecoder.decode(activationUrl, "utf-8");
+        final String emailAndToken = decodedUrl.replaceFirst("^http://.*" + UserRegistrationController.ACTIVATION_PATH + "(.*)", "$1");
+        final String[] strings = emailAndToken.split("/", 2);
+        final String activationEmail = strings[0], activationToken = strings[1];
 
+        // Perform the activation
+        final String ignoredView2 = this.userRegistrationController.performActivation(activationEmail, activationToken);
+        final boolean activeStateByUser = this.userDao.getActiveStateByUser(email);
+        assertTrue(activeStateByUser);
     }
 }

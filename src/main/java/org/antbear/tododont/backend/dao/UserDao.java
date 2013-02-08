@@ -38,7 +38,7 @@ public class UserDao {
     }
 
     public String findRegistrationTokenByUser(final String email) {
-        final String sql = "SELECT registrationtoken FROM users WHERE email = ? AND enabled = 0";
+        final String sql = "SELECT registrationtoken FROM users WHERE email = ? AND enabled = 0 AND registrationtoken IS NOT NULL";
         final String token = this.userDetailsService.getJdbcTemplate().queryForObject(sql, String.class, email);
         return token;
     }
@@ -46,6 +46,10 @@ public class UserDao {
     public boolean getActiveStateByUser(final String email) {
         final int enabled = this.userDetailsService.getJdbcTemplate().queryForInt("SELECT enabled FROM users WHERE email = ?", email);
         return enabled == 0 ? false : true;
+    }
+
+    public void activateUser(final String email) {
+        this.userDetailsService.getJdbcTemplate().update("UPDATE users SET enabled = 1, registrationtoken = NULL WHERE email = ?", email);
     }
 
     public UserDetails findUser(final String email) {

@@ -31,6 +31,10 @@
           p:dataSource-ref="dataSource"
           p:passwordEncoder-ref="passwordEncoder"/>
 
+    <!-- Other beans -->
+
+    <bean class="org.antbear.tododont.backend.service.userregistration.UserRegistrationMailSenderImpl"/>
+
     <!-- Mail -->
 
     <bean id="mailSender" class="org.antbear.tododont.util.MailSenderImpl"

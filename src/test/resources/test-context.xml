@@ -22,6 +22,12 @@
 
     <import resource="test-security-context.xml"/>
 
+    <context:property-placeholder location="classpath:web.properties"/>
+
+    <!-- Other beans -->
+
+    <bean class="org.antbear.tododont.backend.service.userregistration.UserRegistrationMailSenderTestSupport"/>
+
     <!-- Mail -->
 
     <bean id="mailSender" class="org.antbear.tododont.util.TestMailSender"/>

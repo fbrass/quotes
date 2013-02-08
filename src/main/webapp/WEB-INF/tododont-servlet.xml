@@ -18,4 +18,6 @@
           p:prefix="/WEB-INF/views/"
           p:suffix=".jsp"/>
 
+    <context:property-placeholder location="classpath:web.properties"/>
+
 </beans>
