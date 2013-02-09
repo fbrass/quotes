@@ -1,5 +1,6 @@
 package org.antbear.tododont.web.controller.registration;
 
+import org.antbear.tododont.web.beans.UserRegistration;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package org.antbear.tododont.web.controller.registration;
+package org.antbear.tododont.web.beans;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;

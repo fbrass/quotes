@@ -1,8 +1,9 @@
-package org.antbear.tododont.web.controller.registration;
+package org.antbear.tododont.web.controller;
 
 import org.antbear.tododont.backend.service.userregistration.UserRegistrationException;
 import org.antbear.tododont.backend.service.userregistration.UserRegistrationService;
 import org.antbear.tododont.util.InvariantException;
+import org.antbear.tododont.web.beans.UserRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,8 @@ public class UserRegistrationController {
     // TODO check @ExceptionHandler for a way to handle registration exceptions
 
     private static final Logger log = LoggerFactory.getLogger(UserRegistrationController.class);
-    public static final String ACTIVATION_PATH = "register/activate-user/";
+
+    public static final String ACTIVATION_PATH = "register/activate/";
 
     @Value("${application.base.uri}")
     private String applicationBaseUri;
@@ -51,7 +53,7 @@ public class UserRegistrationController {
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView startRegistration() {
         log.debug("registration start (GET)");
-        final ModelAndView modelAndView = new ModelAndView("register", "userRegistration", new UserRegistration());
+        final ModelAndView modelAndView = new ModelAndView("register/start", "userRegistration", new UserRegistration());
         return modelAndView;
     }
 
@@ -61,7 +63,7 @@ public class UserRegistrationController {
 
         if (bindingResult.hasErrors()) {
             log.warn("binding result has errors; returning to registration page");
-            return "register";
+            return "register/start";
         } else {
             log.debug("registration OK, handing over registration attempt to registration service");
             UriComponents userActivationUriComponents = UriComponentsBuilder.fromUriString(
@@ -70,25 +72,25 @@ public class UserRegistrationController {
                 this.userRegistrationService.register(userRegistration, userActivationUriComponents);
             } catch (UserRegistrationException ure) {
                 log.error("User registration failed", ure);
-                return "redirect:/register-error";
+                return "redirect:/register/error";
             }
-            return "redirect:/register-done";
+            return "redirect:/register/done";
         }
     }
 
-    @RequestMapping("/register-error")
+    @RequestMapping("/register/error")
     public String registrationError() {
-        log.debug("/register-error");
-        return "register-error"; // TODO we need to show the error in the view
+        log.debug("/register/error");
+        return "register/error"; // TODO we need to show the error in the view
     }
 
-    @RequestMapping("/register-done")
+    @RequestMapping("/register/done")
     public String registrationDone() {
-        log.debug("/register-done");
-        return "register-done";
+        log.debug("/register/done");
+        return "register/done";
     }
 
-    @RequestMapping(value = "/register/activate-user/{email}/{activationToken}", method = RequestMethod.GET)
+    @RequestMapping(value = "/register/activate/{email}/{activationToken}", method = RequestMethod.GET)
     public String performActivation(@PathVariable("email") final String email,
                                     @PathVariable("activationToken") final String activationToken) {
         log.debug("activation attempt (GET) for {} with token {}", email, activationToken);
@@ -96,17 +98,23 @@ public class UserRegistrationController {
         try {
             log.debug("Handing over activation attempt to registration service");
             this.userRegistrationService.activate(email, activationToken);
+            return "redirect:/register/activate/done"; // TODO we need to show the success of the activation first, then let the user login via home page
         } catch (UserRegistrationException ure) {
             log.error("User activation failed", ure);
-            return "redirect:/activation-error";
+            return "redirect:/register/activate/error";
         }
-        return "redirect:/home"; // TODO we need to show the success of the activation first, then let the user login via home page
+    }
+
+    @RequestMapping("/register/activate/done")
+    public String acivationDone() {
+        log.debug("/register/activate/done");
+        return "register/activate/done"; // TODO show info how to log in with email password via link to home
     }
 
     // TODO resource isn't white listed in security configuration
-    @RequestMapping("/activation-error")
+    @RequestMapping("/register/activate/error")
     public String activationError() {
-        log.debug("/activation-error");
-        return "activation-error"; // TODO we need to show the error in the view
+        log.debug("/register/activation/error");
+        return "register/activate/error"; // TODO we need to show the error in the view
     }
 }

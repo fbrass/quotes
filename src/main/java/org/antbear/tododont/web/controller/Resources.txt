@@ -1,0 +1,9 @@
+/home                       views/home.jsp
+/login                      views/login.jsp
+/loginfailed                views/login.jsp
+/register                   views/register/start.jsp
+/register/error             views/register/error.jsp
+/register/done              views/register/done.jsp
+/register/activate          -
+/register/activate/error    views/register/activate/error.jsp
+/register/activate/done     views/register/activate/done.jsp

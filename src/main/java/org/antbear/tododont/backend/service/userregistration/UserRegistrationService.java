@@ -1,7 +1,7 @@
 package org.antbear.tododont.backend.service.userregistration;
 
 import org.antbear.tododont.backend.dao.UserDao;
-import org.antbear.tododont.web.controller.registration.UserRegistration;
+import org.antbear.tododont.web.beans.UserRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

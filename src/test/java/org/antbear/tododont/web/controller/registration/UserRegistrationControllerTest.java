@@ -3,6 +3,8 @@ package org.antbear.tododont.web.controller.registration;
 import org.antbear.tododont.backend.dao.UserDao;
 import org.antbear.tododont.backend.service.userregistration.UserRegistrationMail;
 import org.antbear.tododont.backend.service.userregistration.UserRegistrationMailSenderTestSupport;
+import org.antbear.tododont.web.beans.UserRegistration;
+import org.antbear.tododont.web.controller.UserRegistrationController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

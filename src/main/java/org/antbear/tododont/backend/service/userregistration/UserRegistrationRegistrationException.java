@@ -1,6 +1,6 @@
 package org.antbear.tododont.backend.service.userregistration;
 
-import org.antbear.tododont.web.controller.registration.UserRegistration;
+import org.antbear.tododont.web.beans.UserRegistration;
 
 public class UserRegistrationRegistrationException extends UserRegistrationException {
 
