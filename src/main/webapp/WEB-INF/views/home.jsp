@@ -15,8 +15,6 @@
                 <li>Username: ${username}</li>
                 <li>Message: ${message}</li>
             </ul>
-
-            <a href="<c:url value="/j_spring_security_logout" />">Logout</a>
         </div>
     </jsp:body>
 </t:genericpage>

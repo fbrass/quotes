@@ -8,10 +8,12 @@ public class UserRegistration {
 
     @NotNull
     @Size(min = 1, max = 128)
-    @Pattern(regexp = "\\w{1,}@\\w{1,}\\.\\w{1,}")
+    @Pattern(regexp = "\\S+@\\S+", message = "your email address must contain at least an @")
     private String email;
 
-    /* http://stackoverflow.com/questions/3721843/here-is-a-regular-expression-for-password-complexity-can-someone-show-me-how-to
+    /* Simple password complexity restrictions:
+     *
+     * http://stackoverflow.com/questions/3721843/here-is-a-regular-expression-for-password-complexity-can-someone-show-me-how-to
      *
      * (?=^.{8,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_])(?=^.*[^\s].*$).*$
      * ^          ^          ^          ^            ^
@@ -22,8 +24,9 @@ public class UserRegistration {
      * L--Number of charaters
      */
     @NotNull
-    @Size(max = 64)
-    @Pattern(regexp = "(?=^.{10,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[\\W_])(?=^.*[^\\s].*$).*$")
+    @Size(max = 64, message = "your password is too long, pleace stick to 64 letters")
+    @Pattern(regexp = "(?=^.{10,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[\\W_])(?=^.*[^\\s].*$).*$",
+            message = "your password must at least contain 10 letters, one lower case letter, at least one UPPER case letter, at least one special letter and no whitespaces")
     private String password;
 
     public UserRegistration() {

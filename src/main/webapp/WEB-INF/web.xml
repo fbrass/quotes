@@ -5,8 +5,8 @@
 		  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
-    <!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
     <context-param>
+        <description>The definition of the Root Spring Container shared by all Servlets and Filters</description>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:/application-context.xml</param-value>
     </context-param>
@@ -15,8 +15,13 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <!--Enables Spring Security-->
+    <listener>
+        <description>Spring Security Listener to detect multiple logins</description>
+        <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+    </listener>
+
     <filter>
+        <description>Spring Security Filter</description>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     </filter>
@@ -40,5 +45,10 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+
+    <session-config>
+        <!-- session-timeout gives the timeout in minutes (10080 is one week)-->
+        <session-timeout>10080</session-timeout>
+    </session-config>
 
 </web-app>

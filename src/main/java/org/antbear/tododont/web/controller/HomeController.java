@@ -9,7 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.security.RolesAllowed;
 import java.security.Principal;
 
-@RolesAllowed("ROLE_USER")
+//@RolesAllowed("ROLE_USER")
+@RolesAllowed("hasRole('ROLE_USER')")
 @Controller
 public class HomeController {
 

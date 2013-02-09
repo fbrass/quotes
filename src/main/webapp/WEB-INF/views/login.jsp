@@ -28,7 +28,7 @@
     <form name="f" action="<c:url value='j_spring_security_check'/>" method="POST">
         <table>
             <tr>
-                <td>User:</td>
+                <td>Email:</td>
                 <td><input type='text' name='j_username' value='<c:if test="${not empty param.login_error}"><c:out value="${SPRING_SECURITY_LAST_USERNAME}"/></c:if>'/></td>
             </tr>
             <tr>
@@ -49,7 +49,7 @@
     </form>
 
     <p style="color: #ff69b4">
-        Not a member? You may <a href="<c:url value="/register"/>">register in one minute</a>!
+        Not a member? You may <a href="<c:url value="/register"/>">Signup in one minute</a>!
     </p>
 
 </body>
