@@ -26,11 +26,6 @@
 
     <tx:annotation-driven transaction-manager="txManager"/>
 
-    <!-- Bean to create the initial application setup, e.g. initial default users -->
-    <bean class="org.antbear.tododont.util.InitialSetup" lazy-init="false" scope="singleton"
-          p:dataSource-ref="dataSource"
-          p:passwordEncoder-ref="passwordEncoder"/>
-
     <!-- Other beans -->
 
     <bean class="org.antbear.tododont.backend.service.userregistration.UserRegistrationMailSenderImpl"/>
