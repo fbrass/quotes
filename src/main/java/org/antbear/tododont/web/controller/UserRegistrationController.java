@@ -20,15 +20,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
+@RequestMapping("/register")
 @Controller
 public class UserRegistrationController {
 
-    // TODO use class based @RequestMapping plus method level for sub resources
-    // TODO organize all resources to be below one common prefix
-
     // TODO rename registration to signUp?
-    // TODO organize views in sub folder WEB-INF/registration or WEB-INF/signUp
-
     // TODO check @ExceptionHandler for a way to handle registration exceptions
 
     private static final Logger log = LoggerFactory.getLogger(UserRegistrationController.class);
@@ -50,14 +46,14 @@ public class UserRegistrationController {
         }
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ModelAndView startRegistration() {
         log.debug("registration start (GET)");
         final ModelAndView modelAndView = new ModelAndView("register/start", "userRegistration", new UserRegistration());
         return modelAndView;
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String performRegistration(@Valid final UserRegistration userRegistration, final BindingResult bindingResult) {
         log.debug("registration attempt (POST) {}", userRegistration);
 
@@ -78,19 +74,19 @@ public class UserRegistrationController {
         }
     }
 
-    @RequestMapping("/register/error")
+    @RequestMapping("/error")
     public String registrationError() {
         log.debug("/register/error");
         return "register/error"; // TODO we need to show the error in the view
     }
 
-    @RequestMapping("/register/done")
+    @RequestMapping("/done")
     public String registrationDone() {
         log.debug("/register/done");
         return "register/done";
     }
 
-    @RequestMapping(value = "/register/activate/{email}/{activationToken}", method = RequestMethod.GET)
+    @RequestMapping(value = "/activate/{email}/{activationToken}", method = RequestMethod.GET)
     public String performActivation(@PathVariable("email") final String email,
                                     @PathVariable("activationToken") final String activationToken) {
         log.debug("activation attempt (GET) for {} with token {}", email, activationToken);
@@ -105,14 +101,13 @@ public class UserRegistrationController {
         }
     }
 
-    @RequestMapping("/register/activate/done")
+    @RequestMapping("/activate/done")
     public String acivationDone() {
         log.debug("/register/activate/done");
         return "register/activate/done"; // TODO show info how to log in with email password via link to home
     }
 
-    // TODO resource isn't white listed in security configuration
-    @RequestMapping("/register/activate/error")
+    @RequestMapping("/activate/error")
     public String activationError() {
         log.debug("/register/activation/error");
         return "register/activate/error"; // TODO we need to show the error in the view
