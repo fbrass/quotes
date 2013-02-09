@@ -6,18 +6,18 @@ public class UserRegistrationRegistrationException extends UserRegistrationExcep
 
     private final UserRegistration userRegistration;
 
-    public UserRegistrationRegistrationException(final String message, final UserRegistration userRegistration) {
-        super(message);
+    public UserRegistrationRegistrationException(final String message, final String userMessage, final UserRegistration userRegistration) {
+        super(message, userMessage);
         this.userRegistration = userRegistration;
     }
 
-    public UserRegistrationRegistrationException(final String message, final Throwable cause, final UserRegistration userRegistration) {
-        super(message, cause);
+    public UserRegistrationRegistrationException(final String message, final Throwable cause, final String userMessage, final UserRegistration userRegistration) {
+        super(message, cause, userMessage);
         this.userRegistration = userRegistration;
     }
 
-    public UserRegistrationRegistrationException(final Throwable cause, final UserRegistration userRegistration) {
-        super(cause);
+    public UserRegistrationRegistrationException(final Throwable cause, final String userMessage, final UserRegistration userRegistration) {
+        super(cause, userMessage);
         this.userRegistration = userRegistration;
     }
 

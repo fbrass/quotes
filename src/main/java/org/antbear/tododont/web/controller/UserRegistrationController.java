@@ -1,6 +1,7 @@
 package org.antbear.tododont.web.controller;
 
 import org.antbear.tododont.backend.service.userregistration.UserRegistrationException;
+import org.antbear.tododont.backend.service.userregistration.UserRegistrationRegistrationException;
 import org.antbear.tododont.backend.service.userregistration.UserRegistrationService;
 import org.antbear.tododont.util.InvariantException;
 import org.antbear.tododont.web.beans.UserRegistration;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,6 +48,14 @@ public class UserRegistrationController {
         }
     }
 
+    @ExceptionHandler(UserRegistrationException.class)
+    public ModelAndView handleUserRegistrationException(final UserRegistrationException ex) {
+        log.debug("ExceptionHandler handleUserRegistrationException");
+        final ModelAndView modelAndView = new ModelAndView("register/error");
+        modelAndView.addObject("reason", ex.getUserMessage()); // TODO provide userErrorMessage translated to view
+        return modelAndView;
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView startRegistration() {
         log.debug("registration start (GET)");
@@ -54,7 +64,8 @@ public class UserRegistrationController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String performRegistration(@Valid final UserRegistration userRegistration, final BindingResult bindingResult) {
+    public String performRegistration(@Valid final UserRegistration userRegistration,
+                                      final BindingResult bindingResult) throws UserRegistrationRegistrationException {
         log.debug("registration attempt (POST) {}", userRegistration);
 
         if (bindingResult.hasErrors()) {
@@ -64,12 +75,12 @@ public class UserRegistrationController {
             log.debug("registration OK, handing over registration attempt to registration service");
             UriComponents userActivationUriComponents = UriComponentsBuilder.fromUriString(
                     this.applicationBaseUri + ACTIVATION_PATH + "{email}/{activationToken}").build();
-            try {
+//            try {
                 this.userRegistrationService.register(userRegistration, userActivationUriComponents);
-            } catch (UserRegistrationException ure) {
-                log.error("User registration failed", ure);
-                return "redirect:/register/error";
-            }
+//            } catch (UserRegistrationException ure) {
+//                log.error("User registration failed", ure);
+//                return "redirect:/register/error";
+//            }
             return "redirect:/register/done";
         }
     }

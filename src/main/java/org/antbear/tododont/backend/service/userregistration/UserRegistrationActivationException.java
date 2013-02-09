@@ -5,21 +5,20 @@ public class UserRegistrationActivationException extends UserRegistrationExcepti
     private final String email;
     private final String activationToken;
 
-    public UserRegistrationActivationException(final String message, final String email, final String activationToken) {
-        super(message);
-
+    public UserRegistrationActivationException(final String message, final String userMessage, final String email, final String activationToken) {
+        super(message, userMessage);
         this.email = email;
         this.activationToken = activationToken;
     }
 
-    public UserRegistrationActivationException(final String message, final Throwable cause, final String email, final String activationToken) {
-        super(message, cause);
+    public UserRegistrationActivationException(final String message, final Throwable cause, final String userMessage, final String email, final String activationToken) {
+        super(message, cause, userMessage);
         this.email = email;
         this.activationToken = activationToken;
     }
 
-    public UserRegistrationActivationException(final Throwable cause, final String email, final String activationToken) {
-        super(cause);
+    public UserRegistrationActivationException(final Throwable cause, final String userMessage, final String email, final String activationToken) {
+        super(cause, userMessage);
         this.email = email;
         this.activationToken = activationToken;
     }

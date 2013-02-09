@@ -49,7 +49,7 @@ public class UserRegistrationService {
         notNullOrEmpty(userRegistration.getPassword(), "UserRegistration.password");
 
         if (this.userDao.exists(userRegistration.getEmail())) {
-            throw new UserRegistrationRegistrationException("User is already registered", userRegistration);
+            throw new UserRegistrationRegistrationException("User is already registered", "User is already registred", userRegistration);
         }
 
         final String registrationToken = createRegistrationToken(userRegistration);
@@ -70,7 +70,7 @@ public class UserRegistrationService {
             this.mailSender.sendRegistration(this.concreteMail);
         } catch (MailException me) {
             log.error("Failed sending activation mail", me);
-            throw new UserRegistrationRegistrationException("Failed sending verification mail", me, userRegistration);
+            throw new UserRegistrationRegistrationException("Failed sending verification mail", me, "Could not send you the registration mail", userRegistration);
         }
 
         log.info("User successfully registered {}", userRegistration);
@@ -103,16 +103,16 @@ public class UserRegistrationService {
         notNullOrEmpty(activationToken, "activationToken");
 
         if (!this.userDao.exists(email)) {
-            throw new UserRegistrationActivationException("User is not registered", email, activationToken);
+            throw new UserRegistrationActivationException("User is not registered", "Sorry", email, activationToken);
         }
 
         if (this.userDao.getActiveStateByUser(email)) {
-            throw new UserRegistrationActivationException("User is already activated", email, activationToken);
+            throw new UserRegistrationActivationException("User is already activated", "Sorry", email, activationToken);
         }
 
         final String savedRegistrationToken = this.userDao.findRegistrationTokenByUser(email);
         if (!savedRegistrationToken.equals(activationToken)) {
-            throw new UserRegistrationActivationException("User tried invalid activation token", email, activationToken);
+            throw new UserRegistrationActivationException("User tried invalid activation token", "Sorry", email, activationToken);
         } else {
             log.info("User {} will be activated", email);
             this.userDao.activateUser(email);
