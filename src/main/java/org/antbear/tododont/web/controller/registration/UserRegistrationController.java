@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -19,9 +19,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
-@RequestMapping("/register")
 @Controller
 public class UserRegistrationController {
+
+    // TODO use class based @RequestMapping plus method level for sub resources
+    // TODO organize all resources to be below one common prefix
+
+    // TODO rename registration to signUp?
+    // TODO organize views in sub folder WEB-INF/registration or WEB-INF/signUp
+
+    // TODO check @ExceptionHandler for a way to handle registration exceptions
 
     private static final Logger log = LoggerFactory.getLogger(UserRegistrationController.class);
     public static final String ACTIVATION_PATH = "register/activate-user/";
@@ -41,14 +48,14 @@ public class UserRegistrationController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView startRegistration() {
         log.debug("registration start (GET)");
         final ModelAndView modelAndView = new ModelAndView("register", "userRegistration", new UserRegistration());
         return modelAndView;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String performRegistration(@Valid final UserRegistration userRegistration, final BindingResult bindingResult) {
         log.debug("registration attempt (POST) {}", userRegistration);
 
@@ -69,9 +76,21 @@ public class UserRegistrationController {
         }
     }
 
-    @RequestMapping(value = "/activate-user/{email}/{activationToken}", method = RequestMethod.GET)
-    public String performActivation(@RequestParam("email") final String email,
-                                    @RequestParam("activationToken") final String activationToken) {
+    @RequestMapping("/register-error")
+    public String registrationError() {
+        log.debug("/register-error");
+        return "register-error"; // TODO we need to show the error in the view
+    }
+
+    @RequestMapping("/register-done")
+    public String registrationDone() {
+        log.debug("/register-done");
+        return "register-done";
+    }
+
+    @RequestMapping(value = "/register/activate-user/{email}/{activationToken}", method = RequestMethod.GET)
+    public String performActivation(@PathVariable("email") final String email,
+                                    @PathVariable("activationToken") final String activationToken) {
         log.debug("activation attempt (GET) for {} with token {}", email, activationToken);
 
         try {
@@ -81,6 +100,13 @@ public class UserRegistrationController {
             log.error("User activation failed", ure);
             return "redirect:/activation-error";
         }
-        return "redirect:/home";
+        return "redirect:/home"; // TODO we need to show the success of the activation first, then let the user login via home page
+    }
+
+    // TODO resource isn't white listed in security configuration
+    @RequestMapping("/activation-error")
+    public String activationError() {
+        log.debug("/activation-error");
+        return "activation-error"; // TODO we need to show the error in the view
     }
 }

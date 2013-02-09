@@ -190,19 +190,16 @@
             <version>${javax.mail.veresion}</version>
         </dependency>
 
-        <!-- Other dependencies -->
+        <!-- JSR-250 for @RolesAllowed annotations -->
 
         <dependency>
-            <!-- Required to get JSR 250 annotations like @RolesAllowed.
-                But javax:javaee-api:6.0 is a crippled file missing any implementation, sources, docs.
-                Instead we use a real implementation.
-                http://www.adam-bien.com/roller/abien/entry/trouble_with_crippled_java_ee
-                -->
-            <groupId>org.glassfish.extras</groupId>
-            <artifactId>glassfish-embedded-all</artifactId>
-            <version>3.1</version>
+            <groupId>javax.annotation</groupId>
+            <artifactId>jsr250-api</artifactId>
+            <version>1.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- Common java web stuff -->
 
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -219,11 +216,23 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- Validation -->
+
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>${javax.validation.version}</version>
-            <scope>provided</scope>
+            <type>jar</type>
+            <!-- validation won't work without the classifier, don' specify scope -->
+            <classifier>sources</classifier>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${javax.validation.version}</version>
+            <!-- validation won't work without this (see above), don't specify scope -->
+            <type>jar</type>
         </dependency>
 
         <dependency>
@@ -233,6 +242,8 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Database connection pool -->
+
         <dependency>
             <groupId>c3p0</groupId>
             <artifactId>c3p0</artifactId>
@@ -240,11 +251,15 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Google collections -->
+
         <dependency>
            <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
+
+        <!-- Test dependencies -->
 
         <dependency>
             <groupId>org.easymock</groupId>

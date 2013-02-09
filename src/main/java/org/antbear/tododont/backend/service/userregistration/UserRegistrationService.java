@@ -41,6 +41,7 @@ public class UserRegistrationService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    // TODO somewhere we need an error handling strategy, check spring mvc docs for guidance
     public String register(final UserRegistration userRegistration, final UriComponents userActivationUriComponents) throws UserRegistrationRegistrationException {
         log.info("Registration attempt for {} and base URI {}", userRegistration, userActivationUriComponents);
         notNull(userRegistration, "UserRegistration");
@@ -62,6 +63,8 @@ public class UserRegistrationService {
         this.concreteMail.setEmail(userRegistration.getEmail());
         this.concreteMail.setActivationUrl(activationUrl);
 
+        // TODO we need to rollback the DB insert if sending the email fails
+        // TODO check with invalid email address, where the MTA bounces the message: it seems no error is thrown.
         try {
             log.debug("Sending registration email to " + userRegistration.getEmail());
             this.mailSender.sendRegistration(this.concreteMail);

@@ -23,9 +23,4 @@ public class LoginController {
         mav.addObject("error", true);
         return mav;
     }
-
-    @RequestMapping("/logout")
-    public String logout() {
-        return "login";
-    }
 }

@@ -10,20 +10,28 @@
 
     <global-method-security jsr250-annotations="enabled" secured-annotations="enabled" />
 
+    <!-- TODO session timeout configuration for automatic logout -->
+    <!-- TODO logout page is missing -->
+    <!-- TODO test persistent (remember me) logins -->
+    <!-- TODO table persistent_logins is unused -->
+
     <http auto-config="true">
         <intercept-url pattern="/register*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <intercept-url pattern="/register/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/**" access="ROLE_USER"/>
 
         <form-login login-page="/login"
                     default-target-url="/home"
                     authentication-failure-url="/loginfailed"/>
-        <logout logout-success-url="/logout"/>
+        <logout logout-success-url="/" delete-cookies="true" invalidate-session="true"/>
         <remember-me user-service-ref="myUserDetailsService" key="tododont"/>
     </http>
 
     <beans:bean id="myUserDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
         <beans:property name="dataSource" ref="dataSource"/>
+        <beans:property name="usersByUsernameQuery" value="select email,password,enabled from users where email = ?"/>
+        <beans:property name="authoritiesByUsernameQuery" value="select email,authority from authorities where email = ?"/>
     </beans:bean>
 
     <beans:bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>

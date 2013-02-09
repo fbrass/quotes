@@ -41,12 +41,12 @@
           p:delegate-ref="mailSenderDelegate"/>
 
     <bean id="mailSenderDelegate" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="mail.mycompany.com"/>
+        <property name="host" value="localhost"/>
     </bean>
 
     <bean id="mailTemplateMessage" class="org.springframework.mail.SimpleMailMessage">
-        <property name="from" value="customerservice@mycompany.tld"/>
-        <property name="subject" value="Your login activation"/>
+        <property name="from" value="customerservice@tododont.tld"/>
+        <property name="subject" value="Your login activation from tododont"/>
     </bean>
 
 </beans>
