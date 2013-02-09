@@ -11,6 +11,7 @@ import javax.validation.ValidatorFactory;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class UserRegistrationTest {
 
@@ -26,7 +27,7 @@ public class UserRegistrationTest {
     public void testInvalidPassword() throws Exception {
         final UserRegistration user = new UserRegistration("foo@bar.tld", "invalid");
         final Set<ConstraintViolation<UserRegistration>> cs = validator.validate(user);
-        assertEquals(1, cs.size());
+        assertTrue(cs.size() > 0);
     }
 
     @Test
