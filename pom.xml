@@ -370,6 +370,8 @@
                 <db.url>jdbc:h2:tcp://localhost/tododont</db.url>
                 <db.username></db.username>
                 <db.password></db.password>
+                <smtp.hostname>localhost</smtp.hostname>
+                <app.mail.from>customerservice@tododont.nowhere.tld</app.mail.from>
             </properties>
 
             <dependencies>

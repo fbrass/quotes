@@ -12,7 +12,7 @@
 
     <context:annotation-config/>
 
-    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <context:property-placeholder location="classpath:app.properties"/>
 
     <bean id="dataSource"
           class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
@@ -38,13 +38,10 @@
     <bean id="mailSender" class="org.antbear.tododont.util.MailSenderImpl"
           p:delegate-ref="mailSenderDelegate"/>
 
-    <bean id="mailSenderDelegate" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="localhost"/>
-    </bean>
+    <bean id="mailSenderDelegate" class="org.springframework.mail.javamail.JavaMailSenderImpl"
+          p:host="${smtp.hostname}"/>
 
-    <bean id="mailTemplateMessage" class="org.springframework.mail.SimpleMailMessage">
-        <property name="from" value="customerservice@tododont.tld"/>
-        <property name="subject" value="Your login activation from tododont"/>
-    </bean>
+    <bean id="mailTemplateMessage" class="org.springframework.mail.SimpleMailMessage"
+          p:from="${app.mail.from}"/>
 
 </beans>
