@@ -26,6 +26,9 @@
 
     <tx:annotation-driven transaction-manager="txManager"/>
 
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+          p:basename="classpath:messages"/>
+
     <!-- Other beans -->
 
     <bean class="org.antbear.tododont.backend.service.userregistration.UserRegistrationMailSenderImpl"/>

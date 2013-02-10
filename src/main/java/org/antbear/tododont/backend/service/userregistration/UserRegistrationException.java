@@ -1,29 +1,33 @@
 package org.antbear.tododont.backend.service.userregistration;
 
-public class UserRegistrationException extends Exception {
+import org.antbear.tododont.util.LocalizableException;
+import org.antbear.tododont.web.beans.UserRegistration;
 
-    private final String userMessage;
+public class UserRegistrationException extends LocalizableException {
 
-    public UserRegistrationException(final String userMessage) {
-        this.userMessage = userMessage;
+    private final UserRegistration userRegistration;
+
+    public UserRegistrationException(final String messageKey, final UserRegistration userRegistration) {
+        super(messageKey);
+        this.userRegistration = userRegistration;
     }
 
-    public UserRegistrationException(final String message, final String userMessage) {
-        super(message);
-        this.userMessage = userMessage;
+    public UserRegistrationException(final String message, final String messageKey, final UserRegistration userRegistration) {
+        super(message, messageKey);
+        this.userRegistration = userRegistration;
     }
 
-    public UserRegistrationException(final String message, final Throwable cause, final String userMessage) {
-        super(message, cause);
-        this.userMessage = userMessage;
+    public UserRegistrationException(final String message, final Throwable cause, final String messageKey, final UserRegistration userRegistration) {
+        super(message, cause, messageKey);
+        this.userRegistration = userRegistration;
     }
 
-    public UserRegistrationException(final Throwable cause, final String userMessage) {
-        super(cause);
-        this.userMessage = userMessage;
+    public UserRegistrationException(final Throwable cause, final String messageKey, final UserRegistration userRegistration) {
+        super(cause, messageKey);
+        this.userRegistration = userRegistration;
     }
 
-    public String getUserMessage() {
-        return this.userMessage;
+    public UserRegistration getUserRegistration() {
+        return userRegistration;
     }
 }

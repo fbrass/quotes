@@ -1,14 +1,20 @@
 package org.antbear.tododont.backend.service.userregistration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
+
+import java.util.Locale;
 
 @Component("prototype")
 public class UserRegistrationMail {
 
     @Autowired
     private SimpleMailMessage mailTemplateMessage;
+
+    @Autowired
+    private MessageSource messageSource;
 
     private String email;
     private String activationUrl;
@@ -39,17 +45,19 @@ public class UserRegistrationMail {
 
     SimpleMailMessage getMailMessage() {
         final SimpleMailMessage msg = new SimpleMailMessage(this.mailTemplateMessage);
-        msg.setTo(this.email);
+        msg.setTo(getEmail());
+        msg.setSubject(getMessageSubject());
         msg.setText(getMessageBody());
         return msg;
     }
 
+    public String getMessageSubject() {
+        return messageSource.getMessage("userRegistration.registration.mail.subject", null, Locale.getDefault());
+    }
+
     public String getMessageBody() {
-        return "Dear " + this.email + ",\n"
-                + "thank you for registering. Please activate your login by following this link,\n"
-                + "or by copying to your browsers address bar.\n"
-                + "URL: " + this.activationUrl + "\n"
-                + "Cheers";
+        return messageSource.getMessage("userRegistration.registration.mail.body",
+                new Object[] { this.email, this.activationUrl }, Locale.getDefault());
     }
 
     @Override

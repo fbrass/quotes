@@ -16,12 +16,12 @@
     </style>
     <title>Register</title>
 </head>
-<body>
+<body onload="document.userRegistration.email.focus();">
     <h1>Register</h1>
 
     <p>Just enter your name and email, and we'll send you an email to confirm you're whoom you bless you're belonging to. It's just that simple!</p>
 
-    <form:form commandName="userRegistration"  action="/register">
+    <form:form name="userRegistration" commandName="userRegistration"  action="/register">
         <form:errors path="*" cssClass="validation-errors" element="div" />
         <table>
             <tr>

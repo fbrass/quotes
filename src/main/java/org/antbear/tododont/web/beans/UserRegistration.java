@@ -26,7 +26,7 @@ public class UserRegistration {
     @NotNull
     @Size(min = 8, max = 64, message = "your password must be at least 8 letters long, up to 64 letters")
     @Pattern(regexp = "(?=^.{10,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[\\W_])(?=^.*[^\\s].*$).*$",
-            message = "your password must at least contain 10 letters, one lower case letter, at least one UPPER case letter, at least one special letter and no whitespaces")
+            message = "your password must at least contain 8 letters, at least one lower case letter, at least one UPPER case letter, at least one special letter and no whitespaces")
     private String password;
 
     public UserRegistration() {

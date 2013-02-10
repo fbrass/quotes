@@ -54,7 +54,7 @@ public class UserRegistrationControllerTest {
         replay(this.bindingResult);
 
         // test user registration from controller
-        final String ignoredView = this.userRegistrationController.performRegistration(userRegistration, this.bindingResult);
+        this.userRegistrationController.performRegistration(userRegistration, this.bindingResult);
 
         // A mail should have been sent
         final UserRegistrationMail userRegistrationMail = this.userRegistrationMailSender.getUserRegistrationMail();
@@ -69,7 +69,7 @@ public class UserRegistrationControllerTest {
         final String activationEmail = strings[0], activationToken = strings[1];
 
         // Perform the activation
-        final String ignoredView2 = this.userRegistrationController.performActivation(activationEmail, activationToken);
+        this.userRegistrationController.performActivation(activationEmail, activationToken);
         final boolean activeStateByUser = this.userDao.getActiveStateByUser(email);
         assertTrue(activeStateByUser);
     }

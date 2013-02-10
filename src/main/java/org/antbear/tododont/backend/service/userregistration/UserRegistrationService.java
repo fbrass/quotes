@@ -41,15 +41,16 @@ public class UserRegistrationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // TODO somewhere we need an error handling strategy, check spring mvc docs for guidance
-    public String register(final UserRegistration userRegistration, final UriComponents userActivationUriComponents) throws UserRegistrationRegistrationException {
+    public String register(final UserRegistration userRegistration, final UriComponents userActivationUriComponents)
+            throws UserRegistrationException {
         log.info("Registration attempt for {} and base URI {}", userRegistration, userActivationUriComponents);
         notNull(userRegistration, "UserRegistration");
         notNullOrEmpty(userRegistration.getEmail(), "UserRegistration.email");
         notNullOrEmpty(userRegistration.getPassword(), "UserRegistration.password");
 
         if (this.userDao.exists(userRegistration.getEmail())) {
-            throw new UserRegistrationRegistrationException("User is already registered", "User is already registred", userRegistration);
+            throw new UserRegistrationException("userRegistration.registration.userAlreadyRegistered",
+                    userRegistration);
         }
 
         final String registrationToken = createRegistrationToken(userRegistration);
@@ -68,9 +69,10 @@ public class UserRegistrationService {
         try {
             log.debug("Sending registration email to " + userRegistration.getEmail());
             this.mailSender.sendRegistration(this.concreteMail);
-        } catch (MailException me) {
-            log.error("Failed sending activation mail", me);
-            throw new UserRegistrationRegistrationException("Failed sending verification mail", me, "Could not send you the registration mail", userRegistration);
+        } catch (MailException mex) {
+            log.error("Failed sending activation mail", mex);
+            throw new UserRegistrationException(mex, "userRegistration.registration.failedSendingVerificationMail",
+                    userRegistration);
         }
 
         log.info("User successfully registered {}", userRegistration);
@@ -97,22 +99,25 @@ public class UserRegistrationService {
         }
     }
 
-    public void activate(final String email, final String activationToken) throws UserRegistrationActivationException {
+    public void activate(final String email, final String activationToken) throws UserActivationException {
         log.info("Activation attempt for {} with token {}", email, activationToken);
         notNullOrEmpty(email, "email");
         notNullOrEmpty(activationToken, "activationToken");
 
         if (!this.userDao.exists(email)) {
-            throw new UserRegistrationActivationException("User is not registered", "Sorry", email, activationToken);
+            throw new UserActivationException("userRegistration.activation.userNotRegistered",
+                    email, activationToken);
         }
 
         if (this.userDao.getActiveStateByUser(email)) {
-            throw new UserRegistrationActivationException("User is already activated", "Sorry", email, activationToken);
+            throw new UserActivationException("userRegistration.activation.userAlreadyActivated",
+                    email, activationToken);
         }
 
         final String savedRegistrationToken = this.userDao.findRegistrationTokenByUser(email);
         if (!savedRegistrationToken.equals(activationToken)) {
-            throw new UserRegistrationActivationException("User tried invalid activation token", "Sorry", email, activationToken);
+            throw new UserActivationException("userRegistration.activation.invalidToken",
+                    email, activationToken);
         } else {
             log.info("User {} will be activated", email);
             this.userDao.activateUser(email);
