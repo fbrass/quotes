@@ -30,7 +30,7 @@ public class UserRegistrationController { // TODO rename registration to signUp?
 
     public static final String ACTIVATION_PATH = "register/activate/";
 
-    @Value("${application.base.uri}")
+    @Value("${web.app.base.uri}")
     private String applicationBaseUri;
 
     @Autowired

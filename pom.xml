@@ -372,6 +372,7 @@
                 <db.password></db.password>
                 <smtp.hostname>localhost</smtp.hostname>
                 <app.mail.from>customerservice@tododont.nowhere.tld</app.mail.from>
+                <web.app.base.uri>http://localhost:8080/</web.app.base.uri>
             </properties>
 
             <dependencies>
