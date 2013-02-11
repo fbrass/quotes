@@ -55,4 +55,8 @@ public class UserDao {
     public UserDetails findUser(final String email) {
         return userDetailsService.loadUserByUsername(email);
     }
+
+    public void delete(final String email) {
+        this.userDetailsService.getJdbcTemplate().update("DELETE FROM users WHERE email = ?", email);
+    }
 }

@@ -27,6 +27,17 @@ create table persistent_logins (
 alter table persistent_logins add foreign key (username) references users (email)
   on delete cascade;
 
+create table scheduled_registration_mail (
+  id            bigint not null primary key auto_increment,
+  email         varchar_ignorecase(128) not null,
+  activationurl varchar(1024) not null,
+  attempts      int not null default 1,
+  lastattempt   timestamp not null default now()
+);
+
+alter table scheduled_registration_mail add foreign key (email) references users (email)
+  on delete cascade;
+
 create table todolist (
   id       bigint not null primary key auto_increment,
   user     varchar_ignorecase(50) not null,

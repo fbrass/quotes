@@ -1,5 +1,6 @@
 package org.antbear.tododont.backend.service.userregistration;
 
+import org.antbear.tododont.backend.dao.ScheduledRegistrationMailDao;
 import org.antbear.tododont.backend.dao.UserDao;
 import org.antbear.tododont.web.beans.UserRegistration;
 import org.slf4j.Logger;
@@ -33,6 +34,9 @@ public class UserRegistrationService {
 
     @Autowired
     private UserRegistrationMailSender mailSender;
+
+    @Autowired
+    private ScheduledRegistrationMailDao scheduledRegistrationMailDao;
 
     private final SecureRandom secureRandom = new SecureRandom();
 
@@ -70,8 +74,11 @@ public class UserRegistrationService {
             log.debug("Sending registration email to " + userRegistration.getEmail());
             this.mailSender.sendRegistration(this.concreteMail);
         } catch (MailException mex) {
-            log.error("Failed sending activation mail", mex);
-            throw new UserRegistrationException(mex, "userRegistration.registration.failedSendingVerificationMail",
+            log.warn("Failed sending activation mail", mex);
+            log.info("Scheduling next attempt for sending activation mail to {}", userRegistration.getEmail());
+            scheduledRegistrationMailDao.create(userRegistration.getEmail(), activationUrl);
+            // TODO throwing exception results in display of the error message to the user, nee another way
+            throw new UserRegistrationException(mex, "userRegistration.registration.scheduledSendingMail",
                     userRegistration);
         }
 
