@@ -28,7 +28,6 @@ public class UserRegistrationServiceTest {
 
     @Test(expected = UserRegistrationException.class)
     public void testRegisterExistingUser() throws Exception {
-
         this.userRegistrationService.register(new UserRegistration("alice@nowhere.tld", "secR3Tlf993"), userActivationUriComponents);
     }
 

@@ -47,8 +47,8 @@
     </welcome-file-list>
 
     <session-config>
-        <!-- session-timeout gives the timeout in minutes (10080 is one week)-->
-        <session-timeout>10080</session-timeout>
+        <!-- session-timeout gives the timeout in minutes -->
+        <session-timeout>60</session-timeout>
     </session-config>
 
 </web-app>

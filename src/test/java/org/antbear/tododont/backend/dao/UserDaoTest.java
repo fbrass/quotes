@@ -7,6 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static java.lang.Boolean.TRUE;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,10 +33,9 @@ public class UserDaoTest {
         this.userDao.createUser(email, password, enabled, registrationToken);
 
         final UserDetails user = this.userDao.findUser(email);
-        assertNotNull(user);
-        assertEquals(email, user.getUsername());
-        assertEquals(password, user.getPassword());
-        assertEquals(enabled, !user.isAccountNonLocked());
+        assertThat(user.getUsername(), equalTo(email));
+        assertThat(user.getPassword(), equalTo(password));
+        assertThat(user.isAccountNonLocked(), is(TRUE));
 
         final boolean active = this.userDao.getActiveStateByUser(email);
         assertEquals(enabled, active);
@@ -46,8 +48,6 @@ public class UserDaoTest {
 
     @Test
     public void testFindRegistrationTokeByUser() throws Exception {
-        final String expected = "registration-token";
-        final String selected = this.userDao.findRegistrationTokenByUser("new@registered.tld");
-        assertEquals(expected, selected);
+        assertThat(this.userDao.findRegistrationTokenByUser("new@registered.tld"), is("registration-token"));
     }
 }

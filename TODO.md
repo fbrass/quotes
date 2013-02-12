@@ -2,10 +2,11 @@ Open points
 ===========
 
 * Unregister, delete account logic
-* Background mail sending via scheduled tast
-** Store mail to be sent in DB
-** Store sending attempts in DB
-** Drop mail and perform custom logic when max attempts is reached
-
+* Exponential back off for sending scheduled registration mails
+* Add ctor param to GenericDao to tell set PK column name
+* Migrate type Date to JodaTime
+* Migrate type SQL:timestamp to JodaTime instance
+* Java based configuration
+* Switch to one application context
 
 EOF

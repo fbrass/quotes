@@ -24,7 +24,7 @@
         <remember-me data-source-ref="dataSource" user-service-ref="myUserDetailsService" key="tododont"/>
 
         <session-management invalid-session-url="/login">
-            <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+            <concurrency-control max-sessions="1" expired-url="/"  error-if-maximum-exceeded="false" />
         </session-management>
     </http>
 

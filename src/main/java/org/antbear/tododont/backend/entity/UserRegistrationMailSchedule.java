@@ -1,9 +1,10 @@
 package org.antbear.tododont.backend.entity;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class ScheduledRegistrationMail implements DomainObject<Long> {
+public class UserRegistrationMailSchedule implements DomainObject<Long> {
 
     @NotNull
     private Long id;
@@ -14,7 +15,11 @@ public class ScheduledRegistrationMail implements DomainObject<Long> {
     @NotNull
     private String activationUrl;
 
+    @Min(1)
     private int attempts = 1;
+
+    @NotNull
+    private Date firstAttempt = new Date();
 
     @NotNull
     private Date lastAttempt = new Date();
@@ -53,6 +58,14 @@ public class ScheduledRegistrationMail implements DomainObject<Long> {
         this.attempts = attempts;
     }
 
+    public Date getFirstAttempt() {
+        return firstAttempt;
+    }
+
+    public void setFirstAttempt(final Date firstAttempt) {
+        this.firstAttempt = firstAttempt;
+    }
+
     public Date getLastAttempt() {
         return lastAttempt;
     }
@@ -63,11 +76,12 @@ public class ScheduledRegistrationMail implements DomainObject<Long> {
 
     @Override
     public String toString() {
-        return "ScheduledRegistrationMail{" +
+        return "UserRegistrationMailSchedule{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", activationUrl='" + activationUrl + '\'' +
                 ", attempts=" + attempts +
+                ", firstAttempt=" + firstAttempt +
                 ", lastAttempt=" + lastAttempt +
                 '}';
     }

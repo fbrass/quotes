@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository
 @Transactional
+@Repository
 public class UserDao {
 
     @Autowired

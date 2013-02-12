@@ -359,7 +359,7 @@
 
     <profiles>
         <profile>
-            <id>h2</id>
+            <id>local-dev</id>
 
             <activation>
                 <activeByDefault>true</activeByDefault>

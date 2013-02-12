@@ -18,6 +18,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static junit.framework.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/test-context.xml")
@@ -46,22 +48,20 @@ public class TodoListDaoTest {
         for (final UserDetails user : users) {
             System.out.println(user + " with stored password '" + user.getPassword() + "'");
         }
-        assertEquals(2, users.size());
+        assertThat(users.size(), equalTo(2));
     }
 
     @Test
     public void testFindAllByUsername() throws Exception {
         final List<TodoList> lists = this.todoListDao.findAllByUser("alice@nowhere.tld");
-        assertNotNull(lists);
         assertEquals(2, lists.size());
     }
 
     @Test
     public void testFindByName() throws Exception {
         final TodoList list = this.todoListDao.findByName("alice@nowhere.tld", "eins");
-        assertNotNull(list);
+        assertThat(list, notNullValue());
         final List<TodoItem> itemList = this.todoItemDao.findAllByListId(list.getPK());
-        assertNotNull(itemList);
-        assertEquals(3, itemList.size());
+        assertThat(itemList.size(), is(3));
     }
 }

@@ -24,10 +24,6 @@
 
     <context:property-placeholder location="classpath:web.properties"/>
 
-    <!-- Other beans -->
-
-    <bean class="org.antbear.tododont.backend.service.userregistration.UserRegistrationMailSenderTestSupport"/>
-
     <!-- Mail -->
 
     <bean id="mailSender" class="org.antbear.tododont.util.TestMailSender"/>
@@ -36,5 +32,7 @@
         <property name="from" value="customerservice@mycompany.tld"/>
         <property name="subject" value="Your login activation link"/>
     </bean>
+
+    <bean class="org.antbear.tododont.backend.service.userregistration.UserRegistrationMailSenderTestSupport"/>
 
 </beans>

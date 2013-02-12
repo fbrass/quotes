@@ -1,6 +1,6 @@
 package org.antbear.tododont.backend.service.userregistration;
 
-import org.antbear.tododont.backend.dao.ScheduledRegistrationMailDao;
+import org.antbear.tododont.backend.dao.UserRegistrationMailScheduleDao;
 import org.antbear.tododont.backend.dao.UserDao;
 import org.antbear.tododont.web.beans.UserRegistration;
 import org.slf4j.Logger;
@@ -32,17 +32,21 @@ public class UserRegistrationService {
     @Autowired
     private UserRegistrationMail concreteMail;
 
-    @Autowired
-    private UserRegistrationMailSender mailSender;
+    private UserRegistrationMailSender userRegistrationMailSender;
 
     @Autowired
-    private ScheduledRegistrationMailDao scheduledRegistrationMailDao;
+    private UserRegistrationMailScheduleDao userRegistrationMailScheduleDao;
 
     private final SecureRandom secureRandom = new SecureRandom();
 
     @Autowired
     public void setPasswordEncoder(final PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @Autowired
+    public void setUserRegistrationMailSender(final UserRegistrationMailSender userRegistrationMailSender) {
+        this.userRegistrationMailSender = userRegistrationMailSender;
     }
 
     public String register(final UserRegistration userRegistration, final UriComponents userActivationUriComponents)
@@ -68,21 +72,15 @@ public class UserRegistrationService {
         this.concreteMail.setEmail(userRegistration.getEmail());
         this.concreteMail.setActivationUrl(activationUrl);
 
-        // TODO we need to rollback the DB insert if sending the email fails
-        // TODO check with invalid email address, where the MTA bounces the message: it seems no error is thrown.
         try {
             log.debug("Sending registration email to " + userRegistration.getEmail());
-            this.mailSender.sendRegistration(this.concreteMail);
+            this.userRegistrationMailSender.sendRegistration(this.concreteMail);
+            log.info("User successfully registered {}", userRegistration);
         } catch (MailException mex) {
-            log.warn("Failed sending activation mail", mex);
-            log.info("Scheduling next attempt for sending activation mail to {}", userRegistration.getEmail());
-            scheduledRegistrationMailDao.create(userRegistration.getEmail(), activationUrl);
-            // TODO throwing exception results in display of the error message to the user, nee another way
-            throw new UserRegistrationException(mex, "userRegistration.registration.scheduledSendingMail",
-                    userRegistration);
+            log.warn("Failed sending activation mail, scheduling it to sending it", mex);
+            userRegistrationMailScheduleDao.create(userRegistration.getEmail(), activationUrl);
         }
 
-        log.info("User successfully registered {}", userRegistration);
         return registrationToken;
     }
 
