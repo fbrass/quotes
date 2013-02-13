@@ -5,6 +5,7 @@ Open points
 * Unregister, delete account logic
 * Exponential back off for sending scheduled registration mails
 * Add ctor param to GenericDao to tell set PK column name
+* Implement own UserService for spring security to prevent circumventing the logic via the DB
 * Migrate type Date to JodaTime
 * Migrate type SQL:timestamp to JodaTime instance
 
