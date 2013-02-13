@@ -45,5 +45,11 @@
             </tr>
         </table>
     </form:form>
+
+    <h2>Good passwords</h2>
+    <p>
+        must at be at least 10 letters long, contain at least one lower case letter, contain at least one UPPER case letter, contain at least one special letter and no whitespaces
+    </p>
+
 </body>
 </html>
