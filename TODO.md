@@ -9,5 +9,6 @@ Open points
 * Add ctor param to GenericDao to tell set PK column name
 * Migrate type Date to JodaTime
 * Migrate type SQL:timestamp to JodaTime instance
+* Provide way to disable app globally either via DB or with special file: google for better solution
 
 EOF
