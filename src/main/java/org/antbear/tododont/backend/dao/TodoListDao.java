@@ -17,6 +17,10 @@ import java.util.List;
 @Repository
 public class TodoListDao extends GenericDao<TodoList, Long> {
 
+    public TodoListDao() {
+        super("id", "todolist");
+    }
+
     @NotNull
     @Transactional
     public List<TodoList> findAllByUser(@NotNull final String login) {
@@ -32,11 +36,6 @@ public class TodoListDao extends GenericDao<TodoList, Long> {
                 + " WHERE user = :user AND listname = :listname",
                 ImmutableMap.of("user", login, "listname", listName),
                 newRowMapper());
-    }
-
-    @Override
-    protected String getTableName() {
-        return "todolist";
     }
 
     @Override

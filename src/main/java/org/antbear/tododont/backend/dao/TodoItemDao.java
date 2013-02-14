@@ -15,16 +15,15 @@ import java.util.List;
 @Repository
 public class TodoItemDao extends GenericDao<TodoItem, Long> {
 
+    public TodoItemDao() {
+        super("id", "todoitem");
+    }
+
     @Transactional
     public List<TodoItem> findAllByListId(@NotNull final long listId) {
         return getJdbcTemplate().query("SELECT * FROM " + getTableName() + " WHERE todolist_id = :listid",
                 new MapSqlParameterSource("listid", listId),
                 newRowMapper());
-    }
-
-    @Override
-    protected String getTableName() {
-        return "todoitem";
     }
 
     @Override

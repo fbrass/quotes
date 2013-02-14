@@ -14,6 +14,10 @@ import java.sql.SQLException;
 @Repository
 public class UserRegistrationMailScheduleDao extends GenericDao<UserRegistrationMailSchedule, Long> {
 
+    public UserRegistrationMailScheduleDao() {
+        super("id", "scheduled_registration_mail");
+    }
+
     public void update(final UserRegistrationMailSchedule srm) {
         getJdbcTemplate().update("UPDATE " + getTableName() + " SET attempts = :attempts, lastAttempt = :lastAttempt WHERE id = :id",
                 ImmutableMap.of("attempts", srm.getAttempts(),
@@ -25,11 +29,6 @@ public class UserRegistrationMailScheduleDao extends GenericDao<UserRegistration
         getJdbcTemplate().update("INSERT INTO " + getTableName() + " (email, activationurl) VALUES (:email, :activationurl)",
                 ImmutableMap.of("email", email,
                         "activationurl", activationUrl));
-    }
-
-    @Override
-    protected String getTableName() {
-        return "scheduled_registration_mail";
     }
 
     @Override
