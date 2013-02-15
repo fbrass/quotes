@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -36,21 +35,14 @@ public class UserRegistrationMailScheduleDao extends GenericDao<UserRegistration
         return new RowMapper<UserRegistrationMailSchedule>() {
             @Override
             public UserRegistrationMailSchedule mapRow(final ResultSet rs, final int rowNum) throws SQLException {
-                final Long pk = rs.getLong(1);
-                final String email = rs.getString(2);
-                final String activationUrl = rs.getString(3);
-                final int attempts = rs.getInt(4);
-                final Date firstAttempt = rs.getDate(5);
-                final Date lastAttempt = rs.getDate(6);
-
-                final UserRegistrationMailSchedule userRegistrationMailSchedule = new UserRegistrationMailSchedule();
-                userRegistrationMailSchedule.setPK(pk);
-                userRegistrationMailSchedule.setEmail(email);
-                userRegistrationMailSchedule.setActivationUrl(activationUrl);
-                userRegistrationMailSchedule.setAttempts(attempts);
-                userRegistrationMailSchedule.setFirstAttempt(firstAttempt);
-                userRegistrationMailSchedule.setLastAttempt(lastAttempt);
-                return userRegistrationMailSchedule;
+                final UserRegistrationMailSchedule sched = new UserRegistrationMailSchedule();
+                sched.setPK(rs.getLong(1));
+                sched.setEmail(rs.getString(2));
+                sched.setActivationUrl(rs.getString(3));
+                sched.setAttempts(rs.getInt(4));
+                sched.setFirstAttempt(rs.getTimestamp(5));
+                sched.setLastAttempt(rs.getTimestamp(6));
+                return sched;
             }
         };
     }

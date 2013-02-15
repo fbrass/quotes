@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.constraints.NotNull;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -35,18 +34,12 @@ public class TodoItemDao extends GenericDao<TodoItem, Long> {
 
         @Override
         public TodoItem mapRow(final ResultSet rs, final int rowNum) throws SQLException {
-            final long id = rs.getLong(1);
-            final long listId = rs.getLong(2);
-            final String itemName = rs.getString(3);
-            final Date created = rs.getTimestamp(4);
-            final boolean done = rs.getBoolean(5);
-
             final TodoItem item = new TodoItem();
-            item.setPK(id);
-            item.setTodoListId(listId);
-            item.setItemName(itemName);
-            item.setCreated(created);
-            item.setDone(done);
+            item.setPK(rs.getLong(1));
+            item.setTodoListId(rs.getLong(2));
+            item.setItemName(rs.getString(3));
+            item.setCreated(rs.getTimestamp(4));
+            item.setDone(rs.getBoolean(5));
             return item;
         }
     }

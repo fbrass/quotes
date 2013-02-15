@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -47,16 +46,11 @@ public class TodoListDao extends GenericDao<TodoList, Long> {
 
         @Override
         public TodoList mapRow(final ResultSet rs, final int rowNum) throws SQLException {
-            final long id = rs.getLong(1);
-            final String user = rs.getString(2);
-            final String listName = rs.getString(3);
-            final Date created = rs.getTimestamp(4);
-
             final TodoList todoList = new TodoList();
-            todoList.setPK(id);
-            todoList.setUser(user);
-            todoList.setListName(listName);
-            todoList.setCreated(created);
+            todoList.setPK(rs.getLong(1));
+            todoList.setUser(rs.getString(2));
+            todoList.setListName(rs.getString(3));
+            todoList.setCreated(rs.getTimestamp(4));
             return todoList;
         }
     }
