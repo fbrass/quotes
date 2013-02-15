@@ -9,5 +9,6 @@ Open points
 * Exponential back off for sending scheduled registration mails
 * Migrate type SQL:timestamp to JodaTime instance
 * Provide way to disable app globally either via DB or with special file: google for better solution
+* Check salting of password: http://static.springsource.org/spring-security/site/docs/3.1.x/reference/core-services.html#d0e3021
 
 EOF
