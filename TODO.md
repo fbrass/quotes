@@ -1,8 +1,6 @@
 Open points
 ===========
 
-* Unit Test UserRegistrationControllerTest fails because of mocked BindingResult called more often than mocked
-
 * Password reset logic
 * Let user enter passwords twice to ensure he/she/it meant really the right password!
 * Implement own UserService for spring security to prevent circumventing the logic via the DB:

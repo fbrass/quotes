@@ -4,7 +4,6 @@ import org.antbear.tododont.backend.service.security.PasswordResetException;
 import org.antbear.tododont.backend.service.security.PasswordResetService;
 import org.antbear.tododont.web.beans.security.PasswordReset;
 import org.antbear.tododont.web.beans.security.PasswordResetAttempt;
-import org.antbear.tododont.web.beans.security.validation.PasswordsBaseValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +27,6 @@ public class PasswordResetController {
     private static final Logger log = LoggerFactory.getLogger(PasswordResetController.class);
 
     public static final String CHANGE_PASSWORD_PATH = "password-reset/change/";
-
-    @Autowired
-    private PasswordsBaseValidator passwordsBaseValidator;
 
     @Value("${web.app.base.uri}")
     private String applicationBaseUri;
@@ -94,7 +90,6 @@ public class PasswordResetController {
                                       final BindingResult bindingResult) throws PasswordResetException {
         log.debug("Password change requested for {}", passwordReset.getEmail());
 
-        this.passwordsBaseValidator.validate(passwordReset, bindingResult);
         if (bindingResult.hasErrors()) {
             log.warn("binding result has errors; returning to change/start page");
             return new ModelAndView("password-reset/change/start");

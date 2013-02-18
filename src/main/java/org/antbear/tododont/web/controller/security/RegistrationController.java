@@ -5,7 +5,6 @@ import org.antbear.tododont.backend.service.security.RegistrationException;
 import org.antbear.tododont.backend.service.security.RegistrationService;
 import org.antbear.tododont.util.InvariantException;
 import org.antbear.tododont.web.beans.security.Registration;
-import org.antbear.tododont.web.beans.security.validation.PasswordsBaseValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +29,6 @@ public class RegistrationController { // TODO rename registration to signUp?
     private static final Logger log = LoggerFactory.getLogger(RegistrationController.class);
 
     public static final String ACTIVATION_PATH = "register/activate/";
-
-    @Autowired
-    private PasswordsBaseValidator passwordsBaseValidator;
 
     @Value("${web.app.base.uri}")
     private String applicationBaseUri;
@@ -64,7 +60,6 @@ public class RegistrationController { // TODO rename registration to signUp?
                                             final BindingResult bindingResult) throws RegistrationException {
         log.debug("registration attempt (POST) {}", registration);
 
-        this.passwordsBaseValidator.validate(registration, bindingResult);
         if (bindingResult.hasErrors()) {
             log.warn("binding result has errors; returning to registration page");
             return new ModelAndView("register/start");

@@ -43,6 +43,7 @@
                 <td>
                     <form:password path="password2"/>
                     <form:errors path="password2" cssClass="validation-msg"/>
+                    <form:errors path="" cssClass="validation-msg"/> <%-- show FieldsMatch validation  --%>
                 </td>
             </tr>
             <tr>
