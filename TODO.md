@@ -1,12 +1,7 @@
 Open points
 ===========
 
-* Password reset logic
-
-* Let user enter passwords twice to ensure he/she/it meant really the right password!
-
-* Implement own UserService for spring security to prevent circumventing the logic via the DB:
-    http://stackoverflow.com/questions/10607696/spring-security-custom-userdetails
+* Add change password logic for logged in users.
 
 * Check salting of password: http://static.springsource.org/spring-security/site/docs/3.1.x/reference/core-services.html#d0e3021
 
