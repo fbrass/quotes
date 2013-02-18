@@ -1,8 +1,6 @@
 Open points
 ===========
 
-* Remove unused messages.properties.
-
 * Password reset logic
 
 * Let user enter passwords twice to ensure he/she/it meant really the right password!
