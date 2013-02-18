@@ -36,7 +36,7 @@ public abstract class PasswordsBase {
     }
 
     public static String getLoggablePassword(final String s) {
-        return new String(new char[s.length()]).replace("\0", "x");
+        return null == s ? null : new String(new char[s.length()]).replace("\0", "x");
     }
 
     @Override
