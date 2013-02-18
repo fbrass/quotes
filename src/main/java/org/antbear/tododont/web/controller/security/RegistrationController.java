@@ -24,7 +24,7 @@ import javax.validation.Valid;
 
 @RequestMapping("/register")
 @Controller
-public class RegistrationController { // TODO rename registration to signUp?
+public class RegistrationController {
 
     private static final Logger log = LoggerFactory.getLogger(RegistrationController.class);
 
