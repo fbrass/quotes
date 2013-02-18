@@ -1,0 +1,13 @@
+GET     /home                                   views/home.jsp
+GET     /login                                  views/security/login.jsp
+GET     /loginfailed                            views/security/login.jsp
+GET     /s                                      views/security/register/start.jsp
+POST    /s                                      views/security/register/done.jsp
+-       RegistrationException.class             views/security/register/error.jsp
+GET     /s/r/a                                  views/security/register/activate/done.jsp
+-       RegistrationActivationException.class   views/security/register/activate/error.jsp
+GET     /s/pw                                   views/security/password-reset/start.jsp
+POST    /s/pw                                   views/security/password-reset/done.jsp
+-       PasswordResetException.class            views/security/password-reset/error.jsp
+GET     /s/pw/c                                 views/security/password-reset/change/start.jsp
+POST    /s/pw/c                                 views/security/password-reset/change/done.jsp

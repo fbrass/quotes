@@ -22,13 +22,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
-@RequestMapping("/register")
+@RequestMapping("/s/r")
 @Controller
 public class RegistrationController {
 
     private static final Logger log = LoggerFactory.getLogger(RegistrationController.class);
 
-    public static final String ACTIVATION_PATH = "register/activate/";
+    // Security/registration/activation
+    public static final String ACTIVATION_PATH = "s/r/a/";
 
     @Value("${web.app.base.uri}")
     private String applicationBaseUri;
@@ -52,7 +53,7 @@ public class RegistrationController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView startRegistration() {
         log.debug("registration start (GET)");
-        return new ModelAndView("register/start", "registration", new Registration());
+        return new ModelAndView("security/register/start", "registration", new Registration());
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -62,23 +63,21 @@ public class RegistrationController {
 
         if (bindingResult.hasErrors()) {
             log.warn("binding result has errors; returning to registration page");
-            return new ModelAndView("register/start");
+            return new ModelAndView("security/register/start");
         } else {
             log.debug("registration OK, handing over registration attempt to registration service");
             this.registrationService.register(registration, getActivationUriComponents());
-            return new ModelAndView("register/done", "email", registration.getEmail());
+            return new ModelAndView("security/register/done", "email", registration.getEmail());
         }
     }
 
     @ExceptionHandler(RegistrationException.class)
     public ModelAndView handleRegistrationException(final RegistrationException ex) {
         log.debug("ExceptionHandler handleRegistrationException", ex);
-        final ModelAndView modelAndView = new ModelAndView("register/error");
-        modelAndView.addObject("errorMessageKey", ex.getMessageKey());
-        return modelAndView;
+        return new ModelAndView("security/register/error", "errorMessageKey", ex.getMessageKey());
     }
 
-    @RequestMapping(value = "/activate/{email}/{activationToken}", method = RequestMethod.GET)
+    @RequestMapping(value = "/a/{email}/{activationToken}", method = RequestMethod.GET)
     public ModelAndView performActivation(@PathVariable("email") final String email,
                                           @PathVariable("activationToken") final String activationToken)
             throws RegistrationActivationException {
@@ -87,12 +86,12 @@ public class RegistrationController {
         log.debug("Handing over activation attempt to registration service");
         this.registrationService.activate(email, activationToken);
 
-        return new ModelAndView("register/activate/done", "email", email);
+        return new ModelAndView("security/register/activate/done", "email", email);
     }
 
     @ExceptionHandler(RegistrationActivationException.class)
     public ModelAndView handleUserActivationException(final RegistrationActivationException ex) {
         log.debug("ExceptionHandler handleActivationException", ex);
-        return new ModelAndView("register/activate/error", "errorMessageKey", ex.getMessageKey());
+        return new ModelAndView("security/register/activate/error", "errorMessageKey", ex.getMessageKey());
     }
 }

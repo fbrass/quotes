@@ -14,10 +14,10 @@
     <http pattern="/favicon.ico" security="none"/>
 
     <http auto-config="true" use-expressions="true">
-        <intercept-url pattern="/register*" access="permitAll"/>
-        <intercept-url pattern="/register/**" access="permitAll"/>
-        <intercept-url pattern="/password-reset*" access="permitAll"/>
-        <intercept-url pattern="/password-reset/**" access="permitAll"/>
+        <intercept-url pattern="/s/*" access="permitAll"/>
+        <intercept-url pattern="/s/**" access="permitAll"/>
+        <intercept-url pattern="/s/pw*" access="permitAll"/>
+        <intercept-url pattern="/s/pw/**" access="permitAll"/>
         <intercept-url pattern="/login*" access="permitAll"/>
         <intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
 

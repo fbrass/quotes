@@ -21,7 +21,7 @@
 
     <p>Just enter your name and email, and we'll send you an email to confirm you're whoom you bless you're belonging to. It's just that simple!</p>
 
-    <form:form name="registration" commandName="registration"  action="/register">
+    <form:form name="registration" commandName="registration"  action="/s/r">
         <%--<form:errors path="*" cssClass="validation-errors" element="div" />--%>
         <table>
             <tr>

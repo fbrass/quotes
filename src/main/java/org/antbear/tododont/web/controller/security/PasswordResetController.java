@@ -20,13 +20,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 
-@RequestMapping("/password-reset")
+@RequestMapping("/s/pw")
 @Controller
 public class PasswordResetController {
 
     private static final Logger log = LoggerFactory.getLogger(PasswordResetController.class);
 
-    public static final String CHANGE_PASSWORD_PATH = "password-reset/change/";
+    public static final String CHANGE_PASSWORD_PATH = "/s/pw/c/";
 
     @Value("${web.app.base.uri}")
     private String applicationBaseUri;
@@ -44,7 +44,7 @@ public class PasswordResetController {
         log.debug("GET");
         // The password is unused in a password reset attempt, pre fill it to make bean validation happy
         final PasswordResetAttempt passwordResetAttempt = new PasswordResetAttempt();
-        return new ModelAndView("password-reset/start", "passwordResetAttempt", passwordResetAttempt);
+        return new ModelAndView("security/password-reset/start", "passwordResetAttempt", passwordResetAttempt);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -54,25 +54,23 @@ public class PasswordResetController {
 
         if (bindingResult.hasErrors()) {
             log.warn("binding result has errors; returning to start page");
-            return new ModelAndView("password-reset/start");
+            return new ModelAndView("security/password-reset/start");
         } else {
             log.debug("Validating password reset request for {}", passwordResetAttempt);
             this.passwordResetService.validateInitialRequest(passwordResetAttempt);
             log.debug("OK, handing over password forget attempt to password reset service");
             this.passwordResetService.passwordResetAttempt(passwordResetAttempt, getPasswordResetUriComponents());
-            return new ModelAndView("password-reset/done", "email", passwordResetAttempt.getEmail());
+            return new ModelAndView("security/password-reset/done", "email", passwordResetAttempt.getEmail());
         }
     }
 
     @ExceptionHandler(PasswordResetException.class)
     public ModelAndView handlePasswordResetException(final PasswordResetException ex) {
         log.debug("ExceptionHandler handlePasswordResetException", ex);
-        final ModelAndView modelAndView = new ModelAndView("password-reset/error");
-        modelAndView.addObject("errorMessageKey", ex.getMessageKey());
-        return modelAndView;
+        return new ModelAndView("security/password-reset/error", "errorMessageKey", ex.getMessageKey());
     }
 
-    @RequestMapping(value = "change/{email}/{passwordResetToken}", method = RequestMethod.GET)
+    @RequestMapping(value = "c/{email}/{passwordResetToken}", method = RequestMethod.GET)
     public ModelAndView passwordResetForm(@PathVariable("email") final String email,
                                           @PathVariable("passwordResetToken") final String passwordResetToken)
             throws PasswordResetException {
@@ -82,23 +80,23 @@ public class PasswordResetController {
         final PasswordReset passwordReset = new PasswordReset();
         passwordReset.setEmail(email);
         passwordReset.setPasswordResetToken(passwordResetToken);
-        return new ModelAndView("password-reset/change/start", "passwordReset", passwordReset);
+        return new ModelAndView("security/password-reset/change/start", "passwordReset", passwordReset);
     }
 
-    @RequestMapping(value = "change", method = RequestMethod.POST)
+    @RequestMapping(value = "c", method = RequestMethod.POST)
     public ModelAndView passwordReset(@Valid final PasswordReset passwordReset,
                                       final BindingResult bindingResult) throws PasswordResetException {
         log.debug("Password change requested for {}", passwordReset.getEmail());
 
         if (bindingResult.hasErrors()) {
             log.warn("binding result has errors; returning to change/start page");
-            return new ModelAndView("password-reset/change/start");
+            return new ModelAndView("security/password-reset/change/start");
         } else {
             log.debug("Validating password reset change request for {}", passwordReset.getEmail());
             this.passwordResetService.validateChangeAttempt(passwordReset.getEmail(), passwordReset.getPasswordResetToken());
             log.info("Giving password reset service a chance for {}", passwordReset);
             this.passwordResetService.passwordChange(passwordReset);
-            return new ModelAndView("password-reset/chanage/done");
+            return new ModelAndView("security/password-reset/change/done");
         }
     }
 }

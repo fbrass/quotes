@@ -17,24 +17,24 @@
     </style>
     <title>Password Reset Step 2</title>
 </head>
-<body onload="document.getElementById('email').focus()">
+<body onload="document.getElementById('password').focus()">
 <h1>Password Reset Step 2</h1>
 
 <p>Instructions: TODO</p>
 
-<form:form name="passwordReset" commandName="passwordReset" action="/password-reset/change/">
-    <form:errors path="*" cssClass="validation-errors" element="div"/>
+<form:form name="passwordReset" commandName="passwordReset" action="/s/pw/c">
+    <%--<form:errors path="*" cssClass="validation-errors" element="div"/>--%>
     <table>
         <tr>
             <td colspan="2">
-                <form:hidden path="email" id="email"/>
+                <form:hidden path="email"/>
                 <form:hidden path="passwordResetToken"/>
             </td>
         </tr>
         <tr>
             <td>New password:</td>
             <td>
-                <form:password path="password"/>
+                <form:password path="password" id="password"/>
                 <form:errors path="password" cssClass="validation-msg"/>
             </td>
         </tr>
@@ -43,6 +43,7 @@
             <td>
                 <form:password path="password2"/>
                 <form:errors path="password2" cssClass="validation-msg"/>
+                <form:errors path="" cssClass="validation-msg"/> <%-- show FieldsMatch validation  --%>
             </td>
         </tr>
         <tr>

@@ -17,18 +17,18 @@
     </style>
     <title>Password Reset</title>
 </head>
-<body onload="document.passwordReset.email.focus();">
+<body onload="document.getElementById('email').focus();">
 <h1>Password Reset</h1>
 
 <p>Instructions: TODO</p>
 
-<form:form name="passwordResetAttempt" commandName="passwordResetAttempt" action="/password-reset">
+<form:form name="passwordResetAttempt" commandName="passwordResetAttempt" action="/s/pw">
     <form:errors path="*" cssClass="validation-errors" element="div"/>
     <table>
         <tr>
             <td>Email:</td>
             <td>
-                <form:input path="email"/>
+                <form:input path="email" id="email"/>
             </td>
         </tr>
         <tr>

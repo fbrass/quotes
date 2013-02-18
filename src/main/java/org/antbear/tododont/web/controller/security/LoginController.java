@@ -1,4 +1,4 @@
-package org.antbear.tododont.web.controller;
+package org.antbear.tododont.web.controller.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,13 +14,11 @@ public class LoginController {
     @RequestMapping("/login")
     public String login() {
         log.debug("loginHandler called");
-        return "login";
+        return "security/login";
     }
 
     @RequestMapping("/loginfailed")
     public ModelAndView loginFailed() {
-        final ModelAndView mav = new ModelAndView("login");
-        mav.addObject("error", true);
-        return mav;
+        return new ModelAndView("security/login", "error", true);
     }
 }
