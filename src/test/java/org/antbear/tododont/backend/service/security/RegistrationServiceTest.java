@@ -1,40 +1,41 @@
-package org.antbear.tododont.backend.service.userregistration;
+package org.antbear.tododont.backend.service.security;
 
 import org.antbear.tododont.backend.dao.UserDao;
-import org.antbear.tododont.web.beans.UserRegistration;
+import org.antbear.tododont.web.beans.security.Registration;
+import org.antbear.tododont.web.controller.security.RegistrationController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/test-context.xml")
-public class UserRegistrationServiceTest {
+public class RegistrationServiceTest {
+
+    @Autowired
+    private RegistrationController registrationController;
 
     @Autowired
     private UserDao userDao;
 
     @Autowired
-    private UserRegistrationService userRegistrationService;
+    private RegistrationService registrationService;
 
-    private UriComponents userActivationUriComponents = UriComponentsBuilder.fromUriString(
-            "http://localhost:8080/register/activate-user/{activationToken}").build();
-
-    @Test(expected = UserRegistrationException.class)
+    @Test(expected = RegistrationException.class)
     public void testRegisterExistingUser() throws Exception {
-        this.userRegistrationService.register(new UserRegistration("alice@nowhere.tld", "secR3Tlf993"), userActivationUriComponents);
+        this.registrationService.register(new Registration("alice@nowhere.tld", "secR3Tlf993"),
+                this.registrationController.getActivationUriComponents());
     }
 
     @Test
     public void testRegisterNewUser() throws Exception {
         final String email = "newuser134@nowhere.tld";
-        final String expectedToken = this.userRegistrationService.register(new UserRegistration(email, "secR3Tlf993"), userActivationUriComponents);
+        final String expectedToken = this.registrationService.register(new Registration(email, "secR3Tlf993"),
+                this.registrationController.getActivationUriComponents());
         final String actualToken = this.userDao.findRegistrationTokenByUser(email);
         assertEquals(expectedToken, actualToken);
         assertFalse(this.userDao.getActiveStateByUser(email));

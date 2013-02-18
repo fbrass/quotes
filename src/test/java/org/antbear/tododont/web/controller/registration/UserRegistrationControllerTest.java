@@ -1,10 +1,10 @@
 package org.antbear.tododont.web.controller.registration;
 
 import org.antbear.tododont.backend.dao.UserDao;
-import org.antbear.tododont.backend.service.userregistration.UserRegistrationMail;
-import org.antbear.tododont.backend.service.userregistration.UserRegistrationMailSenderTestSupport;
-import org.antbear.tododont.web.beans.UserRegistration;
-import org.antbear.tododont.web.controller.UserRegistrationController;
+import org.antbear.tododont.backend.service.security.SecurityMailSenderTestSupport;
+import org.antbear.tododont.backend.service.security.SecurityMail;
+import org.antbear.tododont.web.beans.security.Registration;
+import org.antbear.tododont.web.controller.security.RegistrationController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,19 +16,17 @@ import org.springframework.validation.BindingResult;
 import java.net.URLDecoder;
 
 import static org.easymock.EasyMock.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/test-context.xml")
 public class UserRegistrationControllerTest {
 
     @Autowired
-    private UserRegistrationController userRegistrationController;
+    private RegistrationController registrationController;
 
     @Autowired
-    private UserRegistrationMailSenderTestSupport userRegistrationMailSender;
+    private SecurityMailSenderTestSupport userRegistrationMailSender;
 
     @Autowired
     private UserDao userDao;
@@ -44,32 +42,32 @@ public class UserRegistrationControllerTest {
     @Test
     public void testPerformRegistration() throws Exception {
         final String email = "new-test-user@nowhere.tld";
-        final UserRegistration userRegistration = new UserRegistration();
-        userRegistration.setEmail(email);
-        userRegistration.setPassword("pr3TtYS3c0R3");
+        final Registration registration = new Registration();
+        registration.setEmail(email);
+        registration.setPassword("pr3TtYS3c0R3");
 
-        // create mock for springs BindingResult
+        // createSchedule mock for springs BindingResult
         expect(this.bindingResult.hasErrors()).andReturn(false);
         // activate mock
         replay(this.bindingResult);
 
         // test user registration from controller
-        this.userRegistrationController.performRegistration(userRegistration, this.bindingResult);
+        this.registrationController.performRegistration(registration, this.bindingResult);
 
         // A mail should have been sent
-        final UserRegistrationMail userRegistrationMail = this.userRegistrationMailSender.getUserRegistrationMail();
-        assertNotNull(userRegistrationMail);
-        assertEquals(email, userRegistrationMail.getEmail());
-        final String activationUrl = userRegistrationMail.getActivationUrl();
+        final SecurityMail registrationMail = this.userRegistrationMailSender.getSecurityMail();
+        assertNotNull(registrationMail);
+        assertEquals(email, registrationMail.getEmail());
+        final String activationUrl = registrationMail.getUrl();
         assertNotNull(activationUrl);
 
         final String decodedUrl = URLDecoder.decode(activationUrl, "utf-8");
-        final String emailAndToken = decodedUrl.replaceFirst("^http://.*" + UserRegistrationController.ACTIVATION_PATH + "(.*)", "$1");
+        final String emailAndToken = decodedUrl.replaceFirst("^http://.*" + RegistrationController.ACTIVATION_PATH + "(.*)", "$1");
         final String[] strings = emailAndToken.split("/", 2);
         final String activationEmail = strings[0], activationToken = strings[1];
 
         // Perform the activation
-        this.userRegistrationController.performActivation(activationEmail, activationToken);
+        this.registrationController.performActivation(activationEmail, activationToken);
         final boolean activeStateByUser = this.userDao.getActiveStateByUser(email);
         assertTrue(activeStateByUser);
     }

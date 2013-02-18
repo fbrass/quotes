@@ -1,10 +1,11 @@
-package org.antbear.tododont.web.controller;
+package org.antbear.tododont.web.controller.security;
 
-import org.antbear.tododont.backend.service.userregistration.UserActivationException;
-import org.antbear.tododont.backend.service.userregistration.UserRegistrationException;
-import org.antbear.tododont.backend.service.userregistration.UserRegistrationService;
+import org.antbear.tododont.backend.service.security.RegistrationActivationException;
+import org.antbear.tododont.backend.service.security.RegistrationException;
+import org.antbear.tododont.backend.service.security.RegistrationService;
 import org.antbear.tododont.util.InvariantException;
-import org.antbear.tododont.web.beans.UserRegistration;
+import org.antbear.tododont.web.beans.security.Registration;
+import org.antbear.tododont.web.beans.security.validation.PasswordsBaseValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,54 +25,59 @@ import javax.validation.Valid;
 
 @RequestMapping("/register")
 @Controller
-public class UserRegistrationController { // TODO rename registration to signUp?
+public class RegistrationController { // TODO rename registration to signUp?
 
-    private static final Logger log = LoggerFactory.getLogger(UserRegistrationController.class);
+    private static final Logger log = LoggerFactory.getLogger(RegistrationController.class);
 
     public static final String ACTIVATION_PATH = "register/activate/";
+
+    @Autowired
+    private PasswordsBaseValidator passwordsBaseValidator;
 
     @Value("${web.app.base.uri}")
     private String applicationBaseUri;
 
     @Autowired
-    UserRegistrationService userRegistrationService;
+    RegistrationService registrationService;
 
     @PostConstruct
     private void init() {
-        log.debug("@PostConstruct");
-        InvariantException.notNullOrEmpty(this.applicationBaseUri, "UserRegistrationService.applicationBaseUri");
+        InvariantException.notNullOrEmpty(this.applicationBaseUri, "RegistrationController.applicationBaseUri");
         if (!this.applicationBaseUri.endsWith("/")) {
-            throw new InvariantException("UserRegistrationService.applicationBaseUri must end with '/'");
+            throw new InvariantException("RegistrationController.applicationBaseUri must end with '/'");
         }
+    }
+
+    public UriComponents getActivationUriComponents() {
+        return UriComponentsBuilder.fromUriString(
+                this.applicationBaseUri + ACTIVATION_PATH + "{email}/{activationToken}").build();
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView startRegistration() {
         log.debug("registration start (GET)");
-        return new ModelAndView("register/start", "userRegistration", new UserRegistration());
+        return new ModelAndView("register/start", "registration", new Registration());
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView performRegistration(@Valid final UserRegistration userRegistration,
-                                            final BindingResult bindingResult) throws UserRegistrationException {
-        log.debug("registration attempt (POST) {}", userRegistration);
+    public ModelAndView performRegistration(@Valid final Registration registration,
+                                            final BindingResult bindingResult) throws RegistrationException {
+        log.debug("registration attempt (POST) {}", registration);
 
+        this.passwordsBaseValidator.validate(registration, bindingResult);
         if (bindingResult.hasErrors()) {
             log.warn("binding result has errors; returning to registration page");
             return new ModelAndView("register/start");
         } else {
             log.debug("registration OK, handing over registration attempt to registration service");
-            UriComponents userActivationUriComponents = UriComponentsBuilder.fromUriString(
-                    this.applicationBaseUri + ACTIVATION_PATH + "{email}/{activationToken}").build();
-            this.userRegistrationService.register(userRegistration, userActivationUriComponents);
-
-            return new ModelAndView("register/done", "email", userRegistration.getEmail());
+            this.registrationService.register(registration, getActivationUriComponents());
+            return new ModelAndView("register/done", "email", registration.getEmail());
         }
     }
 
-    @ExceptionHandler(UserRegistrationException.class)
-    public ModelAndView handleUserRegistrationException(final UserRegistrationException ex) {
-        log.debug("ExceptionHandler handleUserRegistrationException", ex);
+    @ExceptionHandler(RegistrationException.class)
+    public ModelAndView handleRegistrationException(final RegistrationException ex) {
+        log.debug("ExceptionHandler handleRegistrationException", ex);
         final ModelAndView modelAndView = new ModelAndView("register/error");
         modelAndView.addObject("errorMessageKey", ex.getMessageKey());
         return modelAndView;
@@ -80,18 +86,18 @@ public class UserRegistrationController { // TODO rename registration to signUp?
     @RequestMapping(value = "/activate/{email}/{activationToken}", method = RequestMethod.GET)
     public ModelAndView performActivation(@PathVariable("email") final String email,
                                           @PathVariable("activationToken") final String activationToken)
-            throws UserActivationException {
+            throws RegistrationActivationException {
         log.debug("activation attempt (GET) for {} with token {}", email, activationToken);
 
         log.debug("Handing over activation attempt to registration service");
-        this.userRegistrationService.activate(email, activationToken);
+        this.registrationService.activate(email, activationToken);
 
         return new ModelAndView("register/activate/done", "email", email);
     }
 
-    @ExceptionHandler(UserActivationException.class)
-    public ModelAndView handleUserActivationException(final UserActivationException ex) {
-        log.debug("ExceptionHandler handleUserActivationException", ex);
+    @ExceptionHandler(RegistrationActivationException.class)
+    public ModelAndView handleUserActivationException(final RegistrationActivationException ex) {
+        log.debug("ExceptionHandler handleActivationException", ex);
         return new ModelAndView("register/activate/error", "errorMessageKey", ex.getMessageKey());
     }
 }

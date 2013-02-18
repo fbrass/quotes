@@ -1,11 +1,12 @@
 -- created 2013-01-11 by mg
 
 create table users (
-  email             varchar_ignorecase(128) not null primary key,
-  password          varchar_ignorecase(80)  not null,
-  enabled           boolean                 not null default 1,
-  registrationtoken varchar(128)            default null,
-  registered_since  timestamp               not null default now()
+  email               varchar_ignorecase(128) not null primary key,
+  password            varchar_ignorecase(80)  not null,
+  enabled             boolean                 not null default 1,
+  registrationtoken   varchar(128)            default null,
+  registered_since    timestamp               not null default now(),
+  passwordchangetoken varchar(128)            default null
 );
 
 create table authorities (
@@ -31,13 +32,25 @@ alter table persistent_logins add foreign key (username) references users (email
 create table scheduled_registration_mail (
   id            bigint                  not null primary key auto_increment,
   email         varchar_ignorecase(128) not null,
-  activationurl varchar(1024)           not null,
+  url           varchar(1024)           not null,
   attempts      int                     not null default 1,
   firstattempt  timestamp               not null default now(),
   lastattempt   timestamp               not null default now()
 );
 
 alter table scheduled_registration_mail add foreign key (email) references users (email)
+  on delete cascade;
+
+create table scheduled_password_reset_mail (
+  id            bigint                  not null primary key auto_increment,
+  email         varchar_ignorecase(128) not null,
+  url           varchar(1024)           not null,
+  attempts      int                     not null default 1,
+  firstattempt  timestamp               not null default now(),
+  lastattempt   timestamp               not null default now()
+);
+
+alter table scheduled_password_reset_mail add foreign key (email) references users (email)
   on delete cascade;
 
 create table todolist (

@@ -30,9 +30,8 @@
 
     <bean id="mailTemplateMessage" class="org.springframework.mail.SimpleMailMessage">
         <property name="from" value="customerservice@mycompany.tld"/>
-        <property name="subject" value="Your login activation link"/>
     </bean>
 
-    <bean class="org.antbear.tododont.backend.service.userregistration.UserRegistrationMailSenderTestSupport"/>
+    <bean class="org.antbear.tododont.backend.service.security.SecurityMailSenderTestSupport"/>
 
 </beans>

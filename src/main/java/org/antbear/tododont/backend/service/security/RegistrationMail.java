@@ -1,14 +1,16 @@
-package org.antbear.tododont.backend.service.userregistration;
+package org.antbear.tododont.backend.service.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Scope;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
 
 import java.util.Locale;
 
-@Component("prototype")
-public class UserRegistrationMail {
+@Component
+@Scope("prototype")
+public class RegistrationMail implements SecurityMail {
 
     @Autowired
     private SimpleMailMessage mailTemplateMessage;
@@ -17,33 +19,33 @@ public class UserRegistrationMail {
     private MessageSource messageSource;
 
     private String email;
-    private String activationUrl;
+    private String url;
 
-    public UserRegistrationMail() {
+    public RegistrationMail() {
     }
 
-    public UserRegistrationMail(final String email, final String activationUrl) {
+    public RegistrationMail(final String email, final String url) {
         this.email = email;
-        this.activationUrl = activationUrl;
+        this.url = url;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public String getActivationUrl() {
-        return activationUrl;
+    public String getUrl() {
+        return url;
     }
 
     public void setEmail(final String email) {
         this.email = email;
     }
 
-    public void setActivationUrl(final String activationUrl) {
-        this.activationUrl = activationUrl;
+    public void setUrl(final String url) {
+        this.url = url;
     }
 
-    SimpleMailMessage getMailMessage() {
+    public SimpleMailMessage getMailMessage() {
         final SimpleMailMessage msg = new SimpleMailMessage(this.mailTemplateMessage);
         msg.setTo(getEmail());
         msg.setSubject(getMessageSubject());
@@ -52,12 +54,12 @@ public class UserRegistrationMail {
     }
 
     public String getMessageSubject() {
-        return messageSource.getMessage("userRegistration.registration.mail.subject", null, Locale.getDefault());
+        return messageSource.getMessage("registration.mail.subject", null, Locale.getDefault());
     }
 
     public String getMessageBody() {
-        return messageSource.getMessage("userRegistration.registration.mail.body",
-                new Object[] { this.email, this.activationUrl }, Locale.getDefault());
+        return messageSource.getMessage("registration.mail.body",
+                new Object[] { this.email, this.url}, Locale.getDefault());
     }
 
     @Override
@@ -65,7 +67,7 @@ public class UserRegistrationMail {
         return "UserRegistrationMail{" +
                 "mailTemplateMessage=" + mailTemplateMessage +
                 ", email='" + email + '\'' +
-                ", activationUrl='" + activationUrl + '\'' +
+                ", url='" + url + '\'' +
                 '}';
     }
 }

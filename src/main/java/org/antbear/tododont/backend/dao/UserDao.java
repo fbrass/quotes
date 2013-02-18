@@ -37,6 +37,17 @@ public class UserDao {
                 email, "ROLE_USER");
     }
 
+    public void saveChangePasswordToken(final String email, final String passwordChangeToken) {
+        this.userDetailsService.getJdbcTemplate().update(
+                "UPDATE users SET passwordchangetoken = ? WHERE email = ?",
+                passwordChangeToken, email);
+    }
+
+    public String getChangePasswordToken(final String email) {
+        return this.userDetailsService.getJdbcTemplate().queryForObject(
+                "SELECT passwordchangetoken FROM users WHERE email = ?", String.class, email);
+    }
+
     public String findRegistrationTokenByUser(final String email) {
         final String sql = "SELECT registrationtoken FROM users WHERE email = ? AND enabled = 0 AND registrationtoken IS NOT NULL";
         final String token = this.userDetailsService.getJdbcTemplate().queryForObject(sql, String.class, email);
@@ -58,5 +69,9 @@ public class UserDao {
 
     public void delete(final String email) {
         this.userDetailsService.getJdbcTemplate().update("DELETE FROM users WHERE email = ?", email);
+    }
+
+    public void updatePassword(final String email, final String password) {
+        this.userDetailsService.getJdbcTemplate().update("UPDATE users SET password = ? WHERE email = ?", password, email);
     }
 }

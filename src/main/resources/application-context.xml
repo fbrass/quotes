@@ -37,11 +37,9 @@
 
     <task:annotation-driven/>
 
-    <!-- Other beans -->
-
-    <bean class="org.antbear.tododont.backend.service.userregistration.UserRegistrationMailSenderImpl"/>
-
     <!-- Mail -->
+
+    <bean class="org.antbear.tododont.backend.service.security.SecurityMailSenderImpl"/>
 
     <bean id="mailSender" class="org.antbear.tododont.util.MailSenderImpl"
           p:delegate-ref="mailSenderDelegate"/>

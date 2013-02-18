@@ -16,18 +16,18 @@
     </style>
     <title>Register</title>
 </head>
-<body onload="document.userRegistration.email.focus();">
+<body onload="document.getElementById('email').focus()">
     <h1>Register</h1>
 
     <p>Just enter your name and email, and we'll send you an email to confirm you're whoom you bless you're belonging to. It's just that simple!</p>
 
-    <form:form name="userRegistration" commandName="userRegistration"  action="/register">
-        <form:errors path="*" cssClass="validation-errors" element="div" />
+    <form:form name="registration" commandName="registration"  action="/register">
+        <%--<form:errors path="*" cssClass="validation-errors" element="div" />--%>
         <table>
             <tr>
                 <td>Email (never published):</td>
                 <td>
-                    <form:input path="email"/>
+                    <form:input path="email" id="email"/>
                     <form:errors path="email" cssClass="validation-msg"/>
                 </td>
             </tr>
@@ -36,6 +36,13 @@
                 <td>
                     <form:password path="password"/>
                     <form:errors path="password" cssClass="validation-msg"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Password repeat:</td>
+                <td>
+                    <form:password path="password2"/>
+                    <form:errors path="password2" cssClass="validation-msg"/>
                 </td>
             </tr>
             <tr>

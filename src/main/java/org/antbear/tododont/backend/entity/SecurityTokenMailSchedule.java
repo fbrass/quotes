@@ -4,7 +4,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class UserRegistrationMailSchedule implements DomainObject<Long> {
+public class SecurityTokenMailSchedule implements DomainObject<Long> {
 
     @NotNull
     private Long id;
@@ -13,7 +13,7 @@ public class UserRegistrationMailSchedule implements DomainObject<Long> {
     private String email;
 
     @NotNull
-    private String activationUrl;
+    private String url;
 
     @Min(1)
     private int attempts = 1;
@@ -42,12 +42,12 @@ public class UserRegistrationMailSchedule implements DomainObject<Long> {
         this.email = email;
     }
 
-    public String getActivationUrl() {
-        return activationUrl;
+    public String getUrl() {
+        return url;
     }
 
-    public void setActivationUrl(final String activationUrl) {
-        this.activationUrl = activationUrl;
+    public void setUrl(final String url) {
+        this.url = url;
     }
 
     public int getAttempts() {
@@ -79,7 +79,7 @@ public class UserRegistrationMailSchedule implements DomainObject<Long> {
         return "UserRegistrationMailSchedule{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", activationUrl='" + activationUrl + '\'' +
+                ", url='" + url + '\'' +
                 ", attempts=" + attempts +
                 ", firstAttempt=" + firstAttempt +
                 ", lastAttempt=" + lastAttempt +

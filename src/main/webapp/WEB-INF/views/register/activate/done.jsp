@@ -8,7 +8,7 @@
     <h1>Activation Success</h1>
 
     <p>
-        <spring:message code="userRegistration.activation.successMessage" arguments="${email}"/>
+        <spring:message code="registration.activation.successMessage" arguments="${email}"/>
         <br/><a href="/login">Login now</a>.
     </p>
 </body>

@@ -52,5 +52,9 @@
         Not a member? You may <a href="<c:url value="/register"/>">Signup in one minute</a>!
     </p>
 
+    <p>
+        Forgot password? <a href="<c:url value="/password-reset"/>">Reset password</a>!
+    </p>
+
 </body>
 </html>

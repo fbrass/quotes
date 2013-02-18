@@ -8,8 +8,9 @@
 </head>
 <body>
     <h1>Thanks for registering</h1>
+
     <p>
-        <spring:message code="userRegistration.registration.successMessage" arguments="${email}"/>
+        <spring:message code="registration.successMessage" arguments="${email}"/>
     </p>
 </body>
 </html>

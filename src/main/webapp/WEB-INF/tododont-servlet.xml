@@ -20,4 +20,7 @@
 
     <context:property-placeholder location="classpath:web.properties"/>
 
+    <bean id="validator"
+          class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+
 </beans>

@@ -1,32 +1,32 @@
-package org.antbear.tododont.backend.service.userregistration;
+package org.antbear.tododont.backend.service.security;
 
+import org.antbear.tododont.backend.dao.RegistrationMailScheduleDao;
 import org.antbear.tododont.backend.dao.UserDao;
-import org.antbear.tododont.backend.dao.UserRegistrationMailScheduleDao;
-import org.antbear.tododont.backend.entity.UserRegistrationMailSchedule;
+import org.antbear.tododont.backend.entity.SecurityTokenMailSchedule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-@Service
-public class UserRegistrationMailScheduleService {
+@Component
+public class RegistrationMailScheduler {
 
-    private static final Logger log = LoggerFactory.getLogger(UserRegistrationMailScheduleService.class);
+    private static final Logger log = LoggerFactory.getLogger(RegistrationMailScheduler.class);
 
     @Autowired
     private UserDao userDao;
 
     @Autowired
-    private UserRegistrationMailScheduleDao userRegistrationMailScheduleDao;
+    private RegistrationMailScheduleDao registrationMailScheduleDao;
 
     @Autowired
-    private UserRegistrationMail concreteMail;
+    private RegistrationMail registrationMail;
 
     @Autowired
-    private UserRegistrationMailSender mailSender;
+    private SecurityMailSender mailSender;
 
     private int maxAttempts = 10;
 
@@ -39,11 +39,10 @@ public class UserRegistrationMailScheduleService {
     }
 
     @Scheduled(fixedDelay = 120000) // TODO unrealistic, better use exponential back off
-    public void processSchedule() {
-        log.debug("processSchedule");
-
+    public void onSchedule() {
         boolean success;
-        for (final UserRegistrationMailSchedule srm : this.userRegistrationMailScheduleDao.findAll()) {
+        for (final SecurityTokenMailSchedule srm : this.registrationMailScheduleDao.findAll()) {
+            log.debug("Processing scheduled registration mail {}", srm);
 
             success = false;
             try {
@@ -56,10 +55,10 @@ public class UserRegistrationMailScheduleService {
             } finally {
                 if (success) {
                     log.info("Done sending registration to mail to {}", srm.getEmail());
-                    this.userRegistrationMailScheduleDao.delete(srm.getPK());
+                    this.registrationMailScheduleDao.delete(srm.getPK());
                 } else {
                     if (srm.getAttempts() < maxAttempts) {
-                        this.userRegistrationMailScheduleDao.update(srm);
+                        this.registrationMailScheduleDao.update(srm);
                     } else {
                         log.warn("Max attempts of scheduled registration mail reached, deleting user {}", srm.getEmail());
                         // scheduled task will be deleted by dropping user
@@ -70,11 +69,11 @@ public class UserRegistrationMailScheduleService {
         }
     }
 
-    public void processRegistrationMail(final UserRegistrationMailSchedule userRegistrationMailSchedule) {
-        this.concreteMail.setEmail(userRegistrationMailSchedule.getEmail());
-        this.concreteMail.setActivationUrl(userRegistrationMailSchedule.getActivationUrl());
+    public void processRegistrationMail(final SecurityTokenMailSchedule securityTokenMailSchedule) {
+        this.registrationMail.setEmail(securityTokenMailSchedule.getEmail());
+        this.registrationMail.setUrl(securityTokenMailSchedule.getUrl());
 
-        log.debug("Scheduled sending registration email to {}", userRegistrationMailSchedule.getEmail());
-        this.mailSender.sendRegistration(this.concreteMail);
+        log.debug("Scheduled sending registration email to {}", securityTokenMailSchedule.getEmail());
+        this.mailSender.send(this.registrationMail);
     }
 }

@@ -1,6 +1,6 @@
 package org.antbear.tododont.web.controller.registration;
 
-import org.antbear.tododont.web.beans.UserRegistration;
+import org.antbear.tododont.web.beans.security.Registration;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -25,15 +25,15 @@ public class UserRegistrationTest {
 
     @Test
     public void testInvalidPassword() throws Exception {
-        final UserRegistration user = new UserRegistration("foo@bar.tld", "invalid");
-        final Set<ConstraintViolation<UserRegistration>> cs = validator.validate(user);
+        final Registration registration = new Registration("foo@bar.tld", "invalid");
+        final Set<ConstraintViolation<Registration>> cs = validator.validate(registration);
         assertTrue(cs.size() > 0);
     }
 
     @Test
     public void testValidPassword() throws Exception {
-        final UserRegistration user = new UserRegistration("foo@bar.tld", "abc123_XZY");
-        final Set<ConstraintViolation<UserRegistration>> cs = validator.validate(user);
+        final Registration registration = new Registration("foo@bar.tld", "abc123_XZY");
+        final Set<ConstraintViolation<Registration>> cs = validator.validate(registration);
         assertEquals(0, cs.size());
     }
 }
