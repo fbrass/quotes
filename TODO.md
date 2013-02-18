@@ -1,6 +1,8 @@
 Open points
 ===========
 
+* Remove unused messages.properties.
+
 * Password reset logic
 * Let user enter passwords twice to ensure he/she/it meant really the right password!
 * Implement own UserService for spring security to prevent circumventing the logic via the DB:
