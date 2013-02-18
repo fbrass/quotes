@@ -1,10 +1,9 @@
-package org.antbear.tododont.web.controller.registration;
+package org.antbear.tododont.web.controller.security;
 
 import org.antbear.tododont.backend.dao.UserDao;
 import org.antbear.tododont.backend.service.security.SecurityMailSenderTestSupport;
 import org.antbear.tododont.backend.service.security.SecurityMail;
 import org.antbear.tododont.web.beans.security.Registration;
-import org.antbear.tododont.web.controller.security.RegistrationController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +19,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/test-context.xml")
-public class UserRegistrationControllerTest {
+public class RegistrationControllerTest {
 
     @Autowired
     private RegistrationController registrationController;

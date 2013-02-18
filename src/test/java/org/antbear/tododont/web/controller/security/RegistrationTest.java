@@ -1,4 +1,4 @@
-package org.antbear.tododont.web.controller.registration;
+package org.antbear.tododont.web.controller.security;
 
 import org.antbear.tododont.web.beans.security.Registration;
 import org.junit.BeforeClass;
@@ -13,7 +13,7 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class UserRegistrationTest {
+public class RegistrationTest {
 
     private static Validator validator;
 
