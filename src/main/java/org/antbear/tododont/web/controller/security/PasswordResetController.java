@@ -101,6 +101,4 @@ public class PasswordResetController {
             return new ModelAndView("password-reset/chanage/done");
         }
     }
-
-    // TODO more urls
 }
