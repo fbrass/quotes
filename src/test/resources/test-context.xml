@@ -26,12 +26,12 @@
 
     <!-- Mail -->
 
-    <bean id="mailSender" class="org.antbear.tododont.util.TestMailSender"/>
+    <bean id="mailSender" class="org.antbear.tododont.backend.security.util.mail.TestMailSender"/>
 
     <bean id="mailTemplateMessage" class="org.springframework.mail.SimpleMailMessage">
         <property name="from" value="customerservice@mycompany.tld"/>
     </bean>
 
-    <bean class="org.antbear.tododont.backend.service.security.SecurityMailSenderTestSupport"/>
+    <bean class="org.antbear.tododont.backend.security.service.SecurityMailSenderTestSupport"/>
 
 </beans>

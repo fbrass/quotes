@@ -1,6 +1,8 @@
 Open points
 ===========
 
+* Fix duplicate // in activation, password reset links.
+
 * Add change password logic for logged in users.
 
 * Unit test for complete registration process from controller perspective.
@@ -16,8 +18,6 @@ Open points
 * Exponential back off for sending scheduled passwordResetAttempt mails
 
 * Create schedule for registered but not activated users, drop user if not activated in time interval since passwordResetAttempt (e.g. 14 days)
-
-* Maybe create a security package to better separate the sec
 
 * Firstname and lastname attributes for users table et al.
 * Unregister, delete account logic

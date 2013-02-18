@@ -39,9 +39,9 @@
 
     <!-- Mail -->
 
-    <bean class="org.antbear.tododont.backend.service.security.SecurityMailSenderImpl"/>
+    <bean class="org.antbear.tododont.backend.security.service.SecurityMailSenderImpl"/>
 
-    <bean id="mailSender" class="org.antbear.tododont.util.MailSenderImpl"
+    <bean id="mailSender" class="org.antbear.tododont.backend.security.util.mail.MailSenderImpl"
           p:delegate-ref="mailSenderDelegate"/>
 
     <bean id="mailSenderDelegate" class="org.springframework.mail.javamail.JavaMailSenderImpl"
