@@ -1,8 +1,8 @@
 GET     /home                                   views/home.jsp
 GET     /login                                  views/security/login.jsp
 GET     /loginfailed                            views/security/login.jsp
-GET     /s                                      views/security/register/start.jsp
-POST    /s                                      views/security/register/done.jsp
+GET     /s/r                                    views/security/register/start.jsp
+POST    /s/r                                    views/security/register/done.jsp
 -       RegistrationException.class             views/security/register/error.jsp
 GET     /s/r/a                                  views/security/register/activate/done.jsp
 -       RegistrationActivationException.class   views/security/register/activate/error.jsp
