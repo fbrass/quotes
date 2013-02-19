@@ -2,6 +2,9 @@ Open points
 ===========
 
 * Add change password logic for logged in users.
+    1. validate current password of user
+    2. finish test
+    3. finish service
 
 * Unit test for complete registration process from controller perspective.
 
