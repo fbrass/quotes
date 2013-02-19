@@ -79,7 +79,8 @@ public class UserDao {
     }
 
     public void updatePassword(final String email, final String password) {
-        this.userDetailsService.getJdbcTemplate().update("UPDATE users SET password = ? WHERE email = ?", password, email);
+        this.userDetailsService.getJdbcTemplate().update(
+                "UPDATE users SET password = ?, PASSWORDCHANGETOKEN = NULL WHERE email = ?", password, email);
     }
 
     public List<UserDetails> findAllWithoutAuthorities() {

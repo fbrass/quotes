@@ -33,17 +33,17 @@
             </tr>
             <tr>
                 <td>Password:</td>
-                <td><input type='password' name='j_password'></td>
+                <td><input type='password' name='j_password'/></td>
             </tr>
             <tr>
-                <td><input type="checkbox" name="_spring_security_remember_me"></td>
+                <td><input type="checkbox" name="_spring_security_remember_me"/></td>
                 <td>Don't ask for my password for two weeks</td>
             </tr>
             <tr>
-                <td colspan='2'><input name="submit" type="submit"></td>
-            </tr>
-            <tr>
-                <td colspan='2'><input name="reset" type="reset"></td>
+                <td colspan='2'>
+                    <input name="submit" type="submit" value="Login"/>
+                    <input name="reset" type="reset" value="Reset"/>
+                </td>
             </tr>
         </table>
     </form>
