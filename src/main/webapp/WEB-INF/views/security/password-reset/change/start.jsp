@@ -22,7 +22,7 @@
 
 <p>Instructions: TODO</p>
 
-<form:form name="passwordReset" commandName="passwordReset" action="/s/pw/c">
+<form:form name="passwordReset" commandName="passwordReset" action="/s/pwr/c">
     <%--<form:errors path="*" cssClass="validation-errors" element="div"/>--%>
     <table>
         <tr>

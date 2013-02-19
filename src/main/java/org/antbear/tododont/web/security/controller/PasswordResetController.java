@@ -22,13 +22,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
-@RequestMapping("/s/pw")
+@RequestMapping("/s/pwr")
 @Controller
 public class PasswordResetController {
 
     private static final Logger log = LoggerFactory.getLogger(PasswordResetController.class);
-
-    public static final String CHANGE_PASSWORD_PATH = "s/pw/c/";
 
     @Value("${web.app.base.uri}")
     private String applicationBaseUri;
@@ -45,8 +43,12 @@ public class PasswordResetController {
     }
 
     public UriComponents getPasswordResetUriComponents() {
-        return UriComponentsBuilder.fromUriString(this.applicationBaseUri + CHANGE_PASSWORD_PATH
-                + "{email}/{changeToken}").build();
+        // Build change password URI by appending /c/ to the controller request mapping
+        final RequestMapping requestMapping = this.getClass().getAnnotation(RequestMapping.class);
+        final String changePasswordPath = requestMapping.value()[0].replaceFirst("^/(.*)$", "$1/c/");
+
+        return UriComponentsBuilder.fromUriString(
+                this.applicationBaseUri + changePasswordPath + "{email}/{changeToken}").build();
     }
 
     @RequestMapping(method = RequestMethod.GET)

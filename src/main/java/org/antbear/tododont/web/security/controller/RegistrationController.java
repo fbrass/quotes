@@ -28,9 +28,6 @@ public class RegistrationController {
 
     private static final Logger log = LoggerFactory.getLogger(RegistrationController.class);
 
-    // Security/registration/activation
-    public static final String ACTIVATION_PATH = "s/r/a/";
-
     @Value("${web.app.base.uri}")
     private String applicationBaseUri;
 
@@ -45,9 +42,15 @@ public class RegistrationController {
         }
     }
 
+    public static String getActivationUriPath() {
+        // Build activation URI by appending /a/ to the controller request mapping
+        final RequestMapping requestMapping = RegistrationController.class.getAnnotation(RequestMapping.class);
+        return requestMapping.value()[0].replaceFirst("^/(.*)$", "$1/a/");
+    }
+
     public UriComponents getActivationUriComponents() {
         return UriComponentsBuilder.fromUriString(
-                this.applicationBaseUri + ACTIVATION_PATH + "{email}/{activationToken}").build();
+                this.applicationBaseUri + getActivationUriPath() + "{email}/{activationToken}").build();
     }
 
     @RequestMapping(method = RequestMethod.GET)

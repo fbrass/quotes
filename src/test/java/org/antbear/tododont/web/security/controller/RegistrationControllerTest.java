@@ -61,7 +61,8 @@ public class RegistrationControllerTest {
         assertNotNull(activationUrl);
 
         final String decodedUrl = URLDecoder.decode(activationUrl, "utf-8");
-        final String emailAndToken = decodedUrl.replaceFirst("^http://.*" + RegistrationController.ACTIVATION_PATH + "(.*)", "$1");
+        final String emailAndToken = decodedUrl.replaceFirst("^http://.*"
+                + RegistrationController.getActivationUriPath() + "(.*)", "$1");
         final String[] strings = emailAndToken.split("/", 2);
         final String activationEmail = strings[0], activationToken = strings[1];
 

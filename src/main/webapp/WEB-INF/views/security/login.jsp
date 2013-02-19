@@ -49,11 +49,11 @@
     </form>
 
     <p style="color: #ff69b4">
-        Not a member? You may <a href="<c:url value="/s/r"/>">Signup in one minute</a>!
+        Not a member? You may <a href="<c:url value="/s/r"/>">SignUp in one minute</a>!
     </p>
 
     <p>
-        Forgot password? <a href="<c:url value="/s/pw"/>">Reset password</a>!
+        Forgot password? <a href="<c:url value="/s/pwr"/>">Reset password</a>!
     </p>
 
 </body>
