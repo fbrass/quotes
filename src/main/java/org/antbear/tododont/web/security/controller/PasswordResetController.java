@@ -2,6 +2,7 @@ package org.antbear.tododont.web.security.controller;
 
 import org.antbear.tododont.backend.security.service.PasswordResetException;
 import org.antbear.tododont.backend.security.service.PasswordResetService;
+import org.antbear.tododont.backend.security.util.InvariantException;
 import org.antbear.tododont.web.security.beans.PasswordReset;
 import org.antbear.tododont.web.security.beans.PasswordResetAttempt;
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
 @RequestMapping("/s/pw")
@@ -26,13 +28,21 @@ public class PasswordResetController {
 
     private static final Logger log = LoggerFactory.getLogger(PasswordResetController.class);
 
-    public static final String CHANGE_PASSWORD_PATH = "/s/pw/c/";
+    public static final String CHANGE_PASSWORD_PATH = "s/pw/c/";
 
     @Value("${web.app.base.uri}")
     private String applicationBaseUri;
 
     @Autowired
     private PasswordResetService passwordResetService;
+
+    @PostConstruct
+    private void init() {
+        InvariantException.notNullOrEmpty(this.applicationBaseUri, "PasswordResetController.applicationBaseUri");
+        if (!this.applicationBaseUri.endsWith("/")) {
+            throw new InvariantException("PasswordResetController.applicationBaseUri must end with '/'");
+        }
+    }
 
     public UriComponents getPasswordResetUriComponents() {
         return UriComponentsBuilder.fromUriString(this.applicationBaseUri + CHANGE_PASSWORD_PATH

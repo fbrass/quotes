@@ -1,8 +1,6 @@
 Open points
 ===========
 
-* Fix duplicate // in activation, password reset links.
-
 * Add change password logic for logged in users.
 
 * Unit test for complete registration process from controller perspective.
