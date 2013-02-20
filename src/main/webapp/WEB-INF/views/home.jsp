@@ -9,7 +9,7 @@
     <jsp:body>
         <t:loginstatus></t:loginstatus>
 
-        <div style="border: 1px solid blue">
+        <div>
             Content box
             <ul>
                 <li>Username: ${username}</li>

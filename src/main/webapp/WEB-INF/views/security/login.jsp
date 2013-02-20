@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <style type="text/css">
         .errorblock {
             color: #ff0000;
@@ -14,16 +15,49 @@
         }
     </style>
 </head>
-<body onload="document.f.j_username.focus();">
+<body onload="document.getElementById('j_username').focus()">
 
     <h1>Login</h1>
 
     <c:if test="${not empty error}">
-        <div class="errorblock">
-            Your login attempt was not successful, try again.<br /> Caused :
-                ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
-        </div>
+    <div class="errorblock">
+        Your login attempt was not successful, try again.<br /> Caused :
+            ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+    </div>
     </c:if>
+
+    <form name="f" action="<c:url value='j_spring_security_check'/>" method="POST" class="form-horizontal">
+        <fieldset>
+            <div class="control-group">
+                <label for="j_username" class="control-label">Email</label>
+                <div class="controls">
+                    <input type='text' id="j_username" name='j_username' value='<c:if test="${not empty param.login_error}"><c:out value="${SPRING_SECURITY_LAST_USERNAME}"/></c:if>'/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label for="j_password" class="control-label">Password</label>
+                <div class="controls">
+                    <input type='password' id="j_password" name='j_password'/>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <label for="_spring_security_remember_me" class="checkbox" style="color: #808080">
+                        <input type="checkbox" id="_spring_security_remember_me" name="_spring_security_remember_me">Remember me</input>
+                    </label>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    &nbsp; or <a href="<c:url value="/s/r"/>">Sign up</a> in a minute
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls" style="color: #808080">
+                    <a href="<c:url value="/s/pwr"/>">Forgot password</a>?
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+    <hr/>
 
     <form name="f" action="<c:url value='j_spring_security_check'/>" method="POST">
         <table>
