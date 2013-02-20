@@ -1,8 +1,6 @@
 package org.antbear.tododont.backend.security.service;
 
 import org.antbear.tododont.backend.security.dao.UserDao;
-import org.antbear.tododont.backend.security.service.RegistrationException;
-import org.antbear.tododont.backend.security.service.RegistrationService;
 import org.antbear.tododont.web.security.beans.Registration;
 import org.antbear.tododont.web.security.controller.RegistrationController;
 import org.junit.Test;
@@ -42,4 +40,6 @@ public class RegistrationServiceTest {
         assertEquals(expectedToken, actualToken);
         assertFalse(this.userDao.getActiveStateByUser(email));
     }
+
+    // TODO missing activation test
 }

@@ -25,7 +25,7 @@ public class RegistrationControllerTest {
     private RegistrationController registrationController;
 
     @Autowired
-    private SecurityMailSenderTestSupport userRegistrationMailSender;
+    private SecurityMailSenderTestSupport securityMailSenderTestSupport;
 
     @Autowired
     private UserDao userDao;
@@ -39,7 +39,7 @@ public class RegistrationControllerTest {
     }
 
     @Test
-    public void testPerformRegistration() throws Exception {
+    public void registrationAndActivationTest() throws Exception {
         final String email = "new-test-user@nowhere.tld";
         final Registration registration = new Registration();
         registration.setEmail(email);
@@ -54,7 +54,7 @@ public class RegistrationControllerTest {
         this.registrationController.performRegistration(registration, this.bindingResult);
 
         // A mail should have been sent
-        final SecurityMail registrationMail = this.userRegistrationMailSender.getSecurityMail();
+        final SecurityMail registrationMail = this.securityMailSenderTestSupport.getSecurityMail();
         assertNotNull(registrationMail);
         assertEquals(email, registrationMail.getEmail());
         final String activationUrl = registrationMail.getUrl();

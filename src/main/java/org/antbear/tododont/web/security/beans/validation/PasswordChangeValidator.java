@@ -15,6 +15,9 @@ import org.springframework.validation.Validator;
 
 import java.security.Principal;
 
+/**
+ * Spring validator to ensure that the current user password is valid.
+ */
 @Component
 public class PasswordChangeValidator implements Validator {
 

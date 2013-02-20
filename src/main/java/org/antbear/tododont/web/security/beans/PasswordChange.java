@@ -18,7 +18,7 @@ public class PasswordChange extends PasswordsBase {
     @Override
     public String toString() {
         return "PasswordChange{" +
-                "currentPassword='" + currentPassword + '\'' +
+                "currentPassword='" + getLoggablePassword(currentPassword) + '\'' +
                 "} " + super.toString();
     }
 }

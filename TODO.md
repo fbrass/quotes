@@ -1,11 +1,6 @@
 Open points
 ===========
 
-* Add change password logic for logged in users.
-    1. validate current password of user
-    2. finish test
-    3. finish service
-
 * Unit test for complete registration process from controller perspective.
 
 * Unit test for complete password reset process from controller perspective.
@@ -13,6 +8,8 @@ Open points
 * Integrate example admin page with spring security, does not work currently.
 
 * Check salting of password: http://static.springsource.org/spring-security/site/docs/3.1.x/reference/core-services.html#d0e3021
+
+* Ensure that the password from RegistrationService is salted.
 
 * Eliminate email in activation link, as it degrades entropy?
 
