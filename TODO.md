@@ -12,7 +12,7 @@ Open points
 
 * Integrate example admin page with spring security, does not work currently.
 
-* Check salting of password: http://static.springsource.org/spring-security/site/docs/3.1.x/reference/core-services.html#d0e3021
+* Check salting of password: http://static.springsource.org/spring-security/site/docs/3.1.x/reference/core-services.html#d0e3021, http://stackoverflow.com/questions/8067564/spring-security-salt
 
 * Eliminate email in activation link, as it degrades entropy?
 
