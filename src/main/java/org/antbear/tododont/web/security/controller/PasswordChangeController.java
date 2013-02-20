@@ -3,6 +3,7 @@ package org.antbear.tododont.web.security.controller;
 import org.antbear.tododont.backend.security.service.PasswordChangeException;
 import org.antbear.tododont.backend.security.service.PasswordChangeService;
 import org.antbear.tododont.web.security.beans.PasswordChange;
+import org.antbear.tododont.web.security.beans.validation.PasswordChangeValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class PasswordChangeController {
     private static final Logger log = LoggerFactory.getLogger(PasswordChangeController.class);
 
     @Autowired
+    private PasswordChangeValidator passwordChangeValidator;
+
+    @Autowired
     private PasswordChangeService passwordChangeService;
 
     @RequestMapping(method = RequestMethod.GET)
@@ -38,6 +42,9 @@ public class PasswordChangeController {
                                         @Valid final PasswordChange passwordChange,
                                         final BindingResult bindingResult) throws PasswordChangeException {
         log.debug("Change password request (POST) for {} with {}", principal, passwordChange);
+
+        assert this.passwordChangeValidator.supports(passwordChange.getClass());
+        this.passwordChangeValidator.validate(passwordChange, bindingResult);
 
         if (bindingResult.hasErrors()) {
             log.warn("binding result has errors; returning to start page");

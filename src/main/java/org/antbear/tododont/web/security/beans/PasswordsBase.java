@@ -1,7 +1,7 @@
 package org.antbear.tododont.web.security.beans;
 
-import org.antbear.tododont.web.security.validation.FieldsMatch;
-import org.antbear.tododont.web.security.validation.Password;
+import org.antbear.tododont.web.security.beans.validation.FieldsMatch;
+import org.antbear.tododont.web.security.beans.validation.Password;
 
 @FieldsMatch(firstProperty = "password", secondProperty = "password2")
 public abstract class PasswordsBase {

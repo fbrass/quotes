@@ -1,4 +1,4 @@
-package org.antbear.tododont.web.security.validation;
+package org.antbear.tododont.web.security.beans.validation;
 
 import org.springframework.beans.BeanUtils;
 

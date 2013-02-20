@@ -1,6 +1,6 @@
 package org.antbear.tododont.web.security.beans;
 
-import org.antbear.tododont.web.security.validation.Password;
+import org.antbear.tododont.web.security.beans.validation.Password;
 
 public class PasswordChange extends PasswordsBase {
 
