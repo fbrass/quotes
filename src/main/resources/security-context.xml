@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/security"
+<beans xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:beans="http://www.springframework.org/schema/beans"
-        xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+        xmlns:sec="http://www.springframework.org/schema/security"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
     <!-- Uncomment to get debugging output from spring security -->
-    <!--<debug/>-->
+    <!--<sec:debug/>-->
 
-    <global-method-security jsr250-annotations="enabled" secured-annotations="enabled" />
+    <sec:global-method-security jsr250-annotations="enabled" secured-annotations="enabled" />
 
     <!-- Exclude favicon.ico to avoid redirect after login -->
-    <http pattern="/favicon.ico" security="none"/>
+    <sec:http pattern="/favicon.ico" security="none"/>
 
-    <http auto-config="true" use-expressions="true">
+    <sec:http xmlns="http://www.springframework.org/schema/security" auto-config="true" use-expressions="true">
         <intercept-url pattern="/s/*" access="permitAll"/>
         <intercept-url pattern="/s/**" access="permitAll"/>
         <intercept-url pattern="/s/pw*" access="permitAll"/>
@@ -31,20 +31,20 @@
         <session-management invalid-session-url="/login">
             <concurrency-control max-sessions="1" expired-url="/"  error-if-maximum-exceeded="false" />
         </session-management>
-    </http>
+    </sec:http>
 
-    <beans:bean id="myUserDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
-        <beans:property name="dataSource" ref="dataSource"/>
-        <beans:property name="usersByUsernameQuery" value="select email,password,enabled from users where email = ?"/>
-        <beans:property name="authoritiesByUsernameQuery" value="select email,authority from authorities where email = ?"/>
-    </beans:bean>
+    <bean id="myUserDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="usersByUsernameQuery" value="select email,password,enabled from users where email = ?"/>
+        <property name="authoritiesByUsernameQuery" value="select email,authority from authorities where email = ?"/>
+    </bean>
 
-    <beans:bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>
 
-    <authentication-manager alias="authenticationManager">
+    <sec:authentication-manager xmlns="http://www.springframework.org/schema/security" alias="authenticationManager">
         <authentication-provider user-service-ref="myUserDetailsService">
             <password-encoder ref="passwordEncoder"/>
         </authentication-provider>
-    </authentication-manager>
+    </sec:authentication-manager>
 
-</beans:beans>
+</beans>
