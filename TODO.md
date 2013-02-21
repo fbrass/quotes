@@ -17,12 +17,16 @@ Open points
 
 * Exponential back off for sending scheduled passwordResetAttempt mails
 
-* Create schedule for registered but not activated users, drop user if not activated in time interval since passwordResetAttempt (e.g. 14 days)
+* Create schedule for registered but not activated users, drop user if not activated in time interval since passwordResetAttempt (3 hours)
 
 * Firstname and lastname attributes for users table et al.
+
 * Unregister, delete account logic
+
 * Migrate type SQL:timestamp to JodaTime instance
+
 * Provide way to disable app globally either via DB or with special file: google for better solution
+
 * Migrate hardcoded text in JSP to Messages.properties?
 
 EOF
