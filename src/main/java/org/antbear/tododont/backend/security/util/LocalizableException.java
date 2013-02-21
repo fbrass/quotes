@@ -26,4 +26,11 @@ public class LocalizableException extends Exception {
     public String getMessageKey() {
         return messageKey;
     }
+
+    @Override
+    public String toString() {
+        return "LocalizableException{" +
+                "messageKey='" + messageKey + '\'' +
+                "} " + super.toString();
+    }
 }
