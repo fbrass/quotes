@@ -1,13 +1,15 @@
 package org.antbear.tododont.backend.security.service;
 
+import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
 import org.antbear.tododont.backend.security.dao.RegistrationMailScheduleDao;
-import org.antbear.tododont.backend.security.dao.UserDao;
+import org.antbear.tododont.backend.security.entity.CustomUserDetails;
 import org.antbear.tododont.web.security.beans.Registration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.authentication.dao.SaltSource;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponents;
 
@@ -25,7 +27,10 @@ public class RegistrationService extends SecurityTokenServiceBase {
     public static final String REGISTRATION_ACTIVATION_INVALID_TOKEN = "registration.activation.invalidToken";
 
     @Autowired
-    private UserDao userDao;
+    private CustomUserDetailsService userDetailsService;
+
+    @Autowired
+    private SaltSource saltSource;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -50,18 +55,20 @@ public class RegistrationService extends SecurityTokenServiceBase {
         notNullOrEmpty(registration.getEmail(), "Registration.email");
         notNullOrEmpty(registration.getPassword(), "Registration.password");
 
-        if (this.userDao.exists(registration.getEmail())) {
-            throw new RegistrationException(REGISTRATION_USER_ALREADY_REGISTERED,
-                    registration);
+        if (this.userDetailsService.isExistingUser(registration.getEmail())) {
+            throw new RegistrationException(REGISTRATION_USER_ALREADY_REGISTERED, registration);
         }
 
-        final String registrationToken = createSecurityToken();
-        this.userDao.createInactiveUser(registration.getEmail(),
-                this.passwordEncoder.encode(registration.getPassword()),
-                registrationToken);
+        final CustomUserDetails user = new CustomUserDetails(registration.getEmail(),
+                createSecurityToken());
+
+        user.setPassword(this.passwordEncoder.encodePassword(registration.getPassword(),
+                this.saltSource.getSalt(user)));
+
+        this.userDetailsService.createUser(user);
 
         final String activationUrl = userActivationUriComponents.expand(registration.getEmail(),
-                registrationToken).encode().toUriString();
+                user.getRegistrationToken()).encode().toUriString();
 
         this.registrationMail.setEmail(registration.getEmail());
         this.registrationMail.setUrl(activationUrl);
@@ -75,7 +82,7 @@ public class RegistrationService extends SecurityTokenServiceBase {
             this.mailScheduleDao.createSchedule(registration.getEmail(), activationUrl);
         }
 
-        return registrationToken;
+        return user.getRegistrationToken();
     }
 
     public void activate(final String email, final String activationToken) throws RegistrationActivationException {
@@ -83,23 +90,23 @@ public class RegistrationService extends SecurityTokenServiceBase {
         notNullOrEmpty(email, "email");
         notNullOrEmpty(activationToken, "activationToken");
 
-        if (!this.userDao.exists(email)) {
+        if (!this.userDetailsService.isExistingUser(email)) {
             throw new RegistrationActivationException(REGISTRATION_ACTIVATION_USER_NOT_REGISTERED,
                     email, activationToken);
         }
 
-        if (this.userDao.getActiveStateByUser(email)) {
+        final CustomUserDetails user = (CustomUserDetails) this.userDetailsService.loadUserByUsername(email);
+        if (user.isEnabled()) {
             throw new RegistrationActivationException(REGISTRATION_ACTIVATION_USER_ALREADY_ACTIVATED,
                     email, activationToken);
         }
 
-        final String savedRegistrationToken = this.userDao.findRegistrationTokenByUser(email);
-        if (!savedRegistrationToken.equals(activationToken)) {
+        if (!user.getRegistrationToken().equals(activationToken)) {
             throw new RegistrationActivationException(REGISTRATION_ACTIVATION_INVALID_TOKEN,
                     email, activationToken);
         } else {
             log.info("User {} will be activated", email);
-            this.userDao.activateUser(email);
+            this.userDetailsService.enableUser(email);
         }
     }
 }

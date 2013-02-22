@@ -2,7 +2,6 @@ package org.antbear.tododont.backend.app.dao;
 
 import org.antbear.tododont.backend.app.entity.TodoItem;
 import org.antbear.tododont.backend.app.entity.TodoList;
-import org.antbear.tododont.backend.security.dao.UserDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +18,6 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/test-context.xml")
 public class TodoListDaoTest {
-
-    @Autowired
-    private UserDao userDao;
 
     @Autowired
     private TodoListDao todoListDao;

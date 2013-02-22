@@ -1,6 +1,7 @@
 package org.antbear.tododont.backend.security.service;
 
-import org.antbear.tododont.backend.security.dao.UserDao;
+import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
+import org.antbear.tododont.backend.security.entity.CustomUserDetails;
 import org.antbear.tododont.web.security.beans.Registration;
 import org.antbear.tododont.web.security.controller.RegistrationController;
 import org.junit.Test;
@@ -26,14 +27,14 @@ public class RegistrationServiceTest {
     private RegistrationController registrationController;
 
     @Autowired
-    private UserDao userDao;
+    private CustomUserDetailsService userDetailsService;
 
     @Test(expected = RegistrationException.class)
     public void testRegisterExistingUser() throws Exception {
         final String email = "alice@nowhere.tld";
         final String password = "secR3Tlf993";
 
-        assertTrue(this.userDao.getActiveStateByUser(email));
+        assertTrue(((CustomUserDetails) this.userDetailsService.loadUserByUsername(email)).isEnabled());
 
         this.registrationService.register(new Registration(email, password),
                 this.registrationController.getActivationUriComponents());
@@ -43,11 +44,11 @@ public class RegistrationServiceTest {
     public void testRegisterNewUser() throws Exception {
         final String expectedToken = this.registrationService.register(new Registration(EMAIL, PASSWORD),
                 this.registrationController.getActivationUriComponents());
-        final String actualToken = this.userDao.findRegistrationTokenByUser(EMAIL);
+        final String actualToken = ((CustomUserDetails) this.userDetailsService.loadUserByUsername(EMAIL)).getRegistrationToken();
         assertEquals(expectedToken, actualToken);
-        assertFalse(this.userDao.getActiveStateByUser(EMAIL));
+        assertFalse(((CustomUserDetails) this.userDetailsService.loadUserByUsername(EMAIL)).isEnabled());
 
-        this.userDao.delete(EMAIL);
+        this.userDetailsService.deleteUser(EMAIL);
     }
 
     @Test
@@ -58,6 +59,8 @@ public class RegistrationServiceTest {
         assertNotNull(activationToken);
 
         this.registrationService.activate(EMAIL, activationToken);
-        assertTrue(this.userDao.getActiveStateByUser(EMAIL));
+        assertTrue(((CustomUserDetails) this.userDetailsService.loadUserByUsername(EMAIL)).isEnabled());
+
+        this.userDetailsService.deleteUser(EMAIL);
     }
 }

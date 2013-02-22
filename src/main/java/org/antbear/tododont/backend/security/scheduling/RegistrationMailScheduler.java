@@ -1,7 +1,7 @@
 package org.antbear.tododont.backend.security.scheduling;
 
+import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
 import org.antbear.tododont.backend.security.dao.RegistrationMailScheduleDao;
-import org.antbear.tododont.backend.security.dao.UserDao;
 import org.antbear.tododont.backend.security.entity.SecurityTokenMailSchedule;
 import org.antbear.tododont.backend.security.service.RegistrationMail;
 import org.antbear.tododont.backend.security.service.SecurityMailSender;
@@ -19,7 +19,7 @@ public class RegistrationMailScheduler {
     private static final Logger log = LoggerFactory.getLogger(RegistrationMailScheduler.class);
 
     @Autowired
-    private UserDao userDao;
+    private CustomUserDetailsService userDetailsService;
 
     @Autowired
     private RegistrationMailScheduleDao registrationMailScheduleDao;
@@ -64,7 +64,7 @@ public class RegistrationMailScheduler {
                     } else {
                         log.warn("Max attempts of scheduled registration mail reached, deleting user {}", srm.getEmail());
                         // scheduled task will be deleted by dropping user
-                        this.userDao.delete(srm.getEmail());
+                        this.userDetailsService.deleteUser(srm.getEmail());
                     }
                 }
             }

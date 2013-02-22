@@ -1,14 +1,16 @@
 package org.antbear.tododont.backend.security.service;
 
+import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
 import org.antbear.tododont.backend.security.dao.PasswordResetMailScheduleDao;
-import org.antbear.tododont.backend.security.dao.UserDao;
+import org.antbear.tododont.backend.security.entity.CustomUserDetails;
 import org.antbear.tododont.web.security.beans.PasswordReset;
 import org.antbear.tododont.web.security.beans.PasswordResetAttempt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.authentication.dao.SaltSource;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponents;
 
@@ -25,7 +27,7 @@ public class PasswordResetService extends SecurityTokenServiceBase {
     public static final String PASSWORD_RESET_USER_UNKNOWN = "passwordReset.userUnknown";
 
     @Autowired
-    private UserDao userDao;
+    private CustomUserDetailsService userDetailsService;
 
     @Autowired
     private PasswordResetMail passwordResetMail;
@@ -36,6 +38,9 @@ public class PasswordResetService extends SecurityTokenServiceBase {
     private PasswordResetMailScheduleDao mailScheduleDao;
 
     @Autowired
+    private SaltSource saltSource;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -43,19 +48,22 @@ public class PasswordResetService extends SecurityTokenServiceBase {
         this.mailSender = mailSender;
     }
 
-    public void validateInitialRequest(final PasswordResetAttempt passwordReset) throws PasswordResetException {
+    public CustomUserDetails validateInitialRequest(final PasswordResetAttempt passwordReset) throws PasswordResetException {
         log.debug("Validating initial password reset request for {}", passwordReset);
 
         notNull(passwordReset, "passwordReset");
         notNullOrEmpty(passwordReset.getEmail(), "passwordReset.email");
 
-        if (!this.userDao.exists(passwordReset.getEmail())) {
+        if (!this.userDetailsService.isExistingUser(passwordReset.getEmail())) {
             throw new PasswordResetException(PASSWORD_RESET_USER_UNKNOWN, passwordReset);
         }
 
-        if (!this.userDao.getActiveStateByUser(passwordReset.getEmail())) {
+        final CustomUserDetails user = (CustomUserDetails) this.userDetailsService.loadUserByUsername(passwordReset.getEmail());
+        if (!user.isEnabled()) {
             throw new PasswordResetException(PASSWORD_RESET_USER_UNKNOWN, passwordReset);
         }
+
+        return user;
     }
 
     public String passwordResetAttempt(final PasswordResetAttempt passwordResetAttempt,
@@ -65,56 +73,60 @@ public class PasswordResetService extends SecurityTokenServiceBase {
         notNull(passwordResetAttempt, "passwordResetAttempt");
         notNullOrEmpty(passwordResetAttempt.getEmail(), "passwordResetAttempt.email");
 
-        if (!this.userDao.exists(passwordResetAttempt.getEmail())) {
-            // Dont show any details for security/obscurity
+        if (!this.userDetailsService.isExistingUser(passwordResetAttempt.getEmail())) {
+            // Don't show any details for security/obscurity
             throw new PasswordResetException(PASSWORD_RESET_USER_UNKNOWN, passwordResetAttempt);
         }
 
-        if (!this.userDao.getActiveStateByUser(passwordResetAttempt.getEmail())) {
-            // Dont show any details for security/obscurity
+        final CustomUserDetails user = (CustomUserDetails) this.userDetailsService.loadUserByUsername(passwordResetAttempt.getEmail());
+        if (!user.isEnabled()) {
+            // Don't show any details for security/obscurity
             throw new PasswordResetException(PASSWORD_RESET_USER_UNKNOWN, passwordResetAttempt);
         }
 
-        final String changePasswordToken = createSecurityToken();
-        this.userDao.saveChangePasswordToken(passwordResetAttempt.getEmail(), changePasswordToken);
+        final String passwordResetToken = createSecurityToken();
+        user.setPasswordResetToken(passwordResetToken);
+        this.userDetailsService.updatePasswordResetToken(passwordResetAttempt.getEmail(), passwordResetToken);
 
-        final String changePasswordUrl = passwordResetUriComponents.expand(passwordResetAttempt.getEmail(),
-                changePasswordToken).encode().toUriString();
+        final String passwordResetUrl = passwordResetUriComponents.expand(passwordResetAttempt.getEmail(),
+                passwordResetToken).encode().toUriString();
 
         this.passwordResetMail.setEmail(passwordResetAttempt.getEmail());
-        this.passwordResetMail.setUrl(changePasswordUrl);
+        this.passwordResetMail.setUrl(passwordResetUrl);
 
         try {
-            log.debug("Sending passwort reset mail to {}", passwordResetAttempt.getEmail());
+            log.debug("Sending password reset mail to {}", passwordResetAttempt.getEmail());
             this.mailSender.send(this.passwordResetMail);
         } catch (MailException mex) {
             log.warn("Failed sending password reset mail, scheduling for deferred sending", mex);
-            this.mailScheduleDao.createSchedule(passwordResetAttempt.getEmail(), changePasswordUrl);
+            this.mailScheduleDao.createSchedule(passwordResetAttempt.getEmail(), passwordResetUrl);
         }
 
-        return changePasswordToken;
+        return passwordResetToken;
     }
 
-    public void validateChangeAttempt(final String email, final String passwordResetToken) throws PasswordResetException {
+    public CustomUserDetails validateChangeAttempt(final String email, final String passwordResetToken) throws PasswordResetException {
         log.info("Validating password change attempt for {} with token {}", email, passwordResetToken);
         notNullOrEmpty(email, "email");
         notNullOrEmpty(passwordResetToken, "passwordResetToken");
 
-        if (!this.userDao.exists(email)) {
-            // Dont show any details for security/obscurity
+        if (!this.userDetailsService.isExistingUser(email)) {
+            // Don't show any details for security/obscurity
             throw new PasswordResetException(PASSWORD_RESET_USER_UNKNOWN, null);
         }
 
-        if (!this.userDao.getActiveStateByUser(email)) {
-            // Dont show any details for security/obscurity
+        final CustomUserDetails user = (CustomUserDetails) this.userDetailsService.loadUserByUsername(email);
+        if (!user.isEnabled()) {
+            // Don't show any details for security/obscurity
             throw new PasswordResetException(PASSWORD_RESET_USER_UNKNOWN, null);
         }
 
-        final String requiredChangePasswordToken = this.userDao.getChangePasswordToken(email);
-        if (!requiredChangePasswordToken.equals(passwordResetToken)) {
-            // Dont show any details for security/obscurity
+        if (!user.getPasswordResetToken().equals(passwordResetToken)) {
+            // Don't show any details for security/obscurity
             throw new PasswordResetException(PASSWORD_RESET_USER_UNKNOWN, null);
         }
+
+        return user;
     }
 
     public void passwordChange(@Valid final PasswordReset passwordReset) throws PasswordResetException {
@@ -124,10 +136,13 @@ public class PasswordResetService extends SecurityTokenServiceBase {
         notNullOrEmpty(passwordReset.getPassword(), "passwordRequest.password");
         notNullOrEmpty(passwordReset.getPasswordResetToken(), "passwordRequest.passwordResetToken");
 
-        this.validateChangeAttempt(passwordReset.getEmail(), passwordReset.getPasswordResetToken());
+        final CustomUserDetails user = this.validateChangeAttempt(passwordReset.getEmail(), passwordReset.getPasswordResetToken());
 
         log.info("Updating password for {}", passwordReset.getEmail());
-        this.userDao.updatePassword(passwordReset.getEmail(),
-                this.passwordEncoder.encode(passwordReset.getPassword()));
+        user.setPasswordResetToken(null);
+        user.setPassword(this.passwordEncoder.encodePassword(passwordReset.getPassword(),
+                this.saltSource.getSalt(user)));
+
+        this.userDetailsService.updatePassword(user);
     }
 }

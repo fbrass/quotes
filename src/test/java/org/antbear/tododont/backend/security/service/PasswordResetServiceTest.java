@@ -1,6 +1,7 @@
 package org.antbear.tododont.backend.security.service;
 
-import org.antbear.tododont.backend.security.dao.UserDao;
+import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
+import org.antbear.tododont.backend.security.entity.CustomUserDetails;
 import org.antbear.tododont.web.security.beans.PasswordReset;
 import org.antbear.tododont.web.security.beans.PasswordResetAttempt;
 import org.antbear.tododont.web.security.controller.PasswordResetController;
@@ -22,7 +23,7 @@ public class PasswordResetServiceTest {
     PasswordResetController passwordResetController;
 
     @Autowired
-    private UserDao userDao;
+    private CustomUserDetailsService userDetailsService;
 
     @Autowired
     private PasswordResetService passwordResetService;
@@ -36,8 +37,7 @@ public class PasswordResetServiceTest {
                 new PasswordResetAttempt(email),
                 this.passwordResetController.getPasswordResetUriComponents());
 
-        final String savedSecurityToken = this.userDao.getChangePasswordToken(email);
-        assertThat(securityToken, is(savedSecurityToken));
+        assertThat(((CustomUserDetails) this.userDetailsService.loadUserByUsername(email)).getPasswordResetToken(), is(securityToken));
 
         final PasswordReset passwordReset = new PasswordReset();
         passwordReset.setEmail(email);
@@ -47,7 +47,8 @@ public class PasswordResetServiceTest {
 
         this.passwordResetService.passwordChange(passwordReset);
 
-        final String tokenShouldBeNull = this.userDao.getChangePasswordToken(email);
+
+        final String tokenShouldBeNull = ((CustomUserDetails) this.userDetailsService.loadUserByUsername(email)).getPasswordResetToken();
         assertThat(tokenShouldBeNull, nullValue());
     }
 }

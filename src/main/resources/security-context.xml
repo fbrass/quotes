@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:sec="http://www.springframework.org/schema/security"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:sec="http://www.springframework.org/schema/security" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
     <!-- Uncomment to get debugging output from spring security -->
     <!--<sec:debug/>-->
 
-    <sec:global-method-security jsr250-annotations="enabled" secured-annotations="enabled" />
+    <sec:global-method-security jsr250-annotations="enabled" secured-annotations="enabled"/>
 
     <!-- Exclude favicon.ico to avoid redirect after login -->
     <sec:http pattern="/favicon.ico" security="none"/>
@@ -26,25 +26,29 @@
                     authentication-failure-url="/loginfailed"/>
         <logout logout-success-url="/" delete-cookies="true" invalidate-session="true"/>
 
-        <remember-me data-source-ref="dataSource" user-service-ref="myUserDetailsService" key="tododont"/>
+        <remember-me data-source-ref="dataSource" user-service-ref="userDetailsService" key="tododont"/>
 
         <session-management invalid-session-url="/login">
-            <concurrency-control max-sessions="1" expired-url="/"  error-if-maximum-exceeded="false" />
+            <concurrency-control max-sessions="1" expired-url="/" error-if-maximum-exceeded="false"/>
         </session-management>
     </sec:http>
 
-    <bean id="myUserDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="usersByUsernameQuery" value="select email,password,enabled from users where email = ?"/>
-        <property name="authoritiesByUsernameQuery" value="select email,authority from authorities where email = ?"/>
-    </bean>
+    <bean id="userDetailsService" class="org.antbear.tododont.backend.security.dao.CustomUserDetailsServiceImpl"
+          p:dataSource-ref="dataSource"/>
 
-    <bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>
+    <bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource"
+          p:userPropertyToUse="username"/>
 
-    <sec:authentication-manager xmlns="http://www.springframework.org/schema/security" alias="authenticationManager">
-        <authentication-provider user-service-ref="myUserDetailsService">
-            <password-encoder ref="passwordEncoder"/>
-        </authentication-provider>
+    <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder"
+          p:iterations="1024"/>
+
+    <bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider"
+          p:passwordEncoder-ref="passwordEncoder"
+          p:saltSource-ref="saltSource"
+          p:userDetailsService-ref="userDetailsService"/>
+
+    <sec:authentication-manager alias="authenticationManager">
+        <sec:authentication-provider ref="authenticationProvider"/>
     </sec:authentication-manager>
 
 </beans>

@@ -18,5 +18,6 @@ insert into todoitem (todolist_id, itemname) values (1, 'Muscheln waessern');
 insert into todoitem (todolist_id, itemname) values (2, 'Passwortraten');
 
 insert into users (email, password, enabled, registrationtoken) values ('new@registered.tld', 'secret', 0, 'registration-token');
+insert into authorities (email, authority) values ('new@registered.tld', 'ROLE_USER');
 
 -- EOF
