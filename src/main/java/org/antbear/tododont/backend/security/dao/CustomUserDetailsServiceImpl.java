@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Transactional
 public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomUserDetailsService {
 
     private static final Logger log = LoggerFactory.getLogger(CustomUserDetailsService.class);
@@ -28,7 +29,6 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
 
     // --- Custom methods
 
-    @Transactional
     public boolean isExistingUser(final String email) {
         final int count = getJdbcTemplate().queryForInt("SELECT COUNT(*) FROM users WHERE email = ?", email);
         return count > 0;
