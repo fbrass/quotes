@@ -6,7 +6,7 @@ create table users (
   enabled             boolean                 not null default 1,
   registrationtoken   varchar(128)            default null,
   registered_since    timestamp               not null default now(),
-  passwordchangetoken varchar(128)            default null
+  passwordresettoken  varchar(128)            default null
 );
 
 create table authorities (

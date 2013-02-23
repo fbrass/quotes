@@ -1,7 +1,6 @@
 package org.antbear.tododont.backend.security.scheduling;
 
 import org.antbear.tododont.backend.security.dao.PasswordResetMailScheduleDao;
-import org.antbear.tododont.backend.security.dao.UserDao;
 import org.antbear.tododont.backend.security.entity.SecurityTokenMailSchedule;
 import org.antbear.tododont.backend.security.service.PasswordResetMail;
 import org.antbear.tododont.backend.security.service.SecurityMailSender;
@@ -17,9 +16,6 @@ import java.util.Date;
 public class PasswordResetMailScheduler {
 
     private static final Logger log = LoggerFactory.getLogger(PasswordResetMailScheduler.class);
-
-    @Autowired
-    private UserDao userDao;
 
     @Autowired
     private PasswordResetMailScheduleDao passwordResetMailScheduleDao;

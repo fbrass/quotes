@@ -1,6 +1,7 @@
 package org.antbear.tododont.web.security.controller;
 
-import org.antbear.tododont.backend.security.dao.UserDao;
+import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
+import org.antbear.tododont.backend.security.entity.CustomUserDetails;
 import org.antbear.tododont.backend.security.service.SecurityMail;
 import org.antbear.tododont.backend.security.service.SecurityMailSenderTestSupport;
 import org.antbear.tododont.web.security.beans.Registration;
@@ -28,7 +29,7 @@ public class RegistrationControllerTest {
     private SecurityMailSenderTestSupport securityMailSenderTestSupport;
 
     @Autowired
-    private UserDao userDao;
+    private CustomUserDetailsService userDetailsService;
 
     // mocked
     private BindingResult bindingResult;
@@ -68,7 +69,7 @@ public class RegistrationControllerTest {
 
         // Perform the activation
         this.registrationController.performActivation(activationEmail, activationToken);
-        final boolean activeStateByUser = this.userDao.getActiveStateByUser(email);
+        final boolean activeStateByUser = ((CustomUserDetails) this.userDetailsService.loadUserByUsername(email)).isEnabled();
         assertTrue(activeStateByUser);
     }
 }

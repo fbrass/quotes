@@ -1,6 +1,6 @@
 package org.antbear.tododont.backend.security.service;
 
-import org.antbear.tododont.backend.security.dao.UserDao;
+import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
 import org.antbear.tododont.web.security.beans.PasswordChange;
 import org.antbear.tododont.web.security.beans.Registration;
 import org.antbear.tododont.web.security.controller.RegistrationController;
@@ -38,7 +38,7 @@ public class PasswordChangeServiceTest {
     private RegistrationController registrationController;
 
     @Autowired
-    private UserDao userDao;
+    private CustomUserDetailsService userDetailsService;
 
     @Autowired
     private PasswordChangeService passwordChangeService;
@@ -55,7 +55,7 @@ public class PasswordChangeServiceTest {
         assertNotNull(activationToken);
 
         this.registrationService.activate(EMAIL, activationToken);
-        assertTrue(this.userDao.getActiveStateByUser(EMAIL));
+        assertTrue(this.userDetailsService.loadUserByUsername(EMAIL).isEnabled());
     }
 
     @Test
