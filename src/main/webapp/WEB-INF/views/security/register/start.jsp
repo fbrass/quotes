@@ -1,63 +1,70 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <style type="text/css">
-        .validation-errors {
-            border: 1px dotted gray;
-            margin-bottom: 2em;
-        }
-        .validation-msg {
-            font-weight: bolder;
-            border-bottom: 1px dashed red;
-        }
-    </style>
-    <title>Register</title>
-</head>
-<body onload="document.getElementById('email').focus()">
-    <h1>Register</h1>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-    <p>Just enter your name and email, and we'll send you an email to confirm you're whoom you bless you're belonging to. It's just that simple!</p>
+<c:set var="title"><spring:message code='registration.title'/></c:set>
 
-    <form:form name="registration" commandName="registration"  action="/s/r">
-        <%--<form:errors path="*" cssClass="validation-errors" element="div" />--%>
-        <table>
-            <tr>
-                <td>Email (never published):</td>
-                <td>
-                    <form:input path="email" id="email"/>
-                    <form:errors path="email" cssClass="validation-msg"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Password:</td>
-                <td>
-                    <form:password path="password"/>
-                    <form:errors path="password" cssClass="validation-msg"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Password repeat:</td>
-                <td>
-                    <form:password path="password2"/>
-                    <form:errors path="password2" cssClass="validation-msg"/>
-                    <form:errors path="" cssClass="validation-msg"/> <%-- show FieldsMatch validation  --%>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="submit" value="Register"/>
-                </td>
-            </tr>
-        </table>
-    </form:form>
+<t:securitypage title="${title}">
+    <jsp:attribute name="afterScripts">
+        <script type="text/javascript">
+            $('#email').focus();
+            $(".help-inline").each(function (i) { $(this).closest(".control-group").addClass("error") });
+        </script>
+    </jsp:attribute>
+    <jsp:body>
+        <form:form name="registration" commandName="registration" action="/s/r" class="form-horizontal">
+            <fieldset>
+                <legend><spring:message code="registration.title"/></legend>
+                <div class="control-group">
+                    <label for="email" class="control-label"><spring:message code="form.email"/></label>
 
-    <h2>Good passwords</h2>
-    <p>
-        must at be at least 10 letters long, contain at least one lower case letter, contain at least one UPPER case letter, contain at least one special letter and no whitespaces
-    </p>
+                    <div class="controls">
+                        <form:input path="email" id="email"/>
+                        <spring:bind path="email">
+                            <c:if test="${status.error}">
+                                    <span class="help-inline">
+                                        <c:out value="${status.errorMessages[0]}"/>
+                                    </span>
+                            </c:if>
+                        </spring:bind>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="password" class="control-label"><spring:message code="form.password"/></label>
 
-</body>
-</html>
+                    <div class="controls">
+                        <form:password path="password" id="password"/>
+                        <spring:bind path="password">
+                            <c:if test="${status.error}">
+                                    <span class="help-inline">
+                                        <c:out value="${status.errorMessages[0]}"/>
+                                    </span>
+                            </c:if>
+                        </spring:bind>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="password2" class="control-label"><spring:message code="form.password2"/></label>
+
+                    <div class="controls">
+                        <form:password path="password2" id="password2"/>
+                        <form:errors path="password2" element="span" cssClass="help-inline"/>
+                        <form:errors path="" element="span"
+                                     cssClass="help-inline"/> <%-- show FieldsMatch validation  --%>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn btn-primary"><spring:message code="registration.submit"/></button>
+                        &nbsp; or <a href="<c:url value="/"/>"><spring:message code="login.title"/></a>
+                    </div>
+                </div>
+            </fieldset>
+            <p>
+                <spring:message code="registration.help"/>
+            </p>
+        </form:form>
+    </jsp:body>
+</t:securitypage>
