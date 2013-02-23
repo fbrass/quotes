@@ -43,8 +43,5 @@
                 </div>
             </fieldset>
         </form:form>
-        <p>
-            <spring:message code="passwordReset.help"/>
-        </p>
     </jsp:body>
 </t:securitypage>

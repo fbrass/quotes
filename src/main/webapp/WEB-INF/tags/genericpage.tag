@@ -9,6 +9,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/main.css"/>
     <title><spring:message code="app.name"/> - ${title}</title>
 </head>
 <body>

@@ -16,7 +16,7 @@
     <jsp:body>
         <form:form name="registration" commandName="registration" action="/s/r" class="form-horizontal">
             <fieldset>
-                <legend><spring:message code="registration.title"/></legend>
+                <legend><spring:message code="registration.legend"/></legend>
                 <div class="control-group">
                     <label for="email" class="control-label"><spring:message code="form.email"/></label>
 
@@ -62,9 +62,11 @@
                     </div>
                 </div>
             </fieldset>
-            <p>
-                <spring:message code="registration.help"/>
-            </p>
+            <div class="alert alert-block alert-info">
+                <p>
+                    <spring:message code="registration.help"/>
+                </p>
+            </div>
         </form:form>
     </jsp:body>
 </t:securitypage>
