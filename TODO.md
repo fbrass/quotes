@@ -29,4 +29,6 @@ Open points
 
 * Migrate hardcoded text in JSP to Messages.properties?
 
+* Local dummy mail server for running/testing on machines without SMTP.
+
 EOF
