@@ -32,7 +32,7 @@ public class RegistrationControllerTest {
 
     @Test
     public void registrationAndActivationTest() throws Exception {
-        final String email = "new-test-user@nowhere.tld";
+        final String email = "new-test-user92634@nowhere.tld";
         final Registration registration = new Registration();
         registration.setEmail(email);
         registration.setPassword("pr3TtYS3c0R3");
@@ -49,13 +49,11 @@ public class RegistrationControllerTest {
         assertNotNull(activationUrl);
 
         final String decodedUrl = URLDecoder.decode(activationUrl, "utf-8");
-        final String emailAndToken = decodedUrl.replaceFirst("^http://.*"
+        final String activationToken = decodedUrl.replaceFirst("^http://.*"
                 + RegistrationController.getActivationUriPath() + "(.*)", "$1");
-        final String[] strings = emailAndToken.split("/", 2);
-        final String activationEmail = strings[0], activationToken = strings[1];
 
         // Perform the activation
-        this.registrationController.performActivation(activationEmail, activationToken);
+        this.registrationController.performActivation(activationToken);
         final boolean activeStateByUser = ((CustomUserDetails) this.userDetailsService.loadUserByUsername(email)).isEnabled();
         assertTrue(activeStateByUser);
     }

@@ -46,6 +46,20 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
                 user.getUsername(), "ROLE_USER");
     }
 
+    public CustomUserDetails loadUserByRegistrationToken(final String registrationToken) {
+        log.debug("loadUserByRegistrationToken {}", registrationToken);
+        final String query = "SELECT email,password,enabled,registrationtoken,registered_since,passwordresettoken"
+                + " FROM users WHERE registrationtoken = ?";
+
+        final List<UserDetails> userDetailsList = super.getJdbcTemplate().query(query,
+                new CustomUserDetailsRowMapper(), registrationToken);
+
+        if (null == userDetailsList || userDetailsList.isEmpty()) {
+            return null;
+        }
+        return (CustomUserDetails) userDetailsList.get(0);
+    }
+
     public void enableUser(final String email) {
         getJdbcTemplate().update("UPDATE users SET enabled = 1, registrationtoken = NULL WHERE email = ?", email);
     }

@@ -9,6 +9,8 @@ public interface CustomUserDetailsService extends UserDetailsService {
 
     void createUser(final CustomUserDetails user);
 
+    CustomUserDetails loadUserByRegistrationToken(final String registrationToken);
+
     void enableUser(final String email);
 
     void updatePasswordResetToken(final String email, final String passwordResetToken);

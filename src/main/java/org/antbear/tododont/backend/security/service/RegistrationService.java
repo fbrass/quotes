@@ -67,8 +67,7 @@ public class RegistrationService extends SecurityTokenServiceBase {
 
         this.userDetailsService.createUser(user);
 
-        final String activationUrl = userActivationUriComponents.expand(registration.getEmail(),
-                user.getRegistrationToken()).encode().toUriString();
+        final String activationUrl = userActivationUriComponents.expand(user.getRegistrationToken()).encode().toUriString();
 
         this.registrationMail.setEmail(registration.getEmail());
         this.registrationMail.setUrl(activationUrl);
@@ -85,28 +84,24 @@ public class RegistrationService extends SecurityTokenServiceBase {
         return user.getRegistrationToken();
     }
 
-    public void activate(final String email, final String activationToken) throws RegistrationActivationException {
-        log.info("Activation attempt for {} with token {}", email, activationToken);
-        notNullOrEmpty(email, "email");
+    public void activate(final String activationToken) throws RegistrationActivationException {
+        log.info("Activation attempt with token {}", activationToken);
         notNullOrEmpty(activationToken, "activationToken");
 
-        if (!this.userDetailsService.isExistingUser(email)) {
-            throw new RegistrationActivationException(REGISTRATION_ACTIVATION_USER_NOT_REGISTERED,
-                    email, activationToken);
+        final CustomUserDetails user = (CustomUserDetails) this.userDetailsService.loadUserByRegistrationToken(activationToken);
+        if (null == user) {
+            throw new RegistrationActivationException(REGISTRATION_ACTIVATION_USER_NOT_REGISTERED, activationToken);
         }
 
-        final CustomUserDetails user = (CustomUserDetails) this.userDetailsService.loadUserByUsername(email);
         if (user.isEnabled()) {
-            throw new RegistrationActivationException(REGISTRATION_ACTIVATION_USER_ALREADY_ACTIVATED,
-                    email, activationToken);
+            throw new RegistrationActivationException(REGISTRATION_ACTIVATION_USER_ALREADY_ACTIVATED, activationToken);
         }
 
         if (!user.getRegistrationToken().equals(activationToken)) {
-            throw new RegistrationActivationException(REGISTRATION_ACTIVATION_INVALID_TOKEN,
-                    email, activationToken);
+            throw new RegistrationActivationException(REGISTRATION_ACTIVATION_INVALID_TOKEN, activationToken);
         } else {
-            log.info("User {} will be activated", email);
-            this.userDetailsService.enableUser(email);
+            log.info("User {} will be activated", user.getUsername());
+            this.userDetailsService.enableUser(user.getUsername());
         }
     }
 }

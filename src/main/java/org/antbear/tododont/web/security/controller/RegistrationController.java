@@ -50,7 +50,7 @@ public class RegistrationController {
 
     public UriComponents getActivationUriComponents() {
         return UriComponentsBuilder.fromUriString(
-                this.applicationBaseUri + getActivationUriPath() + "{email}/{activationToken}").build();
+                this.applicationBaseUri + getActivationUriPath() + "{activationToken}").build();
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -80,16 +80,15 @@ public class RegistrationController {
         return new ModelAndView("security/register/error", "errorMessageKey", ex.getMessageKey());
     }
 
-    @RequestMapping(value = "/a/{email}/{activationToken}", method = RequestMethod.GET)
-    public ModelAndView performActivation(@PathVariable("email") final String email,
-                                          @PathVariable("activationToken") final String activationToken)
+    @RequestMapping(value = "/a/{activationToken}", method = RequestMethod.GET)
+    public ModelAndView performActivation(@PathVariable("activationToken") final String activationToken)
             throws RegistrationActivationException {
-        log.debug("activation attempt (GET) for {} with token {}", email, activationToken);
+        log.debug("activation attempt (GET) with token {}", activationToken);
 
         log.debug("Handing over activation attempt to registration service");
-        this.registrationService.activate(email, activationToken);
+        this.registrationService.activate(activationToken);
 
-        return new ModelAndView("security/register/activate/done", "email", email);
+        return new ModelAndView("security/register/activate/done");
     }
 
     @ExceptionHandler(RegistrationActivationException.class)

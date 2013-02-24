@@ -58,7 +58,7 @@ public class RegistrationServiceTest {
         final String activationToken = this.registrationService.register(registration, this.registrationController.getActivationUriComponents());
         assertNotNull(activationToken);
 
-        this.registrationService.activate(EMAIL, activationToken);
+        this.registrationService.activate(activationToken);
         assertTrue(((CustomUserDetails) this.userDetailsService.loadUserByUsername(EMAIL)).isEnabled());
 
         this.userDetailsService.deleteUser(EMAIL);

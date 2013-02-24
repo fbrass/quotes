@@ -5,8 +5,6 @@ Open points
 
 * Integrate example admin page with spring security, does not work currently.
 
-* Eliminate email in activation link, as it degrades entropy?
-
 * Exponential back off for sending scheduled passwordResetAttempt mails
 
 * Create schedule for registered but not activated users, drop user if not activated in time interval since passwordResetAttempt (3 hours)

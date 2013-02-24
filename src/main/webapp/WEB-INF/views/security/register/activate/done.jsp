@@ -10,7 +10,7 @@
         <h2>${title}</h2>
         <div class="alert alert-block alert-success">
             <p>
-                <spring:message code="registration.activation.successMessage" arguments="${email}"/>
+                <spring:message code="registration.activation.successMessage"/>
             </p>
         </div>
     </jsp:body>

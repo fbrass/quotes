@@ -54,7 +54,7 @@ public class PasswordChangeServiceTest {
         final String activationToken = this.registrationService.register(registration, this.registrationController.getActivationUriComponents());
         assertNotNull(activationToken);
 
-        this.registrationService.activate(EMAIL, activationToken);
+        this.registrationService.activate(activationToken);
         assertTrue(this.userDetailsService.loadUserByUsername(EMAIL).isEnabled());
     }
 
