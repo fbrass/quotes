@@ -3,6 +3,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ attribute name="title" required="true" %>
+<%@ attribute name="head" fragment="true" required="false" %>
 <%@ attribute name="afterScripts" fragment="true" required="false" %>
 
 <!DOCTYPE html>
@@ -11,6 +12,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/main.css"/>
     <title><spring:message code="app.name"/> - ${title}</title>
+    <jsp:invoke fragment="head"/>
 </head>
 <body>
 <div class="navbar">

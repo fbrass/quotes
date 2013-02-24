@@ -12,7 +12,7 @@
             $('#j_username').focus();
         </script>
     </jsp:attribute>
-    <jsp:body>
+    <jsp:attribute name="head">
         <style type="text/css">
             .form-signin {
                 max-width: 300px;
@@ -23,9 +23,9 @@
                 -webkit-border-radius: 5px;
                 -moz-border-radius: 5px;
                 border-radius: 5px;
-                -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+                -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+                box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
             }
             .form-signin .form-signin-heading,
             .form-signin .checkbox {
@@ -38,10 +38,9 @@
                 margin-bottom: 15px;
                 padding: 7px 9px;
             }
-
-
         </style>
-
+    </jsp:attribute>
+    <jsp:body>
         <c:if test="${not empty error}">
             <div class="alert alert-block alert-error">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -61,7 +60,9 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    <label for="j_password" class="control-label"><spring:message code="form.password"/>&nbsp;(<a href="<c:url value="/s/pwr"/>"><spring:message code="login.passwordForget"/></a>)</label>
+                    <label for="j_password" class="control-label"><spring:message code="form.password"/>&nbsp;(<a
+                            href="<c:url value="/s/pwr"/>"><spring:message code="login.passwordForget"/></a>)</label>
+
                     <div class="controls">
                         <input type='password' id="j_password" name='j_password'/>
                     </div>
@@ -74,7 +75,8 @@
                             </input>
                         </label>
                         <button type="submit" class="btn btn-primary"><spring:message code="login.submit"/></button>
-                        &nbsp; or <a href="<c:url value="/s/r"/>"><spring:message code="registration.title"/></a> in a minute
+                        &nbsp; or <a href="<c:url value="/s/r"/>"><spring:message code="registration.title"/></a> in a
+                        minute
                     </div>
                 </div>
             </fieldset>
