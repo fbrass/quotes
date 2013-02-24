@@ -47,7 +47,6 @@ public class PasswordResetServiceTest {
 
         this.passwordResetService.passwordChange(passwordReset);
 
-
         final String tokenShouldBeNull = ((CustomUserDetails) this.userDetailsService.loadUserByUsername(email)).getPasswordResetToken();
         assertThat(tokenShouldBeNull, nullValue());
     }

@@ -60,7 +60,7 @@ public class PasswordResetController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView PasswordReset(@Valid final PasswordResetAttempt passwordResetAttempt,
+    public ModelAndView passwordReset(@Valid final PasswordResetAttempt passwordResetAttempt,
                                       final BindingResult bindingResult) throws PasswordResetException {
         log.debug("password reset request (POST) {}", passwordResetAttempt);
 
@@ -83,8 +83,8 @@ public class PasswordResetController {
     }
 
     @RequestMapping(value = "c/{email}/{passwordResetToken}", method = RequestMethod.GET)
-    public ModelAndView passwordResetForm(@PathVariable("email") final String email,
-                                          @PathVariable("passwordResetToken") final String passwordResetToken)
+    public ModelAndView passwordReset(@PathVariable("email") final String email,
+                                      @PathVariable("passwordResetToken") final String passwordResetToken)
             throws PasswordResetException {
         log.debug("Password reset change form requested for {} and token {}", email, passwordResetToken);
 
@@ -96,9 +96,9 @@ public class PasswordResetController {
     }
 
     @RequestMapping(value = "c", method = RequestMethod.POST)
-    public ModelAndView passwordReset(@Valid final PasswordReset passwordReset,
-                                      final BindingResult bindingResult) throws PasswordResetException {
-        log.debug("Password change requested for {}", passwordReset.getEmail());
+    public ModelAndView performPasswordReset(@Valid final PasswordReset passwordReset,
+                                             final BindingResult bindingResult) throws PasswordResetException {
+        log.debug("Perform password change for {}", passwordReset.getEmail());
 
         if (bindingResult.hasErrors()) {
             log.warn("binding result has errors; returning to change/start page");
