@@ -1,5 +1,10 @@
 
 .navbar .brand {
     font-weight: bold;
-    color: #708090;
+    color: #666666 !important;
+}
+
+legend {
+    font-weight: bold;
+    color: #666666 !important;
 }

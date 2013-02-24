@@ -18,7 +18,7 @@
         <div class="container">
             <ul class="nav">
                 <li class="active">
-                    <a class="brand" href="/"><spring:message code="app.name"/></a>
+                    <a class="brand" href="/"><spring:message code="app.name"/>&nbsp;&trade;</a>
                 </li>
                 <li><a href="#">Link1</a></li>
                 <li><a href="#">Link2</a></li>
