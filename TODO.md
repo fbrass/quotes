@@ -5,7 +5,7 @@ Open points
 
 * Integrate example admin page with spring security, does not work currently.
 
-* Exponential back off for sending scheduled passwordResetAttempt mails
+* Exponential back off for sending scheduled passwordResetAttempt mails. Use strategy pattern.
 
 * Create schedule for registered but not activated users, drop user if not activated in time interval since passwordResetAttempt (3 hours)
 
