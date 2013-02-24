@@ -19,6 +19,6 @@ Open points
 
 * Provide way to disable app globally either via DB or with special file: google for better solution
 
-* Local dummy mail server for running/testing on machines without SMTP.
+* Local dummy mail server for running/testing on machines without SMTP. Check http://code.google.com/p/subethasmtp/.
 
 EOF
