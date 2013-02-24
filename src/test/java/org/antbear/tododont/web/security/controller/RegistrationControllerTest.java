@@ -5,17 +5,16 @@ import org.antbear.tododont.backend.security.entity.CustomUserDetails;
 import org.antbear.tododont.backend.security.service.SecurityMail;
 import org.antbear.tododont.backend.security.service.SecurityMailSenderTestSupport;
 import org.antbear.tododont.web.security.beans.Registration;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 
 import java.net.URLDecoder;
 
-import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -31,14 +30,6 @@ public class RegistrationControllerTest {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
-    // mocked
-    private BindingResult bindingResult;
-
-    @Before
-    public void setup() {
-        this.bindingResult = createMock(BindingResult.class);
-    }
-
     @Test
     public void registrationAndActivationTest() throws Exception {
         final String email = "new-test-user@nowhere.tld";
@@ -46,13 +37,9 @@ public class RegistrationControllerTest {
         registration.setEmail(email);
         registration.setPassword("pr3TtYS3c0R3");
 
-        // createSchedule mock for springs BindingResult
-        expect(this.bindingResult.hasErrors()).andReturn(false);
-        // activate mock
-        replay(this.bindingResult);
-
         // test user registration from controller
-        this.registrationController.performRegistration(registration, this.bindingResult);
+        final BindingResult bindingResult = new BeanPropertyBindingResult(registration, "registration");
+        this.registrationController.performRegistration(registration, bindingResult);
 
         // A mail should have been sent
         final SecurityMail registrationMail = this.securityMailSenderTestSupport.getSecurityMail();

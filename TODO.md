@@ -1,8 +1,6 @@
 Open points
 ===========
 
-* Unit test for complete registration process from controller perspective.
-
 * Unit test for complete password reset process from controller perspective.
 
 * User related Tests use unencoded Passwords. Think of changing this, and what it provides. 
@@ -26,8 +24,6 @@ Open points
 * Migrate type SQL:timestamp to JodaTime instance
 
 * Provide way to disable app globally either via DB or with special file: google for better solution
-
-* Migrate hardcoded text in JSP to Messages.properties?
 
 * Local dummy mail server for running/testing on machines without SMTP.
 
