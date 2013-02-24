@@ -50,7 +50,7 @@ public class RegistrationService extends SecurityTokenServiceBase {
 
     public String register(final Registration registration, final UriComponents userActivationUriComponents)
             throws RegistrationException {
-        log.info("Registration attempt for {} and dataaccess URI {}", registration, userActivationUriComponents);
+        log.info("Registration attempt for {} and activation URI components {}", registration, userActivationUriComponents);
         notNull(registration, "Registration");
         notNullOrEmpty(registration.getEmail(), "Registration.email");
         notNullOrEmpty(registration.getPassword(), "Registration.password");
