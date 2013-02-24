@@ -1,7 +1,7 @@
 Open points
 ===========
 
-* Unit test for complete password reset process from controller perspective.
+* Unit test for complete password change process from controller perspective.
 
 * User related Tests use unencoded Passwords. Think of changing this, and what it provides. 
 
