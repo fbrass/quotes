@@ -1,7 +1,10 @@
 package org.antbear.tododont.backend.security.dao;
 
 import org.antbear.tododont.backend.security.entity.CustomUserDetails;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+
+import java.util.List;
 
 public interface CustomUserDetailsService extends UserDetailsService {
 
@@ -10,6 +13,8 @@ public interface CustomUserDetailsService extends UserDetailsService {
     void createUser(final CustomUserDetails user);
 
     CustomUserDetails loadUserByRegistrationToken(final String registrationToken);
+
+    List<UserDetails> loadUsersByMissingActivation();
 
     void enableUser(final String email);
 

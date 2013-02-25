@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+/**
+ * Sends password reset mails which could not be sent.
+ */
 @Component
 public class PasswordResetMailScheduler {
 
@@ -36,7 +39,7 @@ public class PasswordResetMailScheduler {
         this.maxAttempts = maxAttempts;
     }
 
-    @Scheduled(fixedDelay = 120000) // TODO unrealistic, better use exponential back off
+    @Scheduled(fixedDelay = 2 * 60 * 1000) // TODO unrealistic, better use exponential back off
     public void onSchedule() {
         boolean success;
         for (final SecurityTokenMailSchedule srm : this.passwordResetMailScheduleDao.findAll()) {

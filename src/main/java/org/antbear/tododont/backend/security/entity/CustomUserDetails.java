@@ -20,7 +20,7 @@ public class CustomUserDetails implements UserDetails, CredentialsContainer {
     private final boolean enabled;
     private final Set<GrantedAuthority> authorities;
     private String registrationToken;
-    private final Date registeredSince;
+    private Date registeredSince;
     private String passwordResetToken;
     private final boolean accountNonExpired;
     private final boolean accountNonLocked;
@@ -91,6 +91,10 @@ public class CustomUserDetails implements UserDetails, CredentialsContainer {
 
     public Date getRegisteredSince() {
         return registeredSince;
+    }
+
+    public void setRegisteredSince(final Date date) {
+        this.registeredSince = date;
     }
 
     public String getPasswordResetToken() {

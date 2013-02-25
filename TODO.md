@@ -9,7 +9,7 @@ Open points
 
 * Exponential back off for sending scheduled passwordResetAttempt mails. Use strategy pattern.
 
-* Create schedule for registered but not activated users, drop user if not activated in time interval since passwordResetAttempt (3 hours)
+* Create schedule for password reset enabled accounts, where the password is not reset for say (5 hours): delete token.
 
 * Firstname and lastname attributes for users table et al.
 

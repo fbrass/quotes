@@ -60,6 +60,13 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
         return (CustomUserDetails) userDetailsList.get(0);
     }
 
+    public List<UserDetails> loadUsersByMissingActivation() {
+        return super.getJdbcTemplate().query("SELECT"
+                + " email,password,enabled,registrationtoken,registered_since,passwordresettoken"
+                + " FROM users WHERE enabled = 0 AND registrationtoken IS NOT NULL",
+                new CustomUserDetailsRowMapper());
+    }
+
     public void enableUser(final String email) {
         getJdbcTemplate().update("UPDATE users SET enabled = 1, registrationtoken = NULL WHERE email = ?", email);
     }
