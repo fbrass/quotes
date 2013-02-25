@@ -9,6 +9,7 @@
 <t:genericpage title="${title}">
     <jsp:attribute name="javascript">
         <script type="text/javascript">
+            $("#currentPassword").focus();
             $(".help-inline").each(function(i) { $(this).closest(".control-group").addClass("error") });
         </script>
     </jsp:attribute>

@@ -3,8 +3,6 @@ Open points
 
 * ActivationOutstandingSchedulerTest missing test for successfull outstanding activation mail. Ensure schedule is _not_ purged.
 
-* Initial focus in forms no longer works.
-
 * Use GreenMail for unit testing. This way we may get the last message received and thus may eliminate our MailSender stuff contained in testing.
 
 * User related Tests use unencoded Passwords. Think of changing this, and what it provides.
