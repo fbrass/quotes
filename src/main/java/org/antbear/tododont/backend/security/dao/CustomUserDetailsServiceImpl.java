@@ -48,7 +48,7 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
 
     public CustomUserDetails loadUserByRegistrationToken(final String registrationToken) {
         log.debug("loadUserByRegistrationToken {}", registrationToken);
-        final String query = "SELECT email,password,enabled,registrationtoken,registered_since,passwordresettoken"
+        final String query = "SELECT email,password,enabled,registrationtoken,registered_since,passwordresettoken,passwordreset_requested_at"
                 + " FROM users WHERE registrationtoken = ?";
 
         final List<UserDetails> userDetailsList = super.getJdbcTemplate().query(query,
@@ -60,10 +60,17 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
         return (CustomUserDetails) userDetailsList.get(0);
     }
 
-    public List<UserDetails> loadUsersByMissingActivation() {
+    public List<UserDetails> loadUsersWithMissingActivation() {
         return super.getJdbcTemplate().query("SELECT"
-                + " email,password,enabled,registrationtoken,registered_since,passwordresettoken"
+                + " email,password,enabled,registrationtoken,registered_since,passwordresettoken,passwordreset_requested_at"
                 + " FROM users WHERE enabled = 0 AND registrationtoken IS NOT NULL",
+                new CustomUserDetailsRowMapper());
+    }
+
+    public List<UserDetails> loadUsersWithMissingPasswordReset() {
+        return super.getJdbcTemplate().query("SELECT"
+                + " email,password,enabled,registrationtoken,registered_since,passwordresettoken,passwordreset_requested_at"
+                + " FROM users WHERE enabled = 1 AND passwordresettoken IS NOT NULL",
                 new CustomUserDetailsRowMapper());
     }
 
@@ -71,12 +78,21 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
         getJdbcTemplate().update("UPDATE users SET enabled = 1, registrationtoken = NULL WHERE email = ?", email);
     }
 
+    public void clearPasswordResetToken(final String email) {
+        updatePasswordResetToken(email, null, null);
+    }
+
     public void updatePasswordResetToken(final String email, final String passwordResetToken) {
-        getJdbcTemplate().update("UPDATE users SET passwordresettoken = ? WHERE email = ?", passwordResetToken, email);
+        updatePasswordResetToken(email, passwordResetToken, new Date());
+    }
+
+    public void updatePasswordResetToken(final String email, final String passwordResetToken,
+                                         final Date passwordResetRequestedAt) {
+        getJdbcTemplate().update("UPDATE users SET passwordresettoken = ?, passwordreset_requested_at = ? WHERE email = ?", passwordResetToken, passwordResetRequestedAt, email);
     }
 
     public void updatePassword(final CustomUserDetails user) {
-        getJdbcTemplate().update("UPDATE users SET password = ?, passwordresettoken = NULL WHERE email = ?",
+        getJdbcTemplate().update("UPDATE users SET password = ?, passwordresettoken = NULL, passwordreset_requested_at = NULL WHERE email = ?",
                 user.getPassword(), user.getUsername());
     }
 
@@ -89,7 +105,7 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
     @Override
     protected List<UserDetails> loadUsersByUsername(final String username) {
         log.debug("loadUsersByUsername {}", username);
-        final String query = "SELECT email,password,enabled,registrationtoken,registered_since,passwordresettoken"
+        final String query = "SELECT email,password,enabled,registrationtoken,registered_since,passwordresettoken,passwordreset_requested_at"
                 + " FROM users WHERE email = ?";
 
         return super.getJdbcTemplate().query(query, new CustomUserDetailsRowMapper(), username);
@@ -109,6 +125,7 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
                 user.getRegistrationToken(),
                 user.getRegisteredSince(),
                 user.getPasswordResetToken(),
+                user.getPasswordResetRequestedAt(),
                 user.isAccountNonExpired(),
                 user.isAccountNonLocked(),
                 user.isCredentialsNonExpired());
@@ -124,7 +141,8 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
             final boolean enabled = rs.getBoolean(n++);
             final String registrationToken = rs.getString(n++);
             final Date registeredSince = rs.getTimestamp(n++);
-            final String passwordChangeToken = rs.getString(n++);
+            final String passwordResetToken = rs.getString(n++);
+            final Date passwordResetRequestedAt = rs.getTimestamp(n++);
 
             return new CustomUserDetails(email,
                     password,
@@ -132,7 +150,9 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
                     new HashSet<GrantedAuthority>(),
                     registrationToken,
                     registeredSince,
-                    passwordChangeToken, true, true, true);
+                    passwordResetToken,
+                    passwordResetRequestedAt,
+                    true, true, true);
         }
     }
 }

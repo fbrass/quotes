@@ -29,7 +29,7 @@ public class ActivationOutstandingScheduler {
     public void onSchedule() {
         final GregorianCalendar now = new GregorianCalendar();
 
-        for (UserDetails userDetails : this.userDetailsService.loadUsersByMissingActivation()) {
+        for (UserDetails userDetails : this.userDetailsService.loadUsersWithMissingActivation()) {
             final CustomUserDetails user = (CustomUserDetails) userDetails;
             if (!user.isEnabled() && null != user.getRegistrationToken()) {
                 final GregorianCalendar registeredSince = new GregorianCalendar();
@@ -37,7 +37,7 @@ public class ActivationOutstandingScheduler {
 
                 registeredSince.add(Calendar.HOUR_OF_DAY, ACTIVATION_TIMEOUT_HOURS);
                 if (registeredSince.compareTo(now) < 0) {
-                    log.info("User {} hasn't been activated for too long {}, deleting user",
+                    log.info("User {} hasn't been activated for too long {} h, deleting user",
                             user.getUsername(), ACTIVATION_TIMEOUT_HOURS);
                     this.userDetailsService.deleteUser(user.getUsername());
                 }

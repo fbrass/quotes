@@ -6,56 +6,61 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/test-context.xml")
-public class ActivationOutstandingSchedulerTest {
+public class PasswordResetOutstandingSchedulerTest {
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
     @Autowired
-    private ActivationOutstandingScheduler activationOutstandingScheduler;
+    private PasswordResetOutstandingScheduler passwordResetOutstandingScheduler;
 
-    @Test(expected = UsernameNotFoundException.class)
+    @Test
     public void onScheduleTest() throws Exception {
         final GregorianCalendar past = new GregorianCalendar();
         past.add(Calendar.HOUR_OF_DAY, -6);
 
-        CustomUserDetails user = new CustomUserDetails("ignored@nowhere.tld", "ignored-token");
+        CustomUserDetails user = new CustomUserDetails("ignored89843@nowhere28ry.tld", "ignored-token");
         assertFalse(user.isEnabled());
         user.setPassword("secretPassword@IGNORED");
         user.setRegisteredSince(past.getTime());
         this.userDetailsService.createUser(user);
+        this.userDetailsService.enableUser(user.getUsername());
+        this.userDetailsService.updatePasswordResetToken(user.getUsername(), "a-password-reset-token", past.getTime());
 
-        activationOutstandingScheduler.onSchedule();
+        this.passwordResetOutstandingScheduler.onSchedule();
 
-        // Throws UsernameNotFound because user has been deleted
-        this.userDetailsService.loadUserByUsername(user.getUsername());
+        final UserDetails userDetails = this.userDetailsService.loadUserByUsername(user.getUsername());
+        final CustomUserDetails customUserDetails = (CustomUserDetails) userDetails;
+
+        assertNull(customUserDetails.getPasswordResetToken());
     }
 
     @Test
-    public void onScheduleDoNotDeleteTest() throws Exception {
-        CustomUserDetails user = new CustomUserDetails("ignored8888@nowhere.tld", "ignored-token");
+    public void onScheduleDoNotClearTest() throws Exception {
+        CustomUserDetails user = new CustomUserDetails("ignored112@nowhere66.tld", "ignored-token");
         assertFalse(user.isEnabled());
         user.setPassword("secretPassword@IGNORED");
         this.userDetailsService.createUser(user);
+        this.userDetailsService.enableUser(user.getUsername());
+        this.userDetailsService.updatePasswordResetToken(user.getUsername(), "a-password-reset-token");
 
-        activationOutstandingScheduler.onSchedule();
+        this.passwordResetOutstandingScheduler.onSchedule();
 
         final UserDetails userDetails = this.userDetailsService.loadUserByUsername(user.getUsername());
-        assertNotNull(userDetails);
-        assertThat(userDetails.getUsername(), is(user.getUsername()));
+        final CustomUserDetails customUserDetails = (CustomUserDetails) userDetails;
+
+        assertNotNull(customUserDetails.getPasswordResetToken());
     }
 }

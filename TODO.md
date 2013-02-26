@@ -9,8 +9,6 @@ Open points
 
 * Exponential back off for sending scheduled passwordResetAttempt mails. Use strategy pattern.
 
-* Create schedule for password reset enabled accounts, where the password is not reset for say (5 hours): delete token.
-
 * Firstname and lastname attributes for users table et al.
 
 * Unregister, delete account logic
@@ -20,5 +18,7 @@ Open points
 * Provide way to disable app globally either via DB or with special file: google for better solution
 
 * Local dummy mail server for running/testing on machines without SMTP. Check http://code.google.com/p/subethasmtp/.
+
+* Fix test isolation (DB) by creating a test class with two tests, creating the same user.
 
 EOF

@@ -1,12 +1,13 @@
 -- created 2013-01-11 by mg
 
 create table users (
-  email               varchar_ignorecase(128) not null primary key,
-  password            varchar_ignorecase(80)  not null,
-  enabled             boolean                 not null default 1,
-  registrationtoken   varchar(128)            default null,
-  registered_since    timestamp               not null default now(),
-  passwordresettoken  varchar(128)            default null
+  email                      varchar_ignorecase(128) not null primary key,
+  password                   varchar_ignorecase(80)  not null,
+  enabled                    boolean                 not null default 1,
+  registrationtoken          varchar(128)            default null,
+  registered_since           timestamp               not null default now(),
+  passwordresettoken         varchar(128)            default null,
+  passwordreset_requested_at timestamp               default null
 );
 
 create table authorities (

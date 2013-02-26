@@ -22,6 +22,7 @@ public class CustomUserDetails implements UserDetails, CredentialsContainer {
     private String registrationToken;
     private Date registeredSince;
     private String passwordResetToken;
+    private Date passwordResetRequestedAt;
     private final boolean accountNonExpired;
     private final boolean accountNonLocked;
     private final boolean credentialsNonExpired;
@@ -32,7 +33,7 @@ public class CustomUserDetails implements UserDetails, CredentialsContainer {
     public CustomUserDetails(final String email,
                              final String registrationToken) {
 
-        this(email, null, false, new HashSet<GrantedAuthority>(), registrationToken, new Date(), null, true, true, true);
+        this(email, null, false, new HashSet<GrantedAuthority>(), registrationToken, new Date(), null, null, true, true, true);
     }
 
     public CustomUserDetails(final String email,
@@ -42,6 +43,7 @@ public class CustomUserDetails implements UserDetails, CredentialsContainer {
                              final String registrationToken,
                              final Date registeredSince,
                              final String passwordResetToken,
+                             final Date passwordResetRequestedAt,
                              final boolean accountNonExpired,
                              final boolean accountNonLocked,
                              final boolean credentialsNonExpired) {
@@ -52,6 +54,7 @@ public class CustomUserDetails implements UserDetails, CredentialsContainer {
         this.registrationToken = registrationToken;
         this.registeredSince = registeredSince;
         this.passwordResetToken = passwordResetToken;
+        this.passwordResetRequestedAt = passwordResetRequestedAt;
         this.accountNonExpired = accountNonExpired;
         this.accountNonLocked = accountNonLocked;
         this.credentialsNonExpired = credentialsNonExpired;
@@ -103,6 +106,14 @@ public class CustomUserDetails implements UserDetails, CredentialsContainer {
 
     public void setPasswordResetToken(final String passwordResetToken) {
         this.passwordResetToken = passwordResetToken;
+    }
+
+    public Date getPasswordResetRequestedAt() {
+        return passwordResetRequestedAt;
+    }
+
+    public void setPasswordResetRequestedAt(final Date passwordResetRequestedAt) {
+        this.passwordResetRequestedAt = passwordResetRequestedAt;
     }
 
     @Override
