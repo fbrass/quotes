@@ -13,6 +13,7 @@ import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PasswordChangeService {
@@ -45,6 +46,7 @@ public class PasswordChangeService {
         }
     }
 
+    @Transactional
     public void passwordChange(final String email, final PasswordChange passwordChange) throws PasswordChangeException {
         log.debug("Password change request of {} with {}", email, passwordChange);
         validatePasswordChangeAttempt(email, passwordChange.getCurrentPassword());

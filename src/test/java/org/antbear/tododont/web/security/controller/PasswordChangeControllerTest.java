@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = "classpath:/test-context.xml")
 public class PasswordChangeControllerTest {
 
-    private static final String EMAIL = "new-test-user@nowhere.tld";
+    private static final String EMAIL = "newUser@nowhere.tld";
 
     private static final String PASSWORD = "pr3TtYS3c0R3";
 

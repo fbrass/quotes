@@ -5,13 +5,11 @@ import org.antbear.tododont.backend.dataaccess.GenericDao;
 import org.antbear.tododont.backend.security.entity.SecurityTokenMailSchedule;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@Transactional
 @Repository
 public abstract class SecurityTokenMailScheduleDaoBase extends GenericDao<SecurityTokenMailSchedule, Long> {
 

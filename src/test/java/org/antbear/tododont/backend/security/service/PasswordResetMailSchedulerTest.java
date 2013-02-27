@@ -2,7 +2,7 @@ package org.antbear.tododont.backend.security.service;
 
 import org.antbear.tododont.backend.security.dao.PasswordResetMailScheduleDao;
 import org.antbear.tododont.backend.security.entity.SecurityTokenMailSchedule;
-import org.antbear.tododont.backend.security.scheduling.PasswordResetMailScheduler;
+import org.antbear.tododont.backend.security.service.scheduling.PasswordResetMailScheduler;
 import org.antbear.tododont.web.security.beans.PasswordResetAttempt;
 import org.antbear.tododont.web.security.controller.PasswordResetController;
 import org.junit.Test;
@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+@Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/test-context.xml")
 public class PasswordResetMailSchedulerTest {

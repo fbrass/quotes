@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +15,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Transactional
 public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomUserDetailsService {
 
     private static final Logger log = LoggerFactory.getLogger(CustomUserDetailsService.class);

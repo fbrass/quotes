@@ -15,17 +15,19 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+@Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/test-context.xml")
 public class PasswordChangeServiceTest {
 
     private static final Logger log = LoggerFactory.getLogger(PasswordChangeServiceTest.class);
 
-    private static final String EMAIL = "new-test-user@nowhere.tld";
+    private static final String EMAIL = "newUser@nowhere.tld";
 
     private static final String PASSWORD = "pr3TtYS3c0R3";
 

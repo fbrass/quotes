@@ -1,4 +1,4 @@
-package org.antbear.tododont.backend.security.scheduling;
+package org.antbear.tododont.backend.security.service.scheduling;
 
 import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
 import org.antbear.tododont.backend.security.entity.CustomUserDetails;
@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -18,6 +19,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
+@Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/test-context.xml")
 public class ActivationOutstandingSchedulerTest {
@@ -47,7 +49,7 @@ public class ActivationOutstandingSchedulerTest {
 
     @Test
     public void onScheduleDoNotDeleteTest() throws Exception {
-        CustomUserDetails user = new CustomUserDetails("ignored8888@nowhere.tld", "ignored-token");
+        CustomUserDetails user = new CustomUserDetails("ignored@nowhere.tld", "ignored-token");
         assertFalse(user.isEnabled());
         user.setPassword("secretPassword@IGNORED");
         this.userDetailsService.createUser(user);

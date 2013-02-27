@@ -12,6 +12,7 @@ import org.springframework.mail.MailException;
 import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponents;
 
 import javax.validation.Valid;
@@ -48,6 +49,7 @@ public class PasswordResetService extends SecurityTokenServiceBase {
         this.mailSender = mailSender;
     }
 
+    @Transactional(readOnly = true)
     public CustomUserDetails validateInitialRequest(final PasswordResetAttempt passwordReset) throws PasswordResetException {
         log.debug("Validating initial password reset request for {}", passwordReset);
 
@@ -66,6 +68,7 @@ public class PasswordResetService extends SecurityTokenServiceBase {
         return user;
     }
 
+    @Transactional
     public String passwordResetAttempt(final PasswordResetAttempt passwordResetAttempt,
                                        final UriComponents passwordResetUriComponents) throws PasswordResetException {
         log.info("Password reset for {} and base URI {}", passwordResetAttempt, passwordResetUriComponents);
@@ -105,6 +108,7 @@ public class PasswordResetService extends SecurityTokenServiceBase {
         return passwordResetToken;
     }
 
+    @Transactional(readOnly = true )
     public CustomUserDetails validateChangeAttempt(final String email, final String passwordResetToken) throws PasswordResetException {
         log.info("Validating password change attempt for {} with token {}", email, passwordResetToken);
         notNullOrEmpty(email, "email");
@@ -129,6 +133,7 @@ public class PasswordResetService extends SecurityTokenServiceBase {
         return user;
     }
 
+    @Transactional
     public void passwordChange(@Valid final PasswordReset passwordReset) throws PasswordResetException {
         log.info("Password change requested {}", passwordReset);
         notNull(passwordReset, "passwordReset");

@@ -11,6 +11,7 @@ import org.springframework.mail.MailException;
 import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponents;
 
 import static org.antbear.tododont.backend.security.util.InvariantException.notNull;
@@ -48,6 +49,7 @@ public class RegistrationService extends SecurityTokenServiceBase {
         this.mailSender = mailSender;
     }
 
+    @Transactional
     public String register(final Registration registration, final UriComponents userActivationUriComponents)
             throws RegistrationException {
         log.info("Registration attempt for {} and activation URI components {}", registration, userActivationUriComponents);
@@ -84,6 +86,7 @@ public class RegistrationService extends SecurityTokenServiceBase {
         return user.getRegistrationToken();
     }
 
+    @Transactional
     public void activate(final String activationToken) throws RegistrationActivationException {
         log.info("Activation attempt with token {}", activationToken);
         notNullOrEmpty(activationToken, "activationToken");

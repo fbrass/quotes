@@ -9,14 +9,16 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.*;
 
+@Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/test-context.xml")
 public class RegistrationServiceTest {
 
-    private static final String EMAIL = "newuser134@nowhere.tld";
+    private static final String EMAIL = "newUser@nowhere.tld";
 
     private static final String PASSWORD = "secR3Tlf993";
 

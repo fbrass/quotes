@@ -32,7 +32,7 @@ public class RegistrationControllerTest {
 
     @Test
     public void registrationAndActivationTest() throws Exception {
-        final String email = "new-test-user92634@nowhere.tld";
+        final String email = "newUser1234@nowhere.tld";
         final Registration registration = new Registration();
         registration.setEmail(email);
         registration.setPassword("pr3TtYS3c0R3");

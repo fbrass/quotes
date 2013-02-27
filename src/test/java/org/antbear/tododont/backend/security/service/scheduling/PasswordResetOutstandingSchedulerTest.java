@@ -1,4 +1,4 @@
-package org.antbear.tododont.backend.security.scheduling;
+package org.antbear.tododont.backend.security.service.scheduling;
 
 import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
 import org.antbear.tododont.backend.security.entity.CustomUserDetails;
@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
+@Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/test-context.xml")
 public class PasswordResetOutstandingSchedulerTest {
@@ -31,7 +31,7 @@ public class PasswordResetOutstandingSchedulerTest {
         final GregorianCalendar past = new GregorianCalendar();
         past.add(Calendar.HOUR_OF_DAY, -6);
 
-        CustomUserDetails user = new CustomUserDetails("ignored89843@nowhere28ry.tld", "ignored-token");
+        CustomUserDetails user = new CustomUserDetails("ignored@nowhere.tld", "ignored-token");
         assertFalse(user.isEnabled());
         user.setPassword("secretPassword@IGNORED");
         user.setRegisteredSince(past.getTime());
@@ -49,7 +49,7 @@ public class PasswordResetOutstandingSchedulerTest {
 
     @Test
     public void onScheduleDoNotClearTest() throws Exception {
-        CustomUserDetails user = new CustomUserDetails("ignored112@nowhere66.tld", "ignored-token");
+        CustomUserDetails user = new CustomUserDetails("ignored@nowhere.tld", "ignored-token");
         assertFalse(user.isEnabled());
         user.setPassword("secretPassword@IGNORED");
         this.userDetailsService.createUser(user);

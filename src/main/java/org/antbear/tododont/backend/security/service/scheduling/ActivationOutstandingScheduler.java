@@ -1,4 +1,4 @@
-package org.antbear.tododont.backend.security.scheduling;
+package org.antbear.tododont.backend.security.service.scheduling;
 
 import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
 import org.antbear.tododont.backend.security.entity.CustomUserDetails;
@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -15,7 +16,7 @@ import java.util.GregorianCalendar;
 /**
  * Deletes user accounts which have not been activated for too long.
  */
-@Component
+@Service
 public class ActivationOutstandingScheduler {
 
     private static final Logger log = LoggerFactory.getLogger(ActivationOutstandingScheduler.class);
@@ -25,6 +26,7 @@ public class ActivationOutstandingScheduler {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
+    @Transactional
     @Scheduled(fixedDelay = 15 * 60 * 1000) // Every 15 minutes
     public void onSchedule() {
         final GregorianCalendar now = new GregorianCalendar();
