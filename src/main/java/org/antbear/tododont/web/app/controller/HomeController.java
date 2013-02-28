@@ -1,15 +1,15 @@
 package org.antbear.tododont.web.app.controller;
 
+import org.antbear.tododont.web.security.annotation.RoleUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.security.RolesAllowed;
 import java.security.Principal;
 
-@RolesAllowed("hasRole('ROLE_USER')")
+@RoleUser
 @Controller
 public class HomeController {
 

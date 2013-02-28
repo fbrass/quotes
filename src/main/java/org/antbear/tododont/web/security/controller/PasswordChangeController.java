@@ -2,6 +2,7 @@ package org.antbear.tododont.web.security.controller;
 
 import org.antbear.tododont.backend.security.service.PasswordChangeException;
 import org.antbear.tododont.backend.security.service.PasswordChangeService;
+import org.antbear.tododont.web.security.annotation.RoleUser;
 import org.antbear.tododont.web.security.beans.PasswordChange;
 import org.antbear.tododont.web.security.beans.validation.PasswordChangeValidator;
 import org.slf4j.Logger;
@@ -18,7 +19,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.security.Principal;
 
-@RolesAllowed("hasRole('ROLE_USER')")
+@RoleUser
 @RequestMapping("/s/pwc")
 @Controller
 public class PasswordChangeController {

@@ -17,12 +17,12 @@
     <sec:http pattern="/js/**" security="none"/>
 
     <sec:http xmlns="http://www.springframework.org/schema/security" auto-config="true" use-expressions="true">
-        <intercept-url pattern="/s/*" access="permitAll"/>
-        <intercept-url pattern="/s/**" access="permitAll"/>
-        <intercept-url pattern="/s/pw*" access="permitAll"/>
-        <intercept-url pattern="/s/pw/**" access="permitAll"/>
-        <intercept-url pattern="/login*" access="permitAll"/>
-        <intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/s/*"      access="permitAll"/>
+        <intercept-url pattern="/s/**"     access="permitAll"/>
+        <intercept-url pattern="/s/pwc*"   access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/s/pwc/**" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/login*"   access="permitAll"/>
+        <intercept-url pattern="/**"       access="hasRole('ROLE_USER')"/>
 
         <form-login login-page="/login"
                     default-target-url="/home"

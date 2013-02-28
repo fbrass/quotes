@@ -1,6 +1,16 @@
 Open points
 ===========
 
+* Password change is accessible without authentication, see security context configuration.
+
+* RolesAllowed is not checked of enforced
+
+* 404 page
+
+* Generic error page
+
+* Check TODOs in source code
+
 * User related Tests use unencoded Passwords. Think of changing this, and what it provides.
 
 * Integrate example admin page with spring security, does not work currently.
