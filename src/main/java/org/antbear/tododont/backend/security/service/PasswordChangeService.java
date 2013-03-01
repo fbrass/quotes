@@ -41,7 +41,6 @@ public class PasswordChangeService {
     private void validatePasswordChangeAttempt(final String email, final String currentPassword) throws PasswordChangeException {
         final UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, currentPassword);
         try {
-            // TODO this may fail, check result of unit test: if it fails use saltSource and passwordEncoder.is...
             authenticationManager.authenticate(authenticationToken); // No exception: OK, authenticated
         } catch (AuthenticationException ae) {
             log.debug("Password change attempt cannot be validated for {}", email);
