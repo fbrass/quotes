@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Transactional(readOnly = true)
 public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomUserDetailsService {
 
     private static final Logger log = LoggerFactory.getLogger(CustomUserDetailsService.class);
@@ -32,6 +34,7 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
         return count > 0;
     }
 
+    @Transactional(readOnly = false)
     public void createUser(final CustomUserDetails user) {
         getJdbcTemplate().update(
                 "INSERT INTO users (email,password,enabled,registrationtoken,registered_since) VALUES (?,?,?,?,?)",
@@ -72,6 +75,7 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
                 new CustomUserDetailsRowMapper());
     }
 
+    @Transactional(readOnly = false)
     public void enableUser(final String email) {
         getJdbcTemplate().update("UPDATE users SET enabled = 1, registrationtoken = NULL WHERE email = ?", email);
     }
@@ -80,20 +84,24 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
         updatePasswordResetToken(email, null, null);
     }
 
+    @Transactional(readOnly = false)
     public void updatePasswordResetToken(final String email, final String passwordResetToken) {
         updatePasswordResetToken(email, passwordResetToken, new Date());
     }
 
+    @Transactional(readOnly = false)
     public void updatePasswordResetToken(final String email, final String passwordResetToken,
                                          final Date passwordResetRequestedAt) {
         getJdbcTemplate().update("UPDATE users SET passwordresettoken = ?, passwordreset_requested_at = ? WHERE email = ?", passwordResetToken, passwordResetRequestedAt, email);
     }
 
+    @Transactional(readOnly = false)
     public void updatePassword(final CustomUserDetails user) {
         getJdbcTemplate().update("UPDATE users SET password = ?, passwordresettoken = NULL, passwordreset_requested_at = NULL WHERE email = ?",
                 user.getPassword(), user.getUsername());
     }
 
+    @Transactional(readOnly = false)
     public void deleteUser(final String email) {
         getJdbcTemplate().update("DELETE FROM users WHERE email = ?", email);
     }

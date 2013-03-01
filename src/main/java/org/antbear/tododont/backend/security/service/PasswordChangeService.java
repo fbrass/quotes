@@ -1,9 +1,8 @@
 package org.antbear.tododont.backend.security.service;
 
+import org.antbear.tododont.backend.security.beans.PasswordChange;
 import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
 import org.antbear.tododont.backend.security.entity.CustomUserDetails;
-import org.antbear.tododont.web.security.annotation.RoleUser;
-import org.antbear.tododont.web.security.beans.PasswordChange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@RoleUser
+import javax.annotation.security.RolesAllowed;
+
+@RolesAllowed("hasRole('ROLE_USER')")
 @Service
 public class PasswordChangeService {
 

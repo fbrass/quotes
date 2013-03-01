@@ -1,7 +1,7 @@
 package org.antbear.tododont.backend.security.dao;
 
 import com.google.common.collect.ImmutableMap;
-import org.antbear.tododont.backend.dataaccess.GenericDao;
+import org.antbear.tododont.backend.dao.GenericDao;
 import org.antbear.tododont.backend.security.entity.SecurityTokenMailSchedule;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;

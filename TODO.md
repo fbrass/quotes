@@ -1,10 +1,6 @@
 Open points
 ===========
 
-* Password change is accessible without authentication, see security context configuration.
-
-* RolesAllowed is not checked of enforced
-
 * 404 page
 
 * Generic error page

@@ -1,6 +1,6 @@
 package org.antbear.tododont.backend.security.entity;
 
-import org.antbear.tododont.backend.dataaccess.DomainObject;
+import org.antbear.tododont.backend.dao.DomainObject;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

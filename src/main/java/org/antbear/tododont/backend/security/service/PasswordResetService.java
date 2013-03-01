@@ -3,8 +3,8 @@ package org.antbear.tododont.backend.security.service;
 import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
 import org.antbear.tododont.backend.security.dao.PasswordResetMailScheduleDao;
 import org.antbear.tododont.backend.security.entity.CustomUserDetails;
-import org.antbear.tododont.web.security.beans.PasswordReset;
-import org.antbear.tododont.web.security.beans.PasswordResetAttempt;
+import org.antbear.tododont.backend.security.beans.PasswordReset;
+import org.antbear.tododont.backend.security.beans.PasswordResetAttempt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +15,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponents;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 import static org.antbear.tododont.backend.security.util.InvariantException.notNull;
 import static org.antbear.tododont.backend.security.util.InvariantException.notNullOrEmpty;
 
+@RolesAllowed("IS_AUTHENTICATED_ANONYMOUSLY")
 @Service
 public class PasswordResetService extends SecurityTokenServiceBase {
 
@@ -45,7 +47,7 @@ public class PasswordResetService extends SecurityTokenServiceBase {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    protected void setSecurityMailSender(final SecurityMailSender mailSender) {
+    public void setSecurityMailSender(final SecurityMailSender mailSender) {
         this.mailSender = mailSender;
     }
 

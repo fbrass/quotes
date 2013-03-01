@@ -1,7 +1,7 @@
 package org.antbear.tododont.backend.security.service;
 
 import org.antbear.tododont.backend.security.util.LocalizableException;
-import org.antbear.tododont.web.security.beans.Registration;
+import org.antbear.tododont.backend.security.beans.Registration;
 
 public class RegistrationException extends LocalizableException {
 

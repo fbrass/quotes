@@ -14,3 +14,4 @@ POST    /s/pwr/c                                views/security/password-reset/ch
 GET     /s/pwc                                  views/security/password-change/start.jsp
 POST    /s/pwc                                  views/home.jsp
 -       PasswordChangeException.class           views/security/password-change/error.jsp
+GET     /admin                                  views/admin/home.jsp

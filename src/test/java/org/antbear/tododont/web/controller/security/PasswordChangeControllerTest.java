@@ -1,31 +1,30 @@
-package org.antbear.tododont.backend.security.service;
+package org.antbear.tododont.web.controller.security;
 
 import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
+import org.antbear.tododont.backend.security.service.RegistrationService;
 import org.antbear.tododont.backend.security.beans.PasswordChange;
 import org.antbear.tododont.backend.security.beans.Registration;
+import org.antbear.tododont.web.controller.security.PasswordChangeController;
 import org.antbear.tododont.web.controller.security.RegistrationController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.servlet.ModelAndView;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.*;
 
-@Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/test-context.xml")
-public class PasswordChangeServiceTest {
-
-    private static final Logger log = LoggerFactory.getLogger(PasswordChangeServiceTest.class);
+public class PasswordChangeControllerTest {
 
     private static final String EMAIL = "newUser@nowhere.tld";
 
@@ -43,14 +42,13 @@ public class PasswordChangeServiceTest {
     private CustomUserDetailsService userDetailsService;
 
     @Autowired
-    private PasswordChangeService passwordChangeService;
+    private PasswordChangeController passwordChangeController;
 
     @Autowired
-    @Qualifier("authenticationManager")
     private AuthenticationManager authenticationManager;
 
     @Before
-    public void setUp() throws RegistrationException, RegistrationActivationException {
+    public void setUp() throws Exception {
         final Registration registration = new Registration(EMAIL, PASSWORD);
 
         final String activationToken = this.registrationService.register(registration, this.registrationController.getActivationUriComponents());
@@ -61,13 +59,20 @@ public class PasswordChangeServiceTest {
     }
 
     @Test
-    public void passwordChangeTest() throws PasswordChangeException {
-        final PasswordChange passwordChange = new PasswordChange();
+    public void completePasswordChangeWorkflowTest() throws Exception {
+        final ModelAndView startPasswordChangeModelAndView = this.passwordChangeController.startChangePassword();
+        assertThat(startPasswordChangeModelAndView.getViewName(), is("security/password-change/start"));
+        final PasswordChange passwordChange = (PasswordChange) startPasswordChangeModelAndView.getModel().get("passwordChange");
         passwordChange.setCurrentPassword(PASSWORD);
         passwordChange.setPassword(PASSWORD_NEW);
         passwordChange.setPassword2(PASSWORD_NEW);
 
-        this.passwordChangeService.passwordChange(EMAIL, passwordChange);
+        final UsernamePasswordAuthenticationToken principal = new UsernamePasswordAuthenticationToken(EMAIL, "ignored");
+        // set the principal in the security context hold, used indirectly in the PasswordResetService
+        SecurityContextHolder.getContext().setAuthentication(principal);
+        final BindingResult bindingResult = new BeanPropertyBindingResult(passwordChange, "passwordChange");
+        final String viewName = this.passwordChangeController.performChangePassword(principal, passwordChange, bindingResult);
+        assertThat(viewName, is("/home"));
 
         final UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(EMAIL, PASSWORD_NEW);
         authenticationManager.authenticate(authenticationToken); // No exception: OK, authenticated

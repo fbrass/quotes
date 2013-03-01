@@ -5,15 +5,16 @@
 		  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
+    <listener>
+        <description>Loads the Root Spring Context shared by all Servlets and Filters</description>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
     <context-param>
         <description>The definition of the Root Spring Container shared by all Servlets and Filters</description>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:/application-context.xml</param-value>
+        <param-value>WEB-INF/spring/applicationContext.xml</param-value>
     </context-param>
-
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
 
     <listener>
         <description>Spring Security Listener to detect multiple logins</description>
@@ -34,6 +35,10 @@
     <servlet>
         <servlet-name>tododont</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>WEB-INF/spring/tododont-servlet.xml</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
 

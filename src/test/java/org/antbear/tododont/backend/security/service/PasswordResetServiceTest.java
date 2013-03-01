@@ -2,9 +2,9 @@ package org.antbear.tododont.backend.security.service;
 
 import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
 import org.antbear.tododont.backend.security.entity.CustomUserDetails;
-import org.antbear.tododont.web.security.beans.PasswordReset;
-import org.antbear.tododont.web.security.beans.PasswordResetAttempt;
-import org.antbear.tododont.web.security.controller.PasswordResetController;
+import org.antbear.tododont.backend.security.beans.PasswordReset;
+import org.antbear.tododont.backend.security.beans.PasswordResetAttempt;
+import org.antbear.tododont.web.controller.security.PasswordResetController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package org.antbear.tododont.backend.security.service;
 
 import org.antbear.tododont.backend.security.util.LocalizableException;
-import org.antbear.tododont.web.security.beans.PasswordResetAttempt;
+import org.antbear.tododont.backend.security.beans.PasswordResetAttempt;
 
 public class PasswordResetException extends LocalizableException {
 
