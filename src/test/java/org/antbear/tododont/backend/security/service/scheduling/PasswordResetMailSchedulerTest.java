@@ -1,10 +1,10 @@
 package org.antbear.tododont.backend.security.service.scheduling;
 
+import org.antbear.tododont.backend.security.beans.PasswordResetAttempt;
 import org.antbear.tododont.backend.security.dao.PasswordResetMailScheduleDao;
 import org.antbear.tododont.backend.security.entity.SecurityTokenMailSchedule;
 import org.antbear.tododont.backend.security.service.PasswordResetService;
 import org.antbear.tododont.backend.security.service.SecurityMailSenderFailingTestSupport;
-import org.antbear.tododont.backend.security.beans.PasswordResetAttempt;
 import org.antbear.tododont.web.controller.security.PasswordResetController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,7 +46,7 @@ public class PasswordResetMailSchedulerTest {
     public void onSchedule() throws Exception {
         // Wire failing user registration mail sender into user registration service
         final SecurityMailSenderFailingTestSupport mailSenderFailing = new SecurityMailSenderFailingTestSupport();
-        this.passwordResetService.setSecurityMailSender(mailSenderFailing);
+        this.passwordResetService.setSecurityMailSender(mailSenderFailing); // @DirtiesContext
 
         this.passwordResetService.passwordResetAttempt(new PasswordResetAttempt("alice@nowhere.tld"),
                 this.passwordResetController.getPasswordResetUriComponents());

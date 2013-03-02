@@ -4,8 +4,11 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:util="http://www.springframework.org/schema/util" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
     <context:component-scan base-package="org.antbear.tododont"/>
     <context:annotation-config/>
@@ -22,7 +25,7 @@
 
     <import resource="test-security-context.xml"/>
 
-    <context:property-placeholder location="classpath:web.properties"/>
+    <context:property-placeholder location="classpath:app.properties,web.properties"/>
 
     <!-- Mail -->
 
@@ -33,5 +36,9 @@
     </bean>
 
     <bean class="org.antbear.tododont.backend.security.service.SecurityMailSenderTestSupport"/>
+
+    <!-- Other -->
+
+    <bean class="org.antbear.tododont.backend.security.service.scheduling.LinearScheduleExecutionStrategy"/>
 
 </beans>

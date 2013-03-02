@@ -48,4 +48,8 @@
     <bean id="mailTemplateMessage" class="org.springframework.mail.SimpleMailMessage"
           p:from="${app.mail.from}"/>
 
+    <!-- Other -->
+
+    <bean class="org.antbear.tododont.backend.security.service.scheduling.ExponentialScheduleExecuteStrategy"/>
+
 </beans>

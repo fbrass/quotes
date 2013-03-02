@@ -1,11 +1,9 @@
 package org.antbear.tododont.web.controller.security;
 
-import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
-import org.antbear.tododont.backend.security.service.RegistrationService;
 import org.antbear.tododont.backend.security.beans.PasswordChange;
 import org.antbear.tododont.backend.security.beans.Registration;
-import org.antbear.tododont.web.controller.security.PasswordChangeController;
-import org.antbear.tododont.web.controller.security.RegistrationController;
+import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
+import org.antbear.tododont.backend.security.service.RegistrationService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -7,6 +7,7 @@ import org.antbear.tododont.backend.security.service.SecurityMailSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,41 +31,43 @@ public class PasswordResetMailScheduler {
     @Autowired
     private SecurityMailSender mailSender;
 
-    private int maxAttempts = 10;
+    @Autowired
+    private ScheduleExecuteStrategy scheduleExecuteStrategy;
+
+    @Value("${app.mail.schedule.maxAttempts}")
+    private int maxAttempts;
 
     public int getMaxAttempts() {
-        return maxAttempts;
-    }
-
-    public void setMaxAttempts(final int maxAttempts) {
-        this.maxAttempts = maxAttempts;
+        return this.maxAttempts;
     }
 
     @Transactional
-    @Scheduled(fixedDelay = 2 * 60 * 1000) // TODO unrealistic, better use exponential back off
+    @Scheduled(fixedDelay = 2 * 60 * 1000)
     public void onSchedule() {
         boolean success;
         for (final SecurityTokenMailSchedule srm : this.passwordResetMailScheduleDao.findAll()) {
             log.debug("Processing scheduled password reset mail {}", srm);
 
-            success = false;
-            try {
-                srm.setAttempts(1 + srm.getAttempts());
-                srm.setLastAttempt(new Date());
-                processPasswordResetMail(srm);
-                success = true;
-            } catch (Exception ex) {
-                log.warn("Failed processing scheduled password reset mail " + srm, ex);
-            } finally {
-                if (success) {
-                    log.info("Done sending password reset mail to {}", srm.getEmail());
-                    this.passwordResetMailScheduleDao.delete(srm.getPK());
-                } else {
-                    if (srm.getAttempts() < maxAttempts) {
-                        this.passwordResetMailScheduleDao.update(srm);
-                    } else {
-                        log.warn("Max attempts of scheduled password reset mail reached, aborting {}", srm);
+            if (this.scheduleExecuteStrategy.isSchedulingAttemptDesired(srm.getAttempts(), srm.getLastAttempt())) {
+                success = false;
+                try {
+                    srm.setAttempts(1 + srm.getAttempts());
+                    srm.setLastAttempt(new Date());
+                    processPasswordResetMail(srm);
+                    success = true;
+                } catch (Exception ex) {
+                    log.warn("Failed processing scheduled password reset mail " + srm, ex);
+                } finally {
+                    if (success) {
+                        log.info("Done sending password reset mail to {}", srm.getEmail());
                         this.passwordResetMailScheduleDao.delete(srm.getPK());
+                    } else {
+                        if (srm.getAttempts() < maxAttempts) {
+                            this.passwordResetMailScheduleDao.update(srm);
+                        } else {
+                            log.warn("Max attempts of scheduled password reset mail reached, aborting {}", srm);
+                            this.passwordResetMailScheduleDao.delete(srm.getPK());
+                        }
                     }
                 }
             }

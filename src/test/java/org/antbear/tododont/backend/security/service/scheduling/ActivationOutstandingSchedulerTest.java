@@ -15,9 +15,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)

@@ -1,10 +1,10 @@
 package org.antbear.tododont.backend.security.service.scheduling;
 
+import org.antbear.tododont.backend.security.beans.Registration;
 import org.antbear.tododont.backend.security.dao.RegistrationMailScheduleDao;
 import org.antbear.tododont.backend.security.entity.SecurityTokenMailSchedule;
 import org.antbear.tododont.backend.security.service.RegistrationService;
 import org.antbear.tododont.backend.security.service.SecurityMailSenderFailingTestSupport;
-import org.antbear.tododont.backend.security.beans.Registration;
 import org.antbear.tododont.web.controller.security.RegistrationController;
 import org.junit.Test;
 import org.junit.runner.RunWith;

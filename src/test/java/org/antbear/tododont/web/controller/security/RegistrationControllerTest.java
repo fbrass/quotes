@@ -1,11 +1,10 @@
 package org.antbear.tododont.web.controller.security;
 
+import org.antbear.tododont.backend.security.beans.Registration;
 import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
 import org.antbear.tododont.backend.security.entity.CustomUserDetails;
 import org.antbear.tododont.backend.security.service.SecurityMail;
 import org.antbear.tododont.backend.security.service.SecurityMailSenderTestSupport;
-import org.antbear.tododont.backend.security.beans.Registration;
-import org.antbear.tododont.web.controller.security.RegistrationController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
