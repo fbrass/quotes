@@ -15,8 +15,6 @@ Open points
 
 * Unregister, delete account logic
 
-* Migrate type SQL:timestamp to JodaTime instance
-
 * Provide way to disable app globally either via DB or with special file: google for better solution
 
 * Local dummy mail server for running/testing on machines without SMTP. Check http://code.google.com/p/subethasmtp/
