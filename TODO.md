@@ -7,6 +7,8 @@ Open points
 
 * Check TODOs in source code
 
+* Not all security pages are converted to use twitter bootstrap.
+
 * User related Tests use unencoded Passwords. Think of changing this, and what it provides.
 
 * Integrate example admin page with spring security, does not work currently.
