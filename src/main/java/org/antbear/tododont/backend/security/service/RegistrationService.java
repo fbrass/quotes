@@ -42,15 +42,11 @@ public class RegistrationService extends SecurityTokenServiceBase {
     @Autowired
     private RegistrationMail registrationMail;
 
-    private SecurityMailSender mailSender;
+    @Autowired
+    private SecurityMailSender securityMailSender;
 
     @Autowired
     private RegistrationMailScheduleDao mailScheduleDao;
-
-    @Autowired
-    public void setSecurityMailSender(final SecurityMailSender mailSender) {
-        this.mailSender = mailSender;
-    }
 
     @Transactional
     public String register(final Registration registration, final UriComponents userActivationUriComponents)
@@ -79,7 +75,7 @@ public class RegistrationService extends SecurityTokenServiceBase {
 
         try {
             log.debug("Sending registration mail to " + registration.getEmail());
-            this.mailSender.send(this.registrationMail);
+            this.securityMailSender.send(this.registrationMail);
             log.info("User successfully registered {}", registration);
         } catch (MailException mex) {
             log.warn("Failed sending registration mail, scheduling for deferred sending", mex);

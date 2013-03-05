@@ -5,6 +5,7 @@ import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
 import org.antbear.tododont.backend.security.entity.CustomUserDetails;
 import org.antbear.tododont.backend.security.service.SecurityMail;
 import org.antbear.tododont.backend.security.service.SecurityMailSenderTestSupport;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.net.URLDecoder;
 
 import static org.junit.Assert.*;
 
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/test-context.xml")
 public class RegistrationControllerTest {

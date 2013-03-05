@@ -2,6 +2,7 @@ package org.antbear.tododont.backend.dao;
 
 import org.antbear.tododont.backend.entity.TodoItem;
 import org.antbear.tododont.backend.entity.TodoList;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/test-context.xml")
-
 public class TodoListDaoTest {
 
     @Autowired

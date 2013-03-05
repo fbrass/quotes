@@ -35,7 +35,8 @@ public class PasswordResetService extends SecurityTokenServiceBase {
     @Autowired
     private PasswordResetMail passwordResetMail;
 
-    private SecurityMailSender mailSender;
+    @Autowired
+    private SecurityMailSender securityMailSender;
 
     @Autowired
     private PasswordResetMailScheduleDao mailScheduleDao;
@@ -45,11 +46,6 @@ public class PasswordResetService extends SecurityTokenServiceBase {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public void setSecurityMailSender(final SecurityMailSender mailSender) {
-        this.mailSender = mailSender;
-    }
 
     @Transactional(readOnly = true)
     public CustomUserDetails validateInitialRequest(final PasswordResetAttempt passwordReset) throws PasswordResetException {
@@ -101,7 +97,7 @@ public class PasswordResetService extends SecurityTokenServiceBase {
 
         try {
             log.debug("Sending password reset mail to {}", passwordResetAttempt.getEmail());
-            this.mailSender.send(this.passwordResetMail);
+            this.securityMailSender.send(this.passwordResetMail);
         } catch (MailException mex) {
             log.warn("Failed sending password reset mail, scheduling for deferred sending", mex);
             this.mailScheduleDao.createSchedule(passwordResetAttempt.getEmail(), passwordResetUrl);

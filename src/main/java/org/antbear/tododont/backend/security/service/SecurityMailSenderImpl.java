@@ -1,17 +1,18 @@
 package org.antbear.tododont.backend.security.service;
 
-import org.antbear.tododont.backend.security.util.mail.MailSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SecurityMailSenderImpl implements SecurityMailSender {
 
     private static final Logger log = LoggerFactory.getLogger(SecurityMailSenderImpl.class);
 
     @Autowired
-    private MailSender mailSender;
+    private org.springframework.mail.MailSender mailSender;
 
     @Override
     public void send(final SecurityMail securityMail) {
