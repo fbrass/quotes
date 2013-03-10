@@ -1,6 +1,5 @@
 package org.antbear.tododont.backend.security.service.scheduling;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,9 +13,8 @@ import static org.antbear.tododont.backend.security.service.scheduling.Exponenti
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/test-context.xml")
+@ContextConfiguration(locations = {"classpath:/test-base-context.xml", "classpath:/test-mail-null-context.xml"})
 public class ExponentialScheduleExecuteStrategyTest {
 
     @Test

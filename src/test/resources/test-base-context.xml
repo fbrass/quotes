@@ -14,8 +14,8 @@
     <context:annotation-config/>
 
     <jdbc:embedded-database id="testingDatabase" type="H2">
-        <jdbc:script encoding="utf-8" location="classpath:schema.sql"/>
-        <jdbc:script encoding="utf-8" location="classpath:testdata.sql"/>
+        <jdbc:script execution="INIT" encoding="utf-8" location="classpath:schema.sql"/>
+        <jdbc:script execution="INIT" encoding="utf-8" location="classpath:data.sql"/>
     </jdbc:embedded-database>
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
@@ -27,15 +27,17 @@
 
     <context:property-placeholder location="classpath:app.properties,web.properties"/>
 
-    <!-- Mail -->
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+          p:basename="classpath:messages"/>
 
-    <!--<bean id="mailSender" class="org.antbear.tododont.backend.security.util.mail.TestMailSender"/>-->
+    <!-- Spring Mail -->
+
+    <bean id="mailSenderDelegate" class="org.springframework.mail.javamail.JavaMailSenderImpl"
+          p:host="${smtp.hostname}"/>
 
     <bean id="mailTemplateMessage" class="org.springframework.mail.SimpleMailMessage">
         <property name="from" value="customerservice@mycompany.tld"/>
     </bean>
-
-    <!--<bean class="org.antbear.tododont.backend.security.service.SecurityMailSenderTestSupport"/>-->
 
     <!-- Other -->
 

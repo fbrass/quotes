@@ -1,7 +1,6 @@
 package org.antbear.tododont.backend.security.beans;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,9 +14,8 @@ import java.util.Set;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
-@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/test-context.xml")
+@ContextConfiguration(locations = {"classpath:/test-base-context.xml", "classpath:/test-mail-null-context.xml"})
 public class RegistrationTest {
 
     public static final String EMAIL = "alice@nowhere.tld";

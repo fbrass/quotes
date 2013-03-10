@@ -5,7 +5,6 @@ import org.antbear.tododont.backend.security.beans.Registration;
 import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
 import org.antbear.tododont.backend.security.service.RegistrationService;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
-@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/test-context.xml")
+@ContextConfiguration(locations = {"classpath:/test-base-context.xml", "classpath:/test-mail-null-context.xml"})
 public class PasswordChangeControllerTest {
 
     private static final String EMAIL = "newUser@nowhere.tld";

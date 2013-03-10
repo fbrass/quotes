@@ -4,7 +4,7 @@ import org.antbear.tododont.backend.security.beans.Registration;
 import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
 import org.antbear.tododont.backend.security.entity.CustomUserDetails;
 import org.antbear.tododont.backend.security.service.SecurityMail;
-import org.antbear.tododont.backend.security.service.SecurityMailSenderTestSupport;
+import org.antbear.tododont.backend.security.service.SecurityMailSenderNullTestSupport;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,16 +18,15 @@ import java.net.URLDecoder;
 
 import static org.junit.Assert.*;
 
-@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/test-context.xml")
+@ContextConfiguration(locations = {"classpath:/test-base-context.xml", "classpath:/test-mail-null-context.xml"})
 public class RegistrationControllerTest {
 
     @Autowired
     private RegistrationController registrationController;
 
     @Autowired
-    private SecurityMailSenderTestSupport securityMailSenderTestSupport;
+    private SecurityMailSenderNullTestSupport securityMailSenderTestSupport;
 
     @Autowired
     private CustomUserDetailsService userDetailsService;

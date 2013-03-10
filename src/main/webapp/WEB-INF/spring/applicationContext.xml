@@ -37,12 +37,11 @@
 
     <!-- Mail -->
 
-    <!--<bean class="org.antbear.tododont.backend.security.service.SecurityMailSenderImpl"/>-->
+    <bean class="org.antbear.tododont.backend.security.service.SecurityMailSenderImpl"/>
 
-    <!--<bean id="mailSender" class="org.antbear.tododont.backend.security.util.mail.MailSenderImpl"-->
-          <!--p:delegate-ref="mailSenderDelegate"/>-->
+    <bean id="mailSender" class="org.antbear.tododont.backend.security.util.mail.MailSenderImpl"/>
 
-    <bean id="mailSenderDelegate" class="org.springframework.mail.javamail.JavaMailSenderImpl"
+    <bean class="org.springframework.mail.javamail.JavaMailSenderImpl"
           p:host="${smtp.hostname}"/>
 
     <bean id="mailTemplateMessage" class="org.springframework.mail.SimpleMailMessage"

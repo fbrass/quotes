@@ -5,13 +5,11 @@ import org.antbear.tododont.backend.security.dao.RegistrationMailScheduleDao;
 import org.antbear.tododont.backend.security.entity.SecurityTokenMailSchedule;
 import org.antbear.tododont.backend.security.service.RegistrationService;
 import org.antbear.tododont.web.controller.security.RegistrationController;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,9 +21,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @Transactional
-@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/test-context.xml")
+@ContextConfiguration(locations = {"classpath:/test-base-context.xml", "classpath:/test-mail-fail-context.xml"})
 public class RegistrationMailSchedulerTest {
 
     private static final Logger log = LoggerFactory.getLogger(RegistrationMailSchedulerTest.class);
@@ -45,12 +42,7 @@ public class RegistrationMailSchedulerTest {
     public static final String EMAIL = "newUser@nowhere.tld";
 
     @Test
-    @DirtiesContext
     public void testProcessSchedule() throws Exception {
-        // TODO Wire failing user registration mail sender into user registration service
-//        final SecurityMailSenderFailingTestSupport mailSenderFailing = new SecurityMailSenderFailingTestSupport();
-//        this.registrationService.setSecurityMailSender(mailSenderFailing);
-
         this.registrationService.register(new Registration(EMAIL, "secR3Tlf993"),
                 this.registrationController.getActivationUriComponents());
         final List<SecurityTokenMailSchedule> userRegistrationMailSchedules = this.registrationMailScheduleDao.findAll();

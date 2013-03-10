@@ -3,9 +3,9 @@ package org.antbear.tododont.backend.security.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SecurityMailSenderTestSupport implements SecurityMailSender {
+public class SecurityMailSenderNullTestSupport implements SecurityMailSender {
 
-    private static final Logger log = LoggerFactory.getLogger(SecurityMailSenderTestSupport.class);
+    private static final Logger log = LoggerFactory.getLogger(SecurityMailSenderNullTestSupport.class);
 
     private SecurityMail securityMail;
 
