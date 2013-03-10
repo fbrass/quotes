@@ -1,6 +1,8 @@
 Open points
 ===========
 
+* Apply ignore case in all SQL DML statements.
+
 * 404 page
 
 * Generic error page

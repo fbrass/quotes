@@ -354,7 +354,7 @@
             <id>local-dev</id>
 
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <!--<activeByDefault>true</activeByDefault>-->
             </activation>
 
             <properties>
@@ -386,6 +386,51 @@
                             <mainClass>org.h2.tools.Server</mainClass>
                             <arguments>
                                 <argument>-tcp</argument>
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>local-dev-hsqldb</id>
+
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
+            <properties>
+                <db.driverClassName>org.h2.Driver</db.driverClassName>
+                <db.url>jdbc:hsqldb:file:tododont</db.url>
+                <db.username>SA</db.username>
+                <db.password></db.password>
+                <smtp.hostname>localhost</smtp.hostname>
+                <app.mail.from>customerservice@tododont.nowhere.tld</app.mail.from>
+                <web.app.base.uri>http://localhost:8080/</web.app.base.uri>
+            </properties>
+
+            <dependencies>
+                <dependency>
+                    <groupId>org.hsqldb</groupId>
+                    <artifactId>hsqldb</artifactId>
+                    <version>2.2.9</version>
+                </dependency>
+            </dependencies>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.2</version>
+                        <configuration>
+                            <mainClass>org.hsqldb.server.Server</mainClass>
+                            <arguments>
+                                <argument>--database.0</argument>
+                                <argument>file:tododont</argument>
+                                <argument>--dbname.0</argument>
+                                <argument>tododont</argument>
                             </arguments>
                         </configuration>
                     </plugin>

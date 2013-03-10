@@ -13,7 +13,7 @@
     <context:component-scan base-package="org.antbear.tododont"/>
     <context:annotation-config/>
 
-    <jdbc:embedded-database id="testingDatabase" type="H2">
+    <jdbc:embedded-database id="testingDatabase" type="HSQL">
         <jdbc:script execution="INIT" encoding="utf-8" location="classpath:schema.sql"/>
         <jdbc:script execution="INIT" encoding="utf-8" location="classpath:data.sql"/>
     </jdbc:embedded-database>

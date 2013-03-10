@@ -3,14 +3,17 @@
 delete from todoitem;
 delete from todolist;
 delete from authorities;
+delete from persistent_logins;
+delete from scheduled_password_reset_mail;
+delete from scheduled_registration_mail;
 delete from users;
 
 -- Username/Password alice/alice
 insert into users (email, password) values ('alice@nowhere.tld', '93fd4fa4d6a33d525c78eaa1abc7c0d080864c76b6ac8d09c8ae33dc0b2ef3f971f559fb696b8bf7');
 insert into authorities (email, authority) values ('alice@nowhere.tld', 'ROLE_USER');
 
-insert into todolist (user, listName) values ('alice@nowhere.tld', 'eins');
-insert into todolist (user, listName) values ('alice@nowhere.tld', 'zwei');
+insert into todolist (username, listName) values ('alice@nowhere.tld', 'eins');
+insert into todolist (username, listName) values ('alice@nowhere.tld', 'zwei');
 
 insert into todoitem (todolist_id, itemname) values (1, 'Suppe kaufen');
 insert into todoitem (todolist_id, itemname) values (1, 'Fische braten');

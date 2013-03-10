@@ -11,7 +11,7 @@ public class TodoList implements DomainObject<Long> {
     private Long id;
 
     @NotNull
-    private String user;
+    private String username;
 
     @NotNull
     private String listName;
@@ -27,12 +27,12 @@ public class TodoList implements DomainObject<Long> {
         this.id = id;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(final String username) {
-        this.user = username;
+    public void setUsername(final String username) {
+        this.username = username;
     }
 
     public String getListName() {
@@ -55,7 +55,7 @@ public class TodoList implements DomainObject<Long> {
     public String toString() {
         return "TodoList{" +
                 "id=" + id +
-                ", user='" + user + '\'' +
+                ", username='" + username + '\'' +
                 ", listName='" + listName + '\'' +
                 ", created=" + created +
                 '}';

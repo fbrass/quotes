@@ -30,7 +30,7 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
     // --- Custom methods
 
     public boolean isExistingUser(final String email) {
-        final int count = getJdbcTemplate().queryForInt("SELECT COUNT(*) FROM users WHERE email = ?", email);
+        final int count = getJdbcTemplate().queryForInt("SELECT COUNT(*) FROM users WHERE email = ?", email.toLowerCase());
         return count > 0;
     }
 
@@ -44,7 +44,7 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
 
         getJdbcTemplate().update(
                 "INSERT INTO authorities (email, authority) VALUES (?, ?)",
-                user.getUsername(), "ROLE_USER");
+                user.getUsername().toLowerCase(), "ROLE_USER");
     }
 
     public CustomUserDetails loadUserByRegistrationToken(final String registrationToken) {
@@ -77,7 +77,8 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
 
     @Transactional(readOnly = false)
     public void enableUser(final String email) {
-        getJdbcTemplate().update("UPDATE users SET enabled = 1, registrationtoken = NULL WHERE email = ?", email);
+        getJdbcTemplate().update("UPDATE users SET enabled = 1, registrationtoken = NULL WHERE email = ?",
+                email.toLowerCase());
     }
 
     public void clearPasswordResetToken(final String email) {
@@ -92,18 +93,18 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
     @Transactional(readOnly = false)
     public void updatePasswordResetToken(final String email, final String passwordResetToken,
                                          final Date passwordResetRequestedAt) {
-        getJdbcTemplate().update("UPDATE users SET passwordresettoken = ?, passwordreset_requested_at = ? WHERE email = ?", passwordResetToken, passwordResetRequestedAt, email);
+        getJdbcTemplate().update("UPDATE users SET passwordresettoken = ?, passwordreset_requested_at = ? WHERE email = ?", passwordResetToken, passwordResetRequestedAt, email.toLowerCase());
     }
 
     @Transactional(readOnly = false)
     public void updatePassword(final CustomUserDetails user) {
         getJdbcTemplate().update("UPDATE users SET password = ?, passwordresettoken = NULL, passwordreset_requested_at = NULL WHERE email = ?",
-                user.getPassword(), user.getUsername());
+                user.getPassword(), user.getUsername().toLowerCase());
     }
 
     @Transactional(readOnly = false)
     public void deleteUser(final String email) {
-        getJdbcTemplate().update("DELETE FROM users WHERE email = ?", email);
+        getJdbcTemplate().update("DELETE FROM users WHERE email = ?", email.toLowerCase());
     }
 
     // --- JdbcDaoImpl overrides
@@ -114,7 +115,7 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
         final String query = "SELECT email,password,enabled,registrationtoken,registered_since,passwordresettoken,passwordreset_requested_at"
                 + " FROM users WHERE email = ?";
 
-        return super.getJdbcTemplate().query(query, new CustomUserDetailsRowMapper(), username);
+        return super.getJdbcTemplate().query(query, new CustomUserDetailsRowMapper(), username.toLowerCase());
     }
 
     @Override
@@ -124,7 +125,7 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
         final Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
         grantedAuthorities.addAll(combinedAuthorities);
 
-        return new CustomUserDetails(username,
+        return new CustomUserDetails(username.toLowerCase(),
                 user.getPassword(),
                 user.isEnabled(),
                 grantedAuthorities,

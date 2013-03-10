@@ -27,7 +27,7 @@ public abstract class SecurityTokenMailScheduleDaoBase extends GenericDao<Securi
 
     public void createSchedule(final String email, final String url) {
         getJdbcTemplate().update("INSERT INTO " + getTableName() + " (email, url) VALUES (:email, :url)",
-                ImmutableMap.of("email", email,
+                ImmutableMap.of("email", email.toLowerCase(),
                         "url", url));
     }
 
@@ -36,14 +36,14 @@ public abstract class SecurityTokenMailScheduleDaoBase extends GenericDao<Securi
         return new RowMapper<SecurityTokenMailSchedule>() {
             @Override
             public SecurityTokenMailSchedule mapRow(final ResultSet rs, final int rowNum) throws SQLException {
-                final SecurityTokenMailSchedule sched = new SecurityTokenMailSchedule();
-                sched.setPK(rs.getLong(1));
-                sched.setEmail(rs.getString(2));
-                sched.setUrl(rs.getString(3));
-                sched.setAttempts(rs.getInt(4));
-                sched.setFirstAttempt(rs.getTimestamp(5));
-                sched.setLastAttempt(rs.getTimestamp(6));
-                return sched;
+                final SecurityTokenMailSchedule schedule = new SecurityTokenMailSchedule();
+                schedule.setPK(rs.getLong(1));
+                schedule.setEmail(rs.getString(2));
+                schedule.setUrl(rs.getString(3));
+                schedule.setAttempts(rs.getInt(4));
+                schedule.setFirstAttempt(rs.getTimestamp(5));
+                schedule.setLastAttempt(rs.getTimestamp(6));
+                return schedule;
             }
         };
     }

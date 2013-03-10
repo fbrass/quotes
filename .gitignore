@@ -3,3 +3,5 @@
 /target
 /*.h2.db
 /*.lock.db
+/tododont.properties
+/tododont.script
