@@ -19,7 +19,7 @@ import java.util.Set;
 @Transactional(readOnly = true)
 public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomUserDetailsService {
 
-    private static final Logger log = LoggerFactory.getLogger(CustomUserDetailsService.class);
+    private static final Logger log = LoggerFactory.getLogger(CustomUserDetailsServiceImpl.class);
 
     public CustomUserDetailsServiceImpl() {
         super.setAuthoritiesByUsernameQuery("SELECT email,authority FROM authorities WHERE email = ?");
@@ -38,7 +38,7 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
     public void createUser(final CustomUserDetails user) {
         getJdbcTemplate().update(
                 "INSERT INTO users (email,password,enabled,registrationtoken,registered_since) VALUES (?,?,?,?,?)",
-                user.getUsername(), user.getPassword(),
+                user.getUsername().toLowerCase(), user.getPassword(),
                 user.isEnabled(), user.getRegistrationToken(),
                 user.getRegisteredSince());
 
@@ -111,7 +111,7 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
 
     @Override
     protected List<UserDetails> loadUsersByUsername(final String username) {
-        log.debug("loadUsersByUsername {}", username);
+        log.debug("loadUsersByUsername {}", username.toLowerCase());
         final String query = "SELECT email,password,enabled,registrationtoken,registered_since,passwordresettoken,passwordreset_requested_at"
                 + " FROM users WHERE email = ?";
 
@@ -143,7 +143,7 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
         @Override
         public CustomUserDetails mapRow(final ResultSet rs, final int rowNum) throws SQLException {
             int n = 1;
-            final String email = rs.getString(n++);
+            final String email = rs.getString(n++).toLowerCase();
             final String password = rs.getString(n++);
             final boolean enabled = rs.getBoolean(n++);
             final String registrationToken = rs.getString(n++);

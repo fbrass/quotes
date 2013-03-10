@@ -56,11 +56,11 @@ public class RegistrationService extends SecurityTokenServiceBase {
         notNullOrEmpty(registration.getEmail(), "Registration.email");
         notNullOrEmpty(registration.getPassword(), "Registration.password");
 
-        if (this.userDetailsService.isExistingUser(registration.getEmail())) {
+        if (this.userDetailsService.isExistingUser(registration.getEmail().toLowerCase())) {
             throw new RegistrationException(REGISTRATION_USER_ALREADY_REGISTERED, registration);
         }
 
-        final CustomUserDetails user = new CustomUserDetails(registration.getEmail(),
+        final CustomUserDetails user = new CustomUserDetails(registration.getEmail().toLowerCase(),
                 createSecurityToken());
 
         user.setPassword(this.passwordEncoder.encodePassword(registration.getPassword(),
@@ -70,16 +70,16 @@ public class RegistrationService extends SecurityTokenServiceBase {
 
         final String activationUrl = userActivationUriComponents.expand(user.getRegistrationToken()).encode().toUriString();
 
-        this.registrationMail.setEmail(registration.getEmail());
+        this.registrationMail.setEmail(registration.getEmail().toLowerCase());
         this.registrationMail.setUrl(activationUrl);
 
         try {
-            log.debug("Sending registration mail to " + registration.getEmail());
+            log.debug("Sending registration mail to " + registration.getEmail().toLowerCase());
             this.securityMailSender.send(this.registrationMail);
             log.info("User successfully registered {}", registration);
         } catch (MailException mex) {
             log.warn("Failed sending registration mail, scheduling for deferred sending", mex);
-            this.mailScheduleDao.createSchedule(registration.getEmail(), activationUrl);
+            this.mailScheduleDao.createSchedule(registration.getEmail().toLowerCase(), activationUrl);
         }
 
         return user.getRegistrationToken();

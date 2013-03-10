@@ -28,7 +28,7 @@ public class CustomUserDetailsServiceTest {
 
     @Test
     public void createUserTest() throws Exception {
-        final String email = "newUser@nowhere.tld";
+        final String email = "newuser@nowhere.tld";
         final String password = "secure";
         final String registrationToken = "register-token";
 

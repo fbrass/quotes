@@ -39,25 +39,25 @@ public class PasswordChangeService {
     private PasswordEncoder passwordEncoder;
 
     private void validatePasswordChangeAttempt(final String email, final String currentPassword) throws PasswordChangeException {
-        final UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, currentPassword);
+        final UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email.toLowerCase(), currentPassword);
         try {
             authenticationManager.authenticate(authenticationToken); // No exception: OK, authenticated
         } catch (AuthenticationException ae) {
-            log.debug("Password change attempt cannot be validated for {}", email);
+            log.debug("Password change attempt cannot be validated for {}", email.toLowerCase());
             throw new PasswordChangeException(ae, PASSWORD_CHANGE_CURRENT_PASSWORD_INVALID);
         }
     }
 
     @Transactional
     public void passwordChange(final String email, final PasswordChange passwordChange) throws PasswordChangeException {
-        log.debug("Password change request of {} with {}", email, passwordChange);
-        validatePasswordChangeAttempt(email, passwordChange.getCurrentPassword());
+        log.debug("Password change request of {} with {}", email.toLowerCase(), passwordChange);
+        validatePasswordChangeAttempt(email.toLowerCase(), passwordChange.getCurrentPassword());
 
-        final CustomUserDetails user = (CustomUserDetails) this.userDetailsService.loadUserByUsername(email);
+        final CustomUserDetails user = (CustomUserDetails) this.userDetailsService.loadUserByUsername(email.toLowerCase());
         user.setPassword(this.passwordEncoder.encodePassword(passwordChange.getPassword(),
                 this.saltSource.getSalt(user)));
 
         this.userDetailsService.updatePassword(user);
-        log.info("Updated password of {}", email);
+        log.info("Updated password of {}", email.toLowerCase());
     }
 }

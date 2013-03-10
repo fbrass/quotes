@@ -45,7 +45,7 @@ public class RegistrationControllerTest {
         // A mail should have been sent
         final SecurityMail registrationMail = this.securityMailSenderTestSupport.getSecurityMail();
         assertNotNull(registrationMail);
-        assertEquals(email, registrationMail.getEmail());
+        assertEquals(email.toLowerCase(), registrationMail.getEmail());
         final String activationUrl = registrationMail.getUrl();
         assertNotNull(activationUrl);
 
