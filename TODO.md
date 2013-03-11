@@ -1,6 +1,8 @@
 Open points
 ===========
 
+* Update to [Bootstrap to 2.3.1](http://blog.getbootstrap.com/2013/03/01/bootstrap-2-3-1-released/)
+
 * 404 page
 
 * Generic error page
