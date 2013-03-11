@@ -13,8 +13,13 @@
     <context:component-scan base-package="org.antbear.tododont"/>
     <context:annotation-config/>
 
+    <context:property-placeholder location="classpath:app.properties,web.properties"/>
+
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+          p:basename="classpath:messages"/>
+
     <jdbc:embedded-database id="testingDatabase" type="HSQL">
-        <jdbc:script execution="INIT" encoding="utf-8" location="classpath:schema.sql"/>
+        <jdbc:script execution="INIT" encoding="utf-8" location="classpath:schema-hsqldb.sql"/>
         <jdbc:script execution="INIT" encoding="utf-8" location="classpath:data.sql"/>
     </jdbc:embedded-database>
 
@@ -24,11 +29,6 @@
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <import resource="test-security-context.xml"/>
-
-    <context:property-placeholder location="classpath:app.properties,web.properties"/>
-
-    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
-          p:basename="classpath:messages"/>
 
     <!-- Spring Mail -->
 

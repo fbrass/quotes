@@ -1,4 +1,4 @@
--- created 2013-01-11 by mg
+-- created 2013-03-10 by mg
 
 drop table if exists authorities;
 drop table if exists persistent_logins;
