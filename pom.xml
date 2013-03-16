@@ -350,7 +350,7 @@
             <properties>
                 <hsqldb.version>2.2.9</hsqldb.version>
                 <db.driverClassName>org.h2.Driver</db.driverClassName>
-                <db.url>jdbc:hsqldb:file:tododont</db.url>
+                <db.url>jdbc:hsqldb:hsql://localhost/tododont</db.url>
                 <db.username>SA</db.username>
                 <db.password></db.password>
                 <smtp.hostname>localhost</smtp.hostname>
