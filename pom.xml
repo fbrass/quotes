@@ -282,6 +282,13 @@
                     <include>**/*.properties</include>
                 </includes>
             </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>**/*.properties</exclude>
+                </excludes>
+            </resource>
         </resources>
 
         <plugins>
@@ -349,7 +356,7 @@
 
             <properties>
                 <hsqldb.version>2.2.9</hsqldb.version>
-                <db.driverClassName>org.h2.Driver</db.driverClassName>
+                <db.driverClassName>org.hsqldb.jdbc.JDBCDriver</db.driverClassName>
                 <db.url>jdbc:hsqldb:hsql://localhost/tododont</db.url>
                 <db.username>SA</db.username>
                 <db.password></db.password>
