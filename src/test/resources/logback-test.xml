@@ -8,12 +8,13 @@
         </encoder>
     </appender>
 
-    <logger name="org.springframework" level="INFO"/>
-    <logger name="org.springframework.web" level="DEBUG"/>
-    <logger name="com.mchange" level="WARN"/>
-    <logger name="org.hibernate" level="INFO"/>
-
-    <root level="DEBUG">
+    <root level="WARN">
         <appender-ref ref="CONSOLE"/>
     </root>
+
+    <logger name="org.antbear.tododont.backend.security.service.scheduling.RegistrationMailScheduler" level="ERROR"/>
+    <logger name="org.antbear.tododont.backend.security.service.scheduling.PasswordResetMailScheduler" level="ERROR"/>
+    <logger name="org.antbear.tododont.backend.security.service.RegistrationService" level="ERROR"/>
+    <logger name="org.antbear.tododont.backend.security.service.PasswordResetService" level="ERROR"/>
+
 </configuration>
