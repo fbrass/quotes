@@ -30,8 +30,9 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
     // --- Custom methods
 
     public boolean isExistingUser(final String email) {
-        final int count = getJdbcTemplate().queryForInt("SELECT COUNT(*) FROM users WHERE email = ?", email.toLowerCase());
-        return count > 0;
+        final String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
+        final Integer count = getJdbcTemplate().queryForObject(sql, Integer.class, email.toLowerCase());
+        return count != null && count > 0;
     }
 
     @Transactional(readOnly = false)

@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -34,7 +33,7 @@ public class TodoListDaoTest {
         Assert.assertEquals(2, all.size());
 
         final List<TodoList> lists = this.todoListDao.findAllByUsername("alice@nowhere.tld");
-        assertEquals(2, lists.size());
+        assertThat(2, is(lists.size()));
     }
 
     @Test
