@@ -25,6 +25,12 @@ Open points
   pr use GreenMail for integration testing. This way we may get the last message received and thus may eliminate our
   MailSender stuff contained in testing.
 
-* Create README.md
+* Fill README.md with content and in particular instructions how to run and develop in Eclipse and IntelliJ
+
+* Setup MVP for GWT
+
+* Create resource translation mechanism via DB (bootstrap on initial loading of the app)
+
+* Create user administration
 
 EOF

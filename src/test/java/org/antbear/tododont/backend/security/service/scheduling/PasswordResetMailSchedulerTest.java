@@ -7,8 +7,6 @@ import org.antbear.tododont.backend.security.service.PasswordResetService;
 import org.antbear.tododont.web.controller.security.PasswordResetController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -25,7 +23,7 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(locations = {"classpath:/test-base-context.xml", "classpath:/test-mail-fail-context.xml"})
 public class PasswordResetMailSchedulerTest {
 
-    private static final Logger log = LoggerFactory.getLogger(PasswordResetMailSchedulerTest.class);
+    //private static final Logger log = LoggerFactory.getLogger(PasswordResetMailSchedulerTest.class);
 
     @Autowired
     private PasswordResetService passwordResetService;

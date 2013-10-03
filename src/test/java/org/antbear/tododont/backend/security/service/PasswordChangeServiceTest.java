@@ -7,8 +7,6 @@ import org.antbear.tododont.web.controller.security.RegistrationController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,7 +23,7 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration(locations = {"classpath:/test-base-context.xml", "classpath:/test-mail-null-context.xml"})
 public class PasswordChangeServiceTest {
 
-    private static final Logger log = LoggerFactory.getLogger(PasswordChangeServiceTest.class);
+    //private static final Logger log = LoggerFactory.getLogger(PasswordChangeServiceTest.class);
 
     private static final String EMAIL = "newUser@nowhere.tld";
 

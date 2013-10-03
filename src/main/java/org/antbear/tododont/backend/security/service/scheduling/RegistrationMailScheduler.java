@@ -48,12 +48,11 @@ public class RegistrationMailScheduler {
     @Transactional
     @Scheduled(fixedDelay = 2 * 60 * 1000)
     public void onSchedule() {
-        boolean success;
         for (final SecurityTokenMailSchedule srm : this.registrationMailScheduleDao.findAll()) {
             log.debug("Processing scheduled registration mail {}", srm);
 
             if (this.scheduleExecuteStrategy.isSchedulingAttemptDesired(srm.getAttempts(), srm.getLastAttempt())) {
-                success = false;
+                boolean success = false;
                 try {
                     srm.setAttempts(1 + srm.getAttempts());
                     srm.setLastAttempt(new Date());
@@ -66,7 +65,7 @@ public class RegistrationMailScheduler {
                         log.info("Done sending registration to mail to {}", srm.getEmail());
                         this.registrationMailScheduleDao.delete(srm.getPK());
                     } else {
-                        if (srm.getAttempts() < maxAttempts) {
+                        if (srm.getAttempts() < this.maxAttempts) {
                             this.registrationMailScheduleDao.update(srm);
                         } else {
                             log.warn("Max attempts of scheduled registration mail reached, deleting user {}", srm.getEmail());

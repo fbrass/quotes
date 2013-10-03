@@ -37,7 +37,7 @@ public class SecurityTokenMailSchedule implements DomainObject<Long> {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(final String email) {
@@ -45,7 +45,7 @@ public class SecurityTokenMailSchedule implements DomainObject<Long> {
     }
 
     public String getUrl() {
-        return url;
+        return this.url;
     }
 
     public void setUrl(final String url) {
@@ -53,7 +53,7 @@ public class SecurityTokenMailSchedule implements DomainObject<Long> {
     }
 
     public int getAttempts() {
-        return attempts;
+        return this.attempts;
     }
 
     public void setAttempts(final int attempts) {
@@ -61,7 +61,7 @@ public class SecurityTokenMailSchedule implements DomainObject<Long> {
     }
 
     public Date getFirstAttempt() {
-        return firstAttempt;
+        return this.firstAttempt;
     }
 
     public void setFirstAttempt(final Date firstAttempt) {
@@ -69,7 +69,7 @@ public class SecurityTokenMailSchedule implements DomainObject<Long> {
     }
 
     public Date getLastAttempt() {
-        return lastAttempt;
+        return this.lastAttempt;
     }
 
     public void setLastAttempt(final Date lastAttempt) {
@@ -79,12 +79,12 @@ public class SecurityTokenMailSchedule implements DomainObject<Long> {
     @Override
     public String toString() {
         return "UserRegistrationMailSchedule{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", url='" + url + '\'' +
-                ", attempts=" + attempts +
-                ", firstAttempt=" + firstAttempt +
-                ", lastAttempt=" + lastAttempt +
+                "id=" + this.id +
+                ", email='" + this.email + '\'' +
+                ", url='" + this.url + '\'' +
+                ", attempts=" + this.attempts +
+                ", firstAttempt=" + this.firstAttempt +
+                ", lastAttempt=" + this.lastAttempt +
                 '}';
     }
 }

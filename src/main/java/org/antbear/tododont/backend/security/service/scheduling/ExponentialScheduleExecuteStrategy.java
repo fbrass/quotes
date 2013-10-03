@@ -29,9 +29,9 @@ public class ExponentialScheduleExecuteStrategy implements ScheduleExecuteStrate
         if (n < 1) {
             throw new IllegalArgumentException("Attempt must be > 0");
         }
-        int d = pow(2, n);
+        final int delta = pow(2, n);
         final Calendar ts = (Calendar) pointInTime.clone();
-        ts.add(Calendar.MINUTE, d);
+        ts.add(Calendar.MINUTE, delta);
 
         if (log.isDebugEnabled()) {
             final DateFormat df = DateFormat.getDateTimeInstance();

@@ -4,12 +4,13 @@ import org.antbear.tododont.backend.security.beans.PasswordReset;
 import org.antbear.tododont.backend.security.beans.PasswordResetAttempt;
 import org.antbear.tododont.backend.security.service.SecurityMail;
 import org.antbear.tododont.backend.security.service.SecurityMailSenderNullTestSupport;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.net.URLDecoder;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -27,6 +29,11 @@ import static org.junit.Assert.*;
 public class PasswordResetControllerTest {
 
     private static final String EMAIL = "alice@nowhere.tld";
+    private static final Pattern HTTP_PATTERN = Pattern.compile("^https?://");
+    private static final Pattern CONTROLLER_PREFIX = Pattern.compile("^s/pwr/c/");
+
+    @Value("${web.app.base.uri}")
+    private String applicationBaseUri;
 
     @Autowired
     private PasswordResetController passwordResetController;
@@ -45,7 +52,7 @@ public class PasswordResetControllerTest {
         final PasswordResetAttempt passwordResetAttempt = (PasswordResetAttempt) model.get("passwordResetAttempt");
         passwordResetAttempt.setEmail(EMAIL);
 
-        BindingResult bindingResult = new BeanPropertyBindingResult(passwordResetAttempt, "passwordResetAttempt");
+        final BindingResult bindingResult = new BeanPropertyBindingResult(passwordResetAttempt, "passwordResetAttempt");
         final ModelAndView passwordResetAttemptModelAndView = this.passwordResetController.passwordReset(passwordResetAttempt, bindingResult);
         assertThat(passwordResetAttemptModelAndView.getViewName(), is("security/password-reset/done"));
 
@@ -56,7 +63,10 @@ public class PasswordResetControllerTest {
         final String passwordResetUrl = passwordResetMail.getUrl();
         assertNotNull(passwordResetUrl);
 
-        final String dataPart = passwordResetUrl.replaceFirst("https?://[^/]+/s/pwr/c/", "");
+        final String webAppUrlWithoutSchema = HTTP_PATTERN.matcher(this.applicationBaseUri).replaceFirst("");
+        final String givenUrlWithoutSchema = HTTP_PATTERN.matcher(passwordResetUrl).replaceFirst("");
+        final String givenUrlWithoutPrefix = givenUrlWithoutSchema.replaceFirst('^' + Pattern.quote(webAppUrlWithoutSchema), "");
+        final String dataPart = CONTROLLER_PREFIX.matcher(givenUrlWithoutPrefix).replaceFirst("");
         final String[] emailAndToken = dataPart.split("/", 2);
         assertNotNull(emailAndToken);
         assertThat(emailAndToken.length, is(2));
@@ -78,7 +88,7 @@ public class PasswordResetControllerTest {
         final ModelAndView performPasswordResetModelAndView = this.passwordResetController.performPasswordReset(passwordReset, performPasswordResetBindingResult);
         assertThat(performPasswordResetModelAndView.getViewName(), is("security/password-reset/change/done"));
 
-        final UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(EMAIL, passwordReset.getPassword());
-        authenticationManager.authenticate(authenticationToken); // No exception: OK, authenticated
+        final Authentication authenticationToken = new UsernamePasswordAuthenticationToken(EMAIL, passwordReset.getPassword());
+        this.authenticationManager.authenticate(authenticationToken); // No exception: OK, authenticated
     }
 }

@@ -23,16 +23,18 @@ public class TodoItem implements DomainObject<Long> {
 
     private boolean done;
 
+    @Override
     public Long getPK() {
-        return id;
+        return this.id;
     }
 
+    @Override
     public void setPK(final Long id) {
         this.id = id;
     }
 
     public Long getTodoListId() {
-        return todoListId;
+        return this.todoListId;
     }
 
     public void setTodoListId(final Long todoListId) {
@@ -40,7 +42,7 @@ public class TodoItem implements DomainObject<Long> {
     }
 
     public String getItemName() {
-        return itemName;
+        return this.itemName;
     }
 
     public void setItemName(final String itemName) {
@@ -48,7 +50,7 @@ public class TodoItem implements DomainObject<Long> {
     }
 
     public Date getCreated() {
-        return created;
+        return this.created;
     }
 
     public void setCreated(final Date created) {
@@ -56,7 +58,7 @@ public class TodoItem implements DomainObject<Long> {
     }
 
     public boolean isDone() {
-        return done;
+        return this.done;
     }
 
     public void setDone(final boolean done) {
@@ -66,11 +68,11 @@ public class TodoItem implements DomainObject<Long> {
     @Override
     public String toString() {
         return "TodoItem{" +
-                "id=" + id +
-                ", todoListId=" + todoListId +
-                ", itemName='" + itemName + '\'' +
-                ", created=" + created +
-                ", done=" + done +
+                "id=" + this.id +
+                ", todoListId=" + this.todoListId +
+                ", itemName='" + this.itemName + '\'' +
+                ", created=" + this.created +
+                ", done=" + this.done +
                 '}';
     }
 }

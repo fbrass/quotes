@@ -29,12 +29,14 @@ public class PasswordResetMail implements SecurityMail {
         this.url = url;
     }
 
+    @Override
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
+    @Override
     public String getUrl() {
-        return url;
+        return this.url;
     }
 
     public void setEmail(final String email) {
@@ -55,21 +57,21 @@ public class PasswordResetMail implements SecurityMail {
     }
 
     public String getMessageSubject() {
-        return messageSource.getMessage("passwordReset.mail.subject", null, Locale.getDefault());
+        return this.messageSource.getMessage("passwordReset.mail.subject", null, Locale.getDefault());
     }
 
     public String getMessageBody() {
-        return messageSource.getMessage("passwordReset.mail.body",
-                new Object[] { this.email, this.url}, Locale.getDefault());
+        return this.messageSource.getMessage("passwordReset.mail.body",
+                new Object[]{this.email, this.url}, Locale.getDefault());
     }
 
     @Override
     public String toString() {
         return "PasswordResetMail{" +
-                "mailTemplateMessage=" + mailTemplateMessage +
-                ", messageSource=" + messageSource +
-                ", email='" + email + '\'' +
-                ", url='" + url + '\'' +
+                "mailTemplateMessage=" + this.mailTemplateMessage +
+                ", messageSource=" + this.messageSource +
+                ", email='" + this.email + '\'' +
+                ", url='" + this.url + '\'' +
                 '}';
     }
 }

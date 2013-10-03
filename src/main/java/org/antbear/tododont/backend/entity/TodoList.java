@@ -19,16 +19,18 @@ public class TodoList implements DomainObject<Long> {
     @NotNull
     private Date created;
 
+    @Override
     public Long getPK() {
-        return id;
+        return this.id;
     }
 
+    @Override
     public void setPK(final Long id) {
         this.id = id;
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     public void setUsername(final String username) {
@@ -36,7 +38,7 @@ public class TodoList implements DomainObject<Long> {
     }
 
     public String getListName() {
-        return listName;
+        return this.listName;
     }
 
     public void setListName(final String listName) {
@@ -44,7 +46,7 @@ public class TodoList implements DomainObject<Long> {
     }
 
     public Date getCreated() {
-        return created;
+        return this.created;
     }
 
     public void setCreated(final Date created) {
@@ -54,10 +56,10 @@ public class TodoList implements DomainObject<Long> {
     @Override
     public String toString() {
         return "TodoList{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", listName='" + listName + '\'' +
-                ", created=" + created +
+                "id=" + this.id +
+                ", username='" + this.username + '\'' +
+                ", listName='" + this.listName + '\'' +
+                ", created=" + this.created +
                 '}';
     }
 }

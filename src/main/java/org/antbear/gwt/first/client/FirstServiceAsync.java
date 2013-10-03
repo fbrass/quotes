@@ -2,7 +2,6 @@ package org.antbear.gwt.first.client;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
 
 public interface FirstServiceAsync
 {

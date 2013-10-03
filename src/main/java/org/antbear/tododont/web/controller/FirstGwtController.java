@@ -1,12 +1,17 @@
 package org.antbear.tododont.web.controller;
 
-/**
- * Created with IntelliJ IDEA.
- * User: marcus
- * Date: 12.09.13
- * Time: 19:18
- * To change this template use File | Settings | File Templates.
- */
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+
+@Controller
 public class FirstGwtController {
 
+    private static final Logger log = LoggerFactory.getLogger(FirstGwtController.class);
+
+//    @RequestMapping("/first")
+//    public ModelAndView first() {
+//        log.debug("FirstGwtController called");
+//        return new ModelAndView("first");
+//    }
 }

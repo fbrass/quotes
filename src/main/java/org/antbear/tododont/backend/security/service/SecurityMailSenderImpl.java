@@ -16,6 +16,6 @@ public class SecurityMailSenderImpl implements SecurityMailSender {
     public void send(final SecurityMail securityMail) {
         log.info("Sending security mail via {} for mail {}", this.mailSender, securityMail);
         final SimpleMailMessage mailMessage = securityMail.getMailMessage();
-        mailSender.send(mailMessage);
+        this.mailSender.send(mailMessage);
     }
 }

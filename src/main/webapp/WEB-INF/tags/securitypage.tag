@@ -9,8 +9,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/css/main.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
     <title><spring:message code="app.name"/> - ${title}</title>
     <jsp:invoke fragment="head"/>
 </head>
@@ -20,7 +20,7 @@
         <div class="container">
             <ul class="nav">
                 <li class="active">
-                    <a class="brand" href="/"><spring:message code="app.name"/>&nbsp;&trade;</a>
+                    <a class="brand" href="${pageContext.request.contextPath}"><spring:message code="app.name"/>&nbsp;&trade;</a>
                 </li>
                 <li><a href="#">Link1</a></li>
                 <li><a href="#">Link2</a></li>
@@ -31,8 +31,8 @@
 </div>
 <div class="container">
     <jsp:doBody/>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <jsp:invoke fragment="afterScripts"/>
 </div>
 </body>

@@ -90,7 +90,7 @@ public class RegistrationService extends SecurityTokenServiceBase {
         log.info("Activation attempt with token {}", activationToken);
         notNullOrEmpty(activationToken, "activationToken");
 
-        final CustomUserDetails user = (CustomUserDetails) this.userDetailsService.loadUserByRegistrationToken(activationToken);
+        final CustomUserDetails user = this.userDetailsService.loadUserByRegistrationToken(activationToken);
         if (null == user) {
             throw new RegistrationActivationException(REGISTRATION_ACTIVATION_USER_NOT_REGISTERED, activationToken);
         }
@@ -99,11 +99,11 @@ public class RegistrationService extends SecurityTokenServiceBase {
             throw new RegistrationActivationException(REGISTRATION_ACTIVATION_USER_ALREADY_ACTIVATED, activationToken);
         }
 
-        if (!user.getRegistrationToken().equals(activationToken)) {
-            throw new RegistrationActivationException(REGISTRATION_ACTIVATION_INVALID_TOKEN, activationToken);
-        } else {
+        if (user.getRegistrationToken().equals(activationToken)) {
             log.info("User {} will be activated", user.getUsername());
             this.userDetailsService.enableUser(user.getUsername());
+        } else {
+            throw new RegistrationActivationException(REGISTRATION_ACTIVATION_INVALID_TOKEN, activationToken);
         }
     }
 }

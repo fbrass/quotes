@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,9 +40,9 @@ public class PasswordChangeService {
     private PasswordEncoder passwordEncoder;
 
     private void validatePasswordChangeAttempt(final String email, final String currentPassword) throws PasswordChangeException {
-        final UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email.toLowerCase(), currentPassword);
+        final Authentication authenticationToken = new UsernamePasswordAuthenticationToken(email.toLowerCase(), currentPassword);
         try {
-            authenticationManager.authenticate(authenticationToken); // No exception: OK, authenticated
+            this.authenticationManager.authenticate(authenticationToken); // No exception: OK, authenticated
         } catch (AuthenticationException ae) {
             log.debug("Password change attempt cannot be validated for {}", email.toLowerCase());
             throw new PasswordChangeException(ae, PASSWORD_CHANGE_CURRENT_PASSWORD_INVALID);

@@ -31,7 +31,7 @@ public class ActivationOutstandingScheduler {
     public void onSchedule() {
         final GregorianCalendar now = new GregorianCalendar();
 
-        for (UserDetails userDetails : this.userDetailsService.loadUsersWithMissingActivation()) {
+        for (final UserDetails userDetails : this.userDetailsService.loadUsersWithMissingActivation()) {
             final CustomUserDetails user = (CustomUserDetails) userDetails;
             if (!user.isEnabled() && null != user.getRegistrationToken()) {
                 final GregorianCalendar registeredSince = new GregorianCalendar();

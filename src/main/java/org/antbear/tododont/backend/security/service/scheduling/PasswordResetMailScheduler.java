@@ -44,12 +44,11 @@ public class PasswordResetMailScheduler {
     @Transactional
     @Scheduled(fixedDelay = 2 * 60 * 1000)
     public void onSchedule() {
-        boolean success;
         for (final SecurityTokenMailSchedule srm : this.passwordResetMailScheduleDao.findAll()) {
             log.debug("Processing scheduled password reset mail {}", srm);
 
             if (this.scheduleExecuteStrategy.isSchedulingAttemptDesired(srm.getAttempts(), srm.getLastAttempt())) {
-                success = false;
+                boolean success = false;
                 try {
                     srm.setAttempts(1 + srm.getAttempts());
                     srm.setLastAttempt(new Date());
@@ -62,7 +61,7 @@ public class PasswordResetMailScheduler {
                         log.info("Done sending password reset mail to {}", srm.getEmail());
                         this.passwordResetMailScheduleDao.delete(srm.getPK());
                     } else {
-                        if (srm.getAttempts() < maxAttempts) {
+                        if (srm.getAttempts() < this.maxAttempts) {
                             this.passwordResetMailScheduleDao.update(srm);
                         } else {
                             log.warn("Max attempts of scheduled password reset mail reached, aborting {}", srm);

@@ -85,7 +85,7 @@ public class CustomUserDetails implements UserDetails, CredentialsContainer {
     }
 
     public String getRegistrationToken() {
-        return registrationToken;
+        return this.registrationToken;
     }
 
     public void setRegistrationToken(final String registrationToken) {
@@ -93,7 +93,7 @@ public class CustomUserDetails implements UserDetails, CredentialsContainer {
     }
 
     public Date getRegisteredSince() {
-        return registeredSince;
+        return this.registeredSince;
     }
 
     public void setRegisteredSince(final Date date) {
@@ -101,7 +101,7 @@ public class CustomUserDetails implements UserDetails, CredentialsContainer {
     }
 
     public String getPasswordResetToken() {
-        return passwordResetToken;
+        return this.passwordResetToken;
     }
 
     public void setPasswordResetToken(final String passwordResetToken) {
@@ -109,7 +109,7 @@ public class CustomUserDetails implements UserDetails, CredentialsContainer {
     }
 
     public Date getPasswordResetRequestedAt() {
-        return passwordResetRequestedAt;
+        return this.passwordResetRequestedAt;
     }
 
     public void setPasswordResetRequestedAt(final Date passwordResetRequestedAt) {

@@ -25,4 +25,8 @@ public class RegistrationActivationException extends LocalizableException {
         super(cause, messageKey);
         this.activationToken = activationToken;
     }
+    
+    public String getActivationToken() {
+    	return this.activationToken;
+    }
 }

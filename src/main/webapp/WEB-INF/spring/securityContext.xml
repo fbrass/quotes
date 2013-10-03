@@ -26,6 +26,7 @@
         <intercept-url pattern="/s/pwc/**" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/**"       access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/admin**"  access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/first/**" access="hasRole('ROLE_USER')"/>
 
         <form-login login-page="/login"
                     default-target-url="/home"

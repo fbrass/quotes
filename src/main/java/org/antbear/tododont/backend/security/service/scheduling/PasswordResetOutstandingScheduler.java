@@ -31,8 +31,8 @@ public class PasswordResetOutstandingScheduler {
     public void onSchedule() {
         final GregorianCalendar now = new GregorianCalendar();
 
-        for (UserDetails userDetails : this.userDetailsService.loadUsersWithMissingPasswordReset()) {
-            CustomUserDetails user = (CustomUserDetails) userDetails;
+        for (final UserDetails userDetails : this.userDetailsService.loadUsersWithMissingPasswordReset()) {
+            final CustomUserDetails user = (CustomUserDetails) userDetails;
             if (user.isEnabled() && null != user.getPasswordResetToken()) {
                 final GregorianCalendar requestedAt = new GregorianCalendar();
                 requestedAt.setTime(user.getPasswordResetRequestedAt());
