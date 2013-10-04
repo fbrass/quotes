@@ -1,17 +1,15 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
-<head>
-    <title>Admin/Home</title>
-</head>
-<body>
-    <h1>Admin/Home</h1>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-    <p>Here you find various administrative tasks:</p>
+<t:genericpage>
+    <jsp:attribute name="title">Administration</jsp:attribute>
 
-    <ul>
-        <li><a href="users">User administration</a></li>
-    </ul>
-
-</body>
-</html>
+    <jsp:body>
+        <p>Here you find various administrative tasks:</p>
+        <ul>
+            <li><a href="users">User administration</a></li>
+        </ul>
+    </jsp:body>
+</t:genericpage>

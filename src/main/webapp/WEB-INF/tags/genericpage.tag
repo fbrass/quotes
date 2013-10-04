@@ -9,24 +9,46 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" media="screen" href="${pageContext.request.contextPath}/css/bootstrap.min.css"/>
     <link rel="stylesheet" media="screen" href="${pageContext.request.contextPath}/css/main.css"/>
     <title><spring:message code="app.name"/> - ${title}</title>
     <jsp:invoke fragment="head"/>
 </head>
 <body>
-<div class="navbar">
-    <div class="navbar-inner">
-        <div class="container">
-            <ul class="nav">
-                <li class="active">
-                    <a class="brand" href=""><spring:message code="app.name"/>&nbsp;&trade;</a>
+<div class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><spring:message code="app.name"/>&nbsp;&trade;</a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Nav header</li>
+                        <li><a href="#">Separated link</a></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
                 </li>
-                <li><a href="#">Link1</a></li>
-                <li><a href="#">Link2</a></li>
-                <li><a href="#">Link3</a></li>
             </ul>
-            <ul class="nav pull-right">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href=".">Link</a></li>
+                <li class="active"><a href=".">Active link</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><sec:authorize access="isAuthenticated()"><sec:authentication property="principal.username"/></sec:authorize> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -35,10 +57,7 @@
                     </ul>
                 </li>
             </ul>
-            <form class="navbar-search pull-right" style="margin-right:10px">
-                <input type="text" class="search-query" placeholder="Search"/>
-            </form>
-        </div>
+        </div><!--/.nav-collapse -->
     </div>
 </div>
 

@@ -55,7 +55,7 @@
                     <label for="j_username" class="control-label"><spring:message code="form.email"/></label>
 
                     <div class="controls">
-                        <input type='text' id="j_username" name='j_username'
+                        <input class="form-control" type='text' id="j_username" name='j_username'
                                value='<c:if test="${not empty param.login_error}"><c:out value="${SPRING_SECURITY_LAST_USERNAME}"/></c:if>'/>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                             href="<c:url value="/s/pwr"/>"><spring:message code="login.passwordForget"/></a>)</label>
 
                     <div class="controls">
-                        <input type='password' id="j_password" name='j_password'/>
+                        <input class="form-control" type='password' id="j_password" name='j_password'/>
                     </div>
                 </div>
                 <div class="control-group">
@@ -74,7 +74,7 @@
                                    name="_spring_security_remember_me"><spring:message code="login.rememberMe"/>
                             </input>
                         </label>
-                        <button type="submit" class="btn btn-primary"><spring:message code="login.submit"/></button>
+                        <button type="submit" class="btn btn-lg btn-primary"><spring:message code="login.submit"/></button>
                         &nbsp; or <a href="<c:url value="/s/r"/>"><spring:message code="registration.title"/></a> in a
                         minute
                     </div>
