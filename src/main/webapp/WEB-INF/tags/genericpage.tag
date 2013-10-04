@@ -9,8 +9,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
+    <link rel="stylesheet" media="screen" href="${pageContext.request.contextPath}/css/bootstrap.min.css"/>
+    <link rel="stylesheet" media="screen" href="${pageContext.request.contextPath}/css/main.css"/>
     <title><spring:message code="app.name"/> - ${title}</title>
     <jsp:invoke fragment="head"/>
 </head>
@@ -44,7 +44,7 @@
 
 <div class="container">
     <jsp:doBody/>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <jsp:invoke fragment="javascript"/>
 </div>

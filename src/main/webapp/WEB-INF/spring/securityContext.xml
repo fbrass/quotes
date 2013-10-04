@@ -17,6 +17,7 @@
         <sec:intercept-url pattern="/css/**"      access="permitAll"/>
         <sec:intercept-url pattern="/img/**"      access="permitAll"/>
         <sec:intercept-url pattern="/js/**"       access="permitAll"/>
+        <sec:intercept-url pattern="/fonts/**"    access="permitAll"/>
         <!-- MVC controller access -->
         <sec:intercept-url pattern="/login*"   access="permitAll"/>
         <sec:intercept-url pattern="/s/r*"     access="permitAll"/>
