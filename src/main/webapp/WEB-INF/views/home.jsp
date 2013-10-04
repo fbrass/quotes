@@ -8,7 +8,7 @@
 
     <jsp:body>
         <div class="hero-unit">
-            <h1>Awesome ${title}</h1>
+            <h1>Awesome ${title} 'title' here, rotten junk</h1>
 
             <p>
                 Hi, I'm a .hero-unit. You can present with me super important information.

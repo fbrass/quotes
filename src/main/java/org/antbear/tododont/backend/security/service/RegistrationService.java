@@ -1,25 +1,24 @@
 package org.antbear.tododont.backend.security.service;
 
+import org.antbear.tododont.backend.security.beans.Registration;
 import org.antbear.tododont.backend.security.dao.CustomUserDetailsService;
 import org.antbear.tododont.backend.security.dao.RegistrationMailScheduleDao;
 import org.antbear.tododont.backend.security.entity.CustomUserDetails;
-import org.antbear.tododont.backend.security.beans.Registration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponents;
 
-import javax.annotation.security.RolesAllowed;
-
 import static org.antbear.tododont.backend.security.util.InvariantException.notNull;
 import static org.antbear.tododont.backend.security.util.InvariantException.notNullOrEmpty;
 
-@RolesAllowed("IS_AUTHENTICATED_ANONYMOUSLY")
+@PreAuthorize("permitAll")
 @Service
 public class RegistrationService extends SecurityTokenServiceBase {
 
