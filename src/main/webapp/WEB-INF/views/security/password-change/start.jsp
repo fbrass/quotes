@@ -23,7 +23,7 @@
                         <div class="control-group">
                             <label for="currentPassword" class="control-label"><spring:message code="passwordChange.currentPassword"/></label>
                             <div class="controls">
-                                <form:password path="currentPassword" id="currentPassword"/>
+                                <form:password path="currentPassword" id="currentPassword" cssClass="form-control"/>
                                 <spring:bind path="currentPassword">
                                 <c:if test="${status.error}">
                                     <span class="help-inline">
@@ -36,7 +36,7 @@
                         <div class="control-group">
                             <label for="password" class="control-label"><spring:message code="passwordChange.newPassword"/></label>
                             <div class="controls">
-                                <form:password path="password" id="password"/>
+                                <form:password path="password" id="password" cssClass="form-control"/>
                                 <spring:bind path="password">
                                     <c:if test="${status.error}">
                                     <span class="help-inline">
@@ -49,14 +49,15 @@
                         <div class="control-group">
                             <label for="password2" class="control-label"><spring:message code="form.password2"/></label>
                             <div class="controls">
-                                <form:password path="password2" id="password2"/>
+                                <form:password path="password2" id="password2" cssClass="form-control"/>
                                 <form:errors path="password2" element="span" cssClass="help-inline"/>
                                 <form:errors path="" element="span" cssClass="help-inline"/> <%-- show FieldsMatch validation  --%>
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="controls">
-                                <button type="submit" class="btn btn-primary"><spring:message code="passwordChange.submit"/></button>
+                                <br/>
+                                <button type="submit" class="btn btn-primary btn-lg"><spring:message code="passwordChange.submit"/></button>
                             </div>
                         </div>
                     </fieldset>
