@@ -8,7 +8,7 @@
 
     <jsp:body>
         <h4>User list</h4>
-        <table class="table table-striped table-bordered table-responsive table-condensed">
+        <table class="table table-striped table-responsive table-condensed">
             <thead>
             <tr>
                 <th>E-Mail</th>
@@ -17,6 +17,7 @@
                 <th>Registered<br/>since</th>
                 <th>Password<br/>reset token</th>
                 <th>Password reset<br/>requested</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -28,6 +29,10 @@
                     <td>${u.registeredSince}</td>
                     <td>${u.hasPasswordResetToken}</td>
                     <td>${u.passwordResetRequestedAt}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-thumbs-down"></span> Disable</button>
+                        <button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span> Del</button>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
