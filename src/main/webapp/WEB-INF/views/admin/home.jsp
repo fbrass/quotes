@@ -9,7 +9,7 @@
     <jsp:body>
         <p>Here you find various administrative tasks:</p>
         <ul>
-            <li><a href="users">User administration</a></li>
+            <li><a href="<spring:url value='/admin/users/'/>">User administration</a></li>
         </ul>
     </jsp:body>
 </t:genericpage>

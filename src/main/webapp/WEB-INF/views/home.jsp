@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <t:genericpage>
-    <jsp:attribute name="title">Tododont</jsp:attribute>
+    <jsp:attribute name="title">Quotes</jsp:attribute>
 
     <jsp:body>
         <div class="jumbotron">

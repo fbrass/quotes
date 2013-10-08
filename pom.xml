@@ -5,16 +5,16 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.antbear</groupId>
-    <artifactId>tododont</artifactId>
+    <groupId>de.spqrinfo</groupId>
+    <artifactId>quotes</artifactId>
 
     <packaging>war</packaging>
 
     <version>1.0-SNAPSHOT</version>
 
-    <name>tododont</name>
-    <description>Java EE Todo Demo Application.</description>
-    <url>http://www.github.com/bwolf/tododont/</url>
+    <name>qotsie</name>
+    <description>Quotes - A quote collection app</description>
+    <url>http://www.github.com/bwolf/quotes/</url>
 
     <licenses>
         <license>
@@ -25,14 +25,14 @@
     </licenses>
 
     <organization>
-        <name>Antbear</name>
-        <url>http://antbear.org/</url>
+        <name>SPQR</name>
+        <url>http://spqr-info.de/</url>
     </organization>
 
     <scm>
-        <connection>scm:git:https://github.com/bwolf/tododont.git</connection>
-        <url>scm:git:https://github.com/bwolf/tododont.git</url>
-        <developerConnection>scm:git:https://github.com/bwolf/tododont.git</developerConnection>
+        <connection>scm:git:https://github.com/bwolf/quotes.git</connection>
+        <url>scm:git:https://github.com/bwolf/quotes.git</url>
+        <developerConnection>scm:git:https://github.com/bwolf/quotes.git</developerConnection>
     </scm>
 
     <properties>
@@ -318,7 +318,7 @@
                 </executions>
 
                 <configuration>
-                    <runTarget>MyFirst.html</runTarget>
+                    <runTarget>quotesStart.jsp</runTarget>
                     <hostedWebapp>${webappDirectory}</hostedWebapp>
                     <!--<webappDirectory>${webappDirectory}/gwt</webappDirectory>-->
                 </configuration>
@@ -365,12 +365,12 @@
             <properties>
                 <hsqldb.version>2.2.9</hsqldb.version>
                 <db.driverClassName>org.hsqldb.jdbc.JDBCDriver</db.driverClassName>
-                <db.url>jdbc:hsqldb:hsql://localhost/tododont</db.url>
+                <db.url>jdbc:hsqldb:hsql://localhost/quotes</db.url>
                 <db.username>SA</db.username>
                 <db.password></db.password>
                 <smtp.hostname>localhost</smtp.hostname>
-                <app.mail.from>customerservice@tododont.nowhere.tld</app.mail.from>
-                <web.app.base.uri>http://localhost:8080/tododont/</web.app.base.uri>
+                <app.mail.from>customerservice@quotes.nowhere.tld</app.mail.from>
+                <web.app.base.uri>http://localhost:8080/quotes/</web.app.base.uri>
             </properties>
 
             <dependencies>
@@ -391,9 +391,9 @@
                             <mainClass>org.hsqldb.server.Server</mainClass>
                             <arguments>
                                 <argument>--database.0</argument>
-                                <argument>file:tododont</argument>
+                                <argument>file:quotes</argument>
                                 <argument>--dbname.0</argument>
-                                <argument>tododont</argument>
+                                <argument>quotes</argument>
                             </arguments>
                         </configuration>
                     </plugin>

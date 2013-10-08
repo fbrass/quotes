@@ -43,7 +43,7 @@
 </div>
 <div class="container">
     <jsp:doBody/>
-    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery-2.0.3.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <jsp:invoke fragment="afterScripts"/>
 </div>

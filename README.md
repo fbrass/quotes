@@ -44,7 +44,7 @@ With running HSQLDB server use the URL:
         jdbc:hsqldb:hsql://localhost/tododont
 
 ## Dev Mode configuration in IntelliJ:
-1. Module to load: org.antbear.first.first
+1. Module to load: org.spqrinfo.first.first
 2. Dev mode parameters: -noserver -logLevel INFO -codeServerPort 9997
 3. Start page: http://localhost:8080/First.html
 4. Open in browser: Firefox

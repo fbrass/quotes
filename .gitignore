@@ -6,6 +6,6 @@
 /target
 /*.h2.db
 /*.lock.db
-/tododont.properties
-/tododont.script
-/tododont.lck
+/quotes.properties
+/quotes.script
+/quotes.lck

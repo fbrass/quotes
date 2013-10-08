@@ -10,7 +10,7 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
-    <context:component-scan base-package="org.antbear.tododont.backend"/>
+    <context:component-scan base-package="de.spqrinfo.quotes.backend"/>
 
     <import resource="securityContext.xml"/>
 
@@ -37,9 +37,9 @@
 
     <!-- Mail -->
 
-    <bean class="org.antbear.tododont.backend.security.service.SecurityMailSenderImpl"/>
+    <bean class="de.spqrinfo.quotes.backend.security.service.SecurityMailSenderImpl"/>
 
-    <bean id="mailSender" class="org.antbear.tododont.backend.security.util.mail.MailSenderImpl"/>
+    <bean id="mailSender" class="de.spqrinfo.quotes.backend.security.util.mail.MailSenderImpl"/>
 
     <bean class="org.springframework.mail.javamail.JavaMailSenderImpl"
           p:host="${smtp.hostname}"/>
@@ -49,6 +49,6 @@
 
     <!-- Other -->
 
-    <bean class="org.antbear.tododont.backend.security.service.scheduling.ExponentialScheduleExecuteStrategy"/>
+    <bean class="de.spqrinfo.quotes.backend.security.service.scheduling.ExponentialScheduleExecuteStrategy"/>
 
 </beans>

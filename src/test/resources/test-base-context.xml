@@ -10,7 +10,7 @@
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
-    <context:component-scan base-package="org.antbear.tododont"/>
+    <context:component-scan base-package="de.spqrinfo.quotes"/>
     <context:annotation-config/>
 
     <context:property-placeholder location="classpath:app.properties,web.properties"/>
@@ -41,6 +41,6 @@
 
     <!-- Other -->
 
-    <bean class="org.antbear.tododont.backend.security.service.scheduling.LinearScheduleExecutionStrategy"/>
+    <bean class="de.spqrinfo.quotes.backend.security.service.scheduling.LinearScheduleExecutionStrategy"/>
 
 </beans>

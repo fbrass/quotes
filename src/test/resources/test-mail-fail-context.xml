@@ -12,8 +12,8 @@
 
     <!-- Mail -->
 
-    <bean id="mailSender" class="org.antbear.tododont.backend.security.util.mail.TestMailSender"/>
+    <bean id="mailSender" class="de.spqrinfo.quotes.backend.security.util.mail.TestMailSender"/>
 
-    <bean class="org.antbear.tododont.backend.security.service.SecurityMailSenderFailingTestSupport"/>
+    <bean class="de.spqrinfo.quotes.backend.security.service.SecurityMailSenderFailingTestSupport"/>
 
 </beans>
