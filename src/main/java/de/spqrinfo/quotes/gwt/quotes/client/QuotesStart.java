@@ -2,7 +2,6 @@ package de.spqrinfo.quotes.gwt.quotes.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class QuotesStart implements EntryPoint {
@@ -11,13 +10,14 @@ public class QuotesStart implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
+        final RootPanel rootPanel = RootPanel.get();
 
-        final Button hallo = new Button("hallo");
-        hallo.setStyleName("btn");
-//        hallo.addStyleName("btn");
-        hallo.addStyleName("btn-default");
+        final QuotePanel quotePanel = new QuotePanel("Add a new quotation");
+        rootPanel.getElement().appendChild(quotePanel.getElement());
+        rootPanel.add(quotePanel);
 
-        RootPanel.get().add(hallo);
+//        final RatingWidget ratingWidget = new RatingWidget();
+//        rootPanel.add(ratingWidget);
 
 //        RootPanel.get().add();
 
@@ -28,7 +28,7 @@ public class QuotesStart implements EntryPoint {
 //        final Label outputText = new Label();
 //        final Label errorLabel = new Label();
 //
-//        // We can add style names to widgets
+//        // We can add style names to rootPanel
 //        okButton.addStyleName("okButton");
 //
 //        // Add the nameField and sendButton to the RootPanel
