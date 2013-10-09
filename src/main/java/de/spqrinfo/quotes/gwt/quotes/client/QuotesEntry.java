@@ -4,7 +4,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class QuotesStart implements EntryPoint {
+public class QuotesEntry implements EntryPoint {
 
     private final QuotesServiceAsync quotesService = GWT.create(QuotesService.class);
 
@@ -15,11 +15,6 @@ public class QuotesStart implements EntryPoint {
         final QuotePanel quotePanel = new QuotePanel("Add a new quotation");
         rootPanel.getElement().appendChild(quotePanel.getElement());
         rootPanel.add(quotePanel);
-
-//        final RatingWidget ratingWidget = new RatingWidget();
-//        rootPanel.add(ratingWidget);
-
-//        RootPanel.get().add();
 
 //        final TextBox inputText = new TextBox();
 //        inputText.setText("Predefined text");
