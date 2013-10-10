@@ -56,7 +56,7 @@ public class QuotePanel extends Composite {
     public QuotePanel(final String name) {
         initWidget(uiBinder.createAndBindUi(this));
 
-        this.heading.setInnerText(name);
+        this.heading.setInnerText(name); // TODO i18n
 
         HtmlTools.associateLabel(this.quoteText, this.quoteTextLabel);
         this.quoteTextLabel.setInnerText("Quote"); // TODO i18n
@@ -67,7 +67,7 @@ public class QuotePanel extends Composite {
         HtmlTools.setPlaceholder(this.author, "Author"); // TODO i18n
         this.authorBrowseButton.setText("Select"); // TODO i18n
 
-        HtmlTools.associateLabel(this.ratingWidget, this.ratingLabel); // TODO rename associatelabel and swap parameters
+        HtmlTools.associateLabel(this.ratingWidget, this.ratingLabel);
         this.ratingLabel.setInnerText("Rating"); // TODO i18n
 
         HtmlTools.associateLabel(this.tags, this.tagsLabel);
