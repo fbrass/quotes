@@ -1,8 +1,12 @@
-package de.spqrinfo.quotes.gwt.quotes.client;
+package de.spqrinfo.quotes.gwt.quotes.mvp;
 
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.web.bindery.event.shared.EventBus;
+import de.spqrinfo.quotes.gwt.quotes.client.EditQuoteView;
+import de.spqrinfo.quotes.gwt.quotes.client.EditQuoteViewImpl;
+import de.spqrinfo.quotes.gwt.quotes.client.GoodByViewImpl;
+import de.spqrinfo.quotes.gwt.quotes.client.GoodByeView;
 
 public class ClientFactoryImpl implements ClientFactory {
 

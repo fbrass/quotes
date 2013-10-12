@@ -1,8 +1,12 @@
-package de.spqrinfo.quotes.gwt.quotes.client;
+package de.spqrinfo.quotes.gwt.quotes.mvp;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
+import de.spqrinfo.quotes.gwt.quotes.client.EditQuoteActivity;
+import de.spqrinfo.quotes.gwt.quotes.client.EditQuotePlace;
+import de.spqrinfo.quotes.gwt.quotes.client.GoodByActivity;
+import de.spqrinfo.quotes.gwt.quotes.client.GoodByPlace;
 
 public class AppActivityMapper implements ActivityMapper {
 

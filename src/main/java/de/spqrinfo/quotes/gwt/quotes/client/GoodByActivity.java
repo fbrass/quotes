@@ -4,6 +4,7 @@ import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import de.spqrinfo.quotes.gwt.quotes.mvp.ClientFactory;
 
 public class GoodByActivity extends AbstractActivity implements GoodByeView.Presenter {
 

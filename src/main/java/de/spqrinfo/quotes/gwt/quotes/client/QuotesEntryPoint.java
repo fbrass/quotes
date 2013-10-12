@@ -10,6 +10,9 @@ import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.web.bindery.event.shared.EventBus;
+import de.spqrinfo.quotes.gwt.quotes.mvp.AppActivityMapper;
+import de.spqrinfo.quotes.gwt.quotes.mvp.AppPlaceHistoryMapper;
+import de.spqrinfo.quotes.gwt.quotes.mvp.ClientFactory;
 
 public class QuotesEntryPoint implements EntryPoint {
 
