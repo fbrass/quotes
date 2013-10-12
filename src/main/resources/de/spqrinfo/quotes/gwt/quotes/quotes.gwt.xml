@@ -1,26 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='gwtQuotes'>
-  <!-- Inherit the core Web Toolkit stuff. -->
-  <inherits name='com.google.gwt.user.User' />
 
-  <!-- We need the JUnit module in the main module, -->
-  <!-- otherwise eclipse complains (Google plugin bug?) -->
-  <inherits name='com.google.gwt.junit.JUnit'/>
+    <!-- Inherit the core Web Toolkit stuff. -->
+    <inherits name='com.google.gwt.user.User'/>
 
-  <!-- Inherit the default GWT style sheet.  You can change -->
-  <!-- the theme of your GWT application by un commenting -->
-  <!-- any one of the following lines. -->
-  <inherits name='com.google.gwt.user.theme.standard.Standard'/>
-  <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
-  <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/> -->
+    <!-- Logging -->
+    <!--<inherits name="com.google.gwt.logging.Logging"/>-->
 
-  <!-- Other module inherits -->
+    <!-- We need the JUnit module in the main module, -->
+    <!-- otherwise eclipse complains (Google plugin bug?) -->
+    <inherits name='com.google.gwt.junit.JUnit'/>
 
-  <!-- Specify the app entry point class. -->
-  <entry-point class='de.spqrinfo.quotes.gwt.quotes.client.QuotesEntry'/>
+    <!-- Inherit the default GWT style sheet.  You can change -->
+    <!-- the theme of your GWT application by un commenting -->
+    <!-- any one of the following lines. -->
+    <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+    <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
+    <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/> -->
 
-  <!-- Specify the paths for translatable code -->
-  <source path='client'/>
-  <source path='shared'/>
+    <!-- Other module inherits -->
+    <inherits name="com.google.gwt.place.Place"/>
+    <inherits name="com.google.gwt.activity.Activity"/>
+
+    <!-- Specify the app entry point class. -->
+    <entry-point class='de.spqrinfo.quotes.gwt.quotes.client.QuotesEntryPoint'/>
+
+    <!-- Use ClientFactoryImpl by default -->
+    <replace-with class="de.spqrinfo.quotes.gwt.quotes.client.ClientFactoryImpl">
+        <!-- You can use <when-property-is> to specify different implementations based
+         on user.agent, locale, or other properties you define. -->
+        <when-type-is class="de.spqrinfo.quotes.gwt.quotes.client.ClientFactory"/>
+    </replace-with>
+
+    <!-- Specify the paths for translatable code -->
+    <source path='client'/>
+    <source path='shared'/>
 
 </module>

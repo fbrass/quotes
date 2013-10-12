@@ -1,0 +1,8 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <g:HTMLPanel>
+        Hello, I'm the
+        <span ui:field="name"></span>
+        <g:Anchor ui:field="goodByeLink" text="Say GoodBy"></g:Anchor>
+    </g:HTMLPanel>
+</ui:UiBinder>
