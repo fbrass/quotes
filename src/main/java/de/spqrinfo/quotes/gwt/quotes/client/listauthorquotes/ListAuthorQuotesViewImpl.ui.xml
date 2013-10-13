@@ -1,8 +1,6 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <g:HTMLPanel>
-        <ul ui:field="tagsList">
-        </ul>
-        <g:TextBox ui:field="textBox" styleName="form-control"></g:TextBox>
+    <g:HTMLPanel ui:field="listQuotes" styleName="listQuotes">
+        <h4 ui:field="header"></h4>
     </g:HTMLPanel>
 </ui:UiBinder>

@@ -1,4 +1,4 @@
-package de.spqrinfo.quotes.gwt.quotes.client;
+package de.spqrinfo.quotes.gwt.quotes.client.edit;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.HeadingElement;
@@ -9,13 +9,18 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
+import de.spqrinfo.quotes.gwt.quotes.client.HtmlTools;
+import de.spqrinfo.quotes.gwt.quotes.client.widgets.RatingWidget;
+import de.spqrinfo.quotes.gwt.quotes.shared.Quotation;
 
-public class QuotePanel extends Composite {
+public class EditQuoteViewImpl extends Composite implements EditQuoteView {
 
-    interface MyUiBinder extends UiBinder<Widget, QuotePanel> {
+    interface EditQuoteViewImplUiBinder extends UiBinder<HTMLPanel, EditQuoteViewImpl> {
     }
 
-    private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
+    private static EditQuoteViewImplUiBinder ourUiBinder = GWT.create(EditQuoteViewImplUiBinder.class);
+
+    private Presenter presenter;
 
     @UiField
     HeadingElement heading;
@@ -53,10 +58,8 @@ public class QuotePanel extends Composite {
     @UiField
     Button saveButton;
 
-    public QuotePanel(final String name) {
-        initWidget(uiBinder.createAndBindUi(this));
-
-        this.heading.setInnerText(name); // TODO i18n
+    public EditQuoteViewImpl() {
+        initWidget(ourUiBinder.createAndBindUi(this));
 
         HtmlTools.associateLabel(this.quoteText, this.quoteTextLabel);
         this.quoteTextLabel.setInnerText("Quote"); // TODO i18n
@@ -76,6 +79,20 @@ public class QuotePanel extends Composite {
         this.tagsBrowseButton.setText("Select"); // TODO i18n
     }
 
+    @Override
+    public void setPresenter(final Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void setData(final String headingText, final Quotation quotation) {
+        this.heading.setInnerText(headingText);
+        this.quoteText.setText(quotation.getQuotationText());
+        this.author.setText(quotation.getAuthor().getName());
+        this.ratingWidget.setRating(quotation.getRating());
+        this.tags.setText(quotation.getTagsAsText());
+    }
+
     @UiHandler("authorBrowseButton")
     void authorBrowseClick(final ClickEvent e) {
         Window.alert("Browse authors");
@@ -88,6 +105,6 @@ public class QuotePanel extends Composite {
 
     @UiHandler("saveButton")
     void saveClick(final ClickEvent e) {
-        Window.alert("Save");
+        this.presenter.save();
     }
 }

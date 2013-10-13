@@ -1,4 +1,4 @@
-package de.spqrinfo.quotes.gwt.quotes.client;
+package de.spqrinfo.quotes.gwt.quotes.client.widgets;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -60,6 +60,23 @@ public class RatingWidget extends Composite {
 
     public int getRating() {
         return this.rating + 1;
+    }
+
+    public void setRating(final Integer rating) {
+        if (rating == null) {
+            toggleButtons(this.rating);
+            return;
+        }
+
+        if (rating < 1 || rating > this.buttons.length) {
+            throw new IllegalArgumentException("Rating out of range " + rating);
+        }
+
+        if (hasRating()) {
+            toggleButtons(this.rating);
+        }
+
+        toggleButtons(rating - 1);
     }
 
     private void toggleButtons(final int buttonIndex) {

@@ -1,13 +1,17 @@
 package de.spqrinfo.quotes.gwt.quotes.mvp;
 
-import com.google.web.bindery.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
-import de.spqrinfo.quotes.gwt.quotes.client.EditQuoteView;
-import de.spqrinfo.quotes.gwt.quotes.client.GoodByeView;
+import com.google.web.bindery.event.shared.EventBus;
+import de.spqrinfo.quotes.gwt.quotes.client.edit.EditQuoteView;
+import de.spqrinfo.quotes.gwt.quotes.client.listauthorquotes.ListAuthorQuotesView;
+import de.spqrinfo.quotes.gwt.quotes.client.listquotes.ListQuotesView;
+import de.spqrinfo.quotes.gwt.quotes.client.listtagquotes.ListTagQuotesView;
 
 public interface ClientFactory {
     EventBus getEventBus();
     PlaceController getPlaceController();
     EditQuoteView getEditQuoteView();
-    GoodByeView getEdGoodByeView();
+    ListQuotesView getListQuotesView();
+    ListAuthorQuotesView getListAuthorQuotesView();
+    ListTagQuotesView getListTagQuotesView();
 }

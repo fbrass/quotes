@@ -1,4 +1,4 @@
-package de.spqrinfo.quotes.gwt.quotes.client;
+package de.spqrinfo.quotes.gwt.quotes.client.listtagquotes;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
@@ -6,22 +6,19 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import de.spqrinfo.quotes.gwt.quotes.mvp.ClientFactory;
 
-public class EditQuoteActivity extends AbstractActivity implements EditQuoteView.Presenter {
+public class ListTagQuotesActivity extends AbstractActivity implements ListTagQuotesView.Presenter {
 
-    private String name;
-    private ClientFactory clientFactory;
+    private final ClientFactory clientFactory;
 
-    public EditQuoteActivity(final EditQuotePlace place, final ClientFactory clientFactory) {
-        this.name = place.getName();
+    public ListTagQuotesActivity(final ListTagQuotesPlace place, final ClientFactory clientFactory) {
+        // TODO do something with place
         this.clientFactory = clientFactory;
     }
 
     @Override
     public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
-        final EditQuoteView view = this.clientFactory.getEditQuoteView();
-        view.setData(this.name);
-        view.setPresenter(this);
-        panel.setWidget(view.asWidget());
+
+
     }
 
     @Override

@@ -1,7 +1,7 @@
-<?xml version='1.0'?>
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g='urn:import:com.google.gwt.user.client.ui'
-        xmlns:spqr='urn:import:de.spqrinfo.quotes.gwt.quotes.client'>
-    <g:HTMLPanel styleName="container" addStyleNames="quotePanel">
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:spqr='urn:import:de.spqrinfo.quotes.gwt.quotes.client.widgets'>
+    <g:HTMLPanel styleName="container" addStyleNames="editQuotePanel">
         <h2 ui:field="heading"></h2>
 
         <div class="form-group">
