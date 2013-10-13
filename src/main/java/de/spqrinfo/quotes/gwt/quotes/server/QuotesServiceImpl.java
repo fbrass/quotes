@@ -57,24 +57,6 @@ public class QuotesServiceImpl extends SpringRemoteServiceServlet implements Quo
         this.quotesByAuthor.put(oscarWilde.getId(), ow2);
     }
 
-    // TODO remove
-    @Override
-    public String first(final String inputText) throws IllegalArgumentException {
-        if (null == inputText || inputText.isEmpty()) {
-            throw new IllegalArgumentException("Name must be at least 4 characters long");
-        }
-
-        return escapeHtml("Server feedback " + inputText);
-    }
-
-    // TODO remove
-    private String escapeHtml(final String html) {
-        if (html == null) {
-            return null;
-        }
-        return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-    }
-
     @Override
     public List<Quotation> getQuotes() {
         return Lists.newArrayList(this.quotes);

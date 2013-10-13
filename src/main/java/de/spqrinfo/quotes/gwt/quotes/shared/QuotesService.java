@@ -8,8 +8,6 @@ import java.util.List;
 @RemoteServiceRelativePath("quotesService")
 public interface QuotesService extends RemoteService {
 
-    String first(String text) throws IllegalArgumentException;
-
     List<Quotation> getQuotes();
 
     QuotationsOfAuthor getQuotesByAuthor(Integer authorId);
