@@ -6,6 +6,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import de.spqrinfo.quotes.gwt.quotes.client.QuotesAppEvent;
 import de.spqrinfo.quotes.gwt.quotes.client.listquotes.ListQuotesPlace;
 import de.spqrinfo.quotes.gwt.quotes.mvp.ClientFactory;
 import de.spqrinfo.quotes.gwt.quotes.shared.Quotation;
@@ -57,7 +58,12 @@ public class EditQuoteActivity extends AbstractActivity implements EditQuoteView
 
     @Override
     public void save() {
-        // TODO really save quote
+        // TODO save quote
+
+        // Notify application that we saved
+        this.clientFactory.getEventBus().fireEvent(new QuotesAppEvent());
+
+        // Navigate to next view
         this.clientFactory.getPlaceController().goTo(new ListQuotesPlace(""));
     }
 }

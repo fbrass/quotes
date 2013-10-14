@@ -1,0 +1,8 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <g:HTMLPanel styleName="alert" addStyleNames="alert-dismissable alert-info">
+        <g:Button ui:field="closeButton" styleName="close">&times;</g:Button>
+        <span ui:field="message"></span>
+    </g:HTMLPanel>
+</ui:UiBinder>
