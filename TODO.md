@@ -25,10 +25,10 @@ Open points
 
 * Fill README.md with content and in particular instructions how to run and develop in Eclipse and IntelliJ
 
-* Setup MVP for GWT
-
 * Create resource translation mechanism via DB (bootstrap on initial loading of the app)
 
 * Create user administration
+
+* GWT: move 'mvp' package into the client package. There it belongs.
 
 EOF
