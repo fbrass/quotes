@@ -26,14 +26,13 @@
     <entry-point class='de.spqrinfo.quotes.gwt.quotes.client.QuotesEntryPoint'/>
 
     <!-- Use ClientFactoryImpl by default -->
-    <replace-with class="de.spqrinfo.quotes.gwt.quotes.mvp.ClientFactoryImpl">
+    <replace-with class="de.spqrinfo.quotes.gwt.quotes.client.mvp.ClientFactoryImpl">
         <!-- You can use <when-property-is> to specify different implementations based
          on user.agent, locale, or other properties you define. -->
-        <when-type-is class="de.spqrinfo.quotes.gwt.quotes.mvp.ClientFactory"/>
+        <when-type-is class="de.spqrinfo.quotes.gwt.quotes.client.mvp.ClientFactory"/>
     </replace-with>
 
     <!-- Specify the paths for translatable code -->
-    <source path='mvp'/>
     <source path='client'/>
     <source path='shared'/>
 

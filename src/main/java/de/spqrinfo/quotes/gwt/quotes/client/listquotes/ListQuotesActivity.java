@@ -6,7 +6,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import de.spqrinfo.quotes.gwt.quotes.mvp.ClientFactory;
+import de.spqrinfo.quotes.gwt.quotes.client.mvp.ClientFactory;
 import de.spqrinfo.quotes.gwt.quotes.shared.Quotation;
 import de.spqrinfo.quotes.gwt.quotes.shared.QuotesService;
 import de.spqrinfo.quotes.gwt.quotes.shared.QuotesServiceAsync;

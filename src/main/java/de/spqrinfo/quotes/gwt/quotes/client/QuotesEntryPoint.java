@@ -12,9 +12,9 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.web.bindery.event.shared.EventBus;
 import de.spqrinfo.quotes.gwt.quotes.client.listquotes.ListQuotesPlace;
 import de.spqrinfo.quotes.gwt.quotes.client.widgets.InformationWidget;
-import de.spqrinfo.quotes.gwt.quotes.mvp.AppActivityMapper;
-import de.spqrinfo.quotes.gwt.quotes.mvp.AppPlaceHistoryMapper;
-import de.spqrinfo.quotes.gwt.quotes.mvp.ClientFactory;
+import de.spqrinfo.quotes.gwt.quotes.client.mvp.AppActivityMapper;
+import de.spqrinfo.quotes.gwt.quotes.client.mvp.AppPlaceHistoryMapper;
+import de.spqrinfo.quotes.gwt.quotes.client.mvp.ClientFactory;
 import de.spqrinfo.quotes.gwt.quotes.shared.QuotesService;
 import de.spqrinfo.quotes.gwt.quotes.shared.QuotesServiceAsync;
 

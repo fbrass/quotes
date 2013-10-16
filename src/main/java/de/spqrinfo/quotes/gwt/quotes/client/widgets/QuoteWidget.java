@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import de.spqrinfo.quotes.gwt.quotes.client.edit.EditQuotePlace;
 import de.spqrinfo.quotes.gwt.quotes.client.listauthorquotes.ListAuthorQuotesPlace;
-import de.spqrinfo.quotes.gwt.quotes.mvp.GoToPresenter;
+import de.spqrinfo.quotes.gwt.quotes.client.mvp.GoToPresenter;
 import de.spqrinfo.quotes.gwt.quotes.shared.Quotation;
 
 public class QuoteWidget extends Composite {

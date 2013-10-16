@@ -1,4 +1,4 @@
-package de.spqrinfo.quotes.gwt.quotes.mvp;
+package de.spqrinfo.quotes.gwt.quotes.client.mvp;
 
 import com.google.gwt.place.shared.Place;
 

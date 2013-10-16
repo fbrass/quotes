@@ -1,7 +1,7 @@
 package de.spqrinfo.quotes.gwt.quotes.client.listquotes;
 
 import com.google.gwt.user.client.ui.IsWidget;
-import de.spqrinfo.quotes.gwt.quotes.mvp.GoToPresenter;
+import de.spqrinfo.quotes.gwt.quotes.client.mvp.GoToPresenter;
 import de.spqrinfo.quotes.gwt.quotes.shared.Quotation;
 
 import java.util.List;

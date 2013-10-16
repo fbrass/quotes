@@ -29,6 +29,4 @@ Open points
 
 * Create user administration
 
-* GWT: move 'mvp' package into the client package. There it belongs.
-
 EOF

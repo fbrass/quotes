@@ -8,7 +8,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import de.spqrinfo.quotes.gwt.quotes.client.QuotesAppEvent;
 import de.spqrinfo.quotes.gwt.quotes.client.listquotes.ListQuotesPlace;
-import de.spqrinfo.quotes.gwt.quotes.mvp.ClientFactory;
+import de.spqrinfo.quotes.gwt.quotes.client.mvp.ClientFactory;
 import de.spqrinfo.quotes.gwt.quotes.shared.Quotation;
 import de.spqrinfo.quotes.gwt.quotes.shared.QuotesService;
 import de.spqrinfo.quotes.gwt.quotes.shared.QuotesServiceAsync;
