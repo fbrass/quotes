@@ -11,10 +11,10 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.web.bindery.event.shared.EventBus;
 import de.spqrinfo.quotes.gwt.quotes.client.listquotes.ListQuotesPlace;
-import de.spqrinfo.quotes.gwt.quotes.client.widgets.InformationWidget;
 import de.spqrinfo.quotes.gwt.quotes.client.mvp.AppActivityMapper;
 import de.spqrinfo.quotes.gwt.quotes.client.mvp.AppPlaceHistoryMapper;
 import de.spqrinfo.quotes.gwt.quotes.client.mvp.ClientFactory;
+import de.spqrinfo.quotes.gwt.quotes.client.widgets.InformationWidget;
 import de.spqrinfo.quotes.gwt.quotes.shared.QuotesService;
 import de.spqrinfo.quotes.gwt.quotes.shared.QuotesServiceAsync;
 
@@ -31,7 +31,7 @@ public class QuotesEntryPoint implements EntryPoint {
         viewsPanel.setStyleName("container");
 
         // Setup MVP
-        final Place defaultPlace = new ListQuotesPlace(""); // TODO empty string
+        final Place defaultPlace = new ListQuotesPlace();
 
         final ClientFactory clientFactory = GWT.create(ClientFactory.class);
         final EventBus eventBus = clientFactory.getEventBus();

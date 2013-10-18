@@ -12,17 +12,15 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
-import de.spqrinfo.quotes.gwt.quotes.client.edit.EditQuotePlace;
-import de.spqrinfo.quotes.gwt.quotes.client.listauthorquotes.ListAuthorQuotesPlace;
-import de.spqrinfo.quotes.gwt.quotes.client.mvp.GoToPresenter;
 import de.spqrinfo.quotes.gwt.quotes.shared.Quotation;
 
-public class QuoteWidget extends Composite {
+public class QuotationWidget extends Composite {
 
-    interface QuoteWidgetUiBinder extends UiBinder<HTMLPanel, QuoteWidget> {
+    interface QuoteWidgetUiBinder extends UiBinder<HTMLPanel, QuotationWidget> {
 
     }
     private static QuoteWidgetUiBinder ourUiBinder = GWT.create(QuoteWidgetUiBinder.class);
+
     @UiField
     HTMLPanel quotationTextContainer;
 
@@ -35,15 +33,16 @@ public class QuoteWidget extends Composite {
     @UiField
     Anchor authorLink;
 
-    private Quotation quotation;
+    private final Quotation quotation;
+    private final QuotationAuthorClickHandler quotationAuthorClickHandler;
 
-    private final GoToPresenter goToPresenter;
-
-    public QuoteWidget(final Quotation quotation, final GoToPresenter goToPresenter) {
-        initWidget(ourUiBinder.createAndBindUi(this));
-
+    public QuotationWidget(final Quotation quotation,
+                           final QuotationClickHandler quotationClickHandler,
+                           final QuotationAuthorClickHandler quotationAuthorClickHandler) {
         this.quotation = quotation;
-        this.goToPresenter = goToPresenter;
+        this.quotationAuthorClickHandler = quotationAuthorClickHandler;
+
+        initWidget(ourUiBinder.createAndBindUi(this));
 
         this.quotationText.setInnerText(quotation.getQuotationText());
         final DateTimeFormat format = DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.YEAR_MONTH_ABBR_DAY);
@@ -54,13 +53,18 @@ public class QuoteWidget extends Composite {
         this.quotationTextContainer.addDomHandler(new ClickHandler() {
             @Override
             public void onClick(final ClickEvent event) {
-                goToPresenter.goTo(new EditQuotePlace(quotation.getId()));
+                quotationClickHandler.onClick(quotation);
             }
         }, ClickEvent.getType());
+
+        // Conditionally show the author link
+        if (quotationAuthorClickHandler == null) {
+            this.authorLink.setVisible(false);
+        }
     }
 
     @UiHandler("authorLink")
     void authorLinkClick(final ClickEvent event) {
-        this.goToPresenter.goTo(new ListAuthorQuotesPlace(this.quotation.getAuthor().getId()));
+        this.quotationAuthorClickHandler.onClick(this.quotation.getAuthor());
     }
 }

@@ -64,6 +64,6 @@ public class EditQuoteActivity extends AbstractActivity implements EditQuoteView
         this.clientFactory.getEventBus().fireEvent(new QuotesAppEvent());
 
         // Navigate to next view
-        this.clientFactory.getPlaceController().goTo(new ListQuotesPlace(""));
+        this.clientFactory.getPlaceController().goTo(new ListQuotesPlace());
     }
 }
