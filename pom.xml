@@ -38,12 +38,12 @@
     <properties>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <slf4j.version>1.7.4</slf4j.version>
-        <logback.version>1.0.10</logback.version>
-        <spring.version>3.2.2.RELEASE</spring.version>
+        <slf4j.version>1.7.5</slf4j.version>
+        <logback.version>1.0.13</logback.version>
+        <spring.version>3.2.4.RELEASE</spring.version>
         <spring.security.version>3.1.3.RELEASE</spring.security.version>
         <javax.mail.version>1.4.5</javax.mail.version>
-        <cglib.version>2.2.2</cglib.version>
+        <cglib.version>3.0</cglib.version>
         <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
         <javax.servlet-jstl.version>1.2</javax.servlet-jstl.version>
         <javax.validation.version>1.0.0.GA</javax.validation.version>
