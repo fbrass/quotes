@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/bwolf/tododont.png?branch=master)](https://travis-ci.org/bwolf/tododont)
+[![Build Status](https://travis-ci.org/bwolf/quotes.png?branch=master)](https://travis-ci.org/bwolf/quotes)
 
 # IDE Setup
 
