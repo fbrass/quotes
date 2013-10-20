@@ -4,9 +4,8 @@
 1. Clone the repository `git clone https://github.com/bwolf/quotes/`
 2. Build `mvn package`
 3. Run the database server `mvn exec:java`
-4. Br0ken: In new Terminal run application server `mvn jetty:run`
-
-Ideally you should run the App via embedded jetty or tomcat.
+4. In new Terminal run application server `mvn tomcat7:run-war`
+5. Browse to http://localhost:8080/quotes/
 
 # IDE Setup
 

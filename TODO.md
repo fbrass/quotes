@@ -31,4 +31,6 @@ Open points
 
 * Update to spring-security 3.1.4.RELEASE, consider deprecated PasswordEncoder.
 
+* Check IntelliJ DevMode configuration to match README.md
+
 EOF
