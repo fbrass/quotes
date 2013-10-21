@@ -1,7 +1,7 @@
 package de.spqrinfo.quotes.backend.admin.service;
 
 import de.spqrinfo.quotes.backend.admin.dao.AdminDao;
-import de.spqrinfo.quotes.backend.admin.entity.CustomUser;
+import de.spqrinfo.quotes.backend.admin.domain.CustomUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

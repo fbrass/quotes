@@ -1,4 +1,4 @@
-package de.spqrinfo.quotes.backend.dao;
+package de.spqrinfo.quotes.backend.base;
 
 import com.google.common.collect.ImmutableMap;
 import org.springframework.jdbc.core.RowMapper;

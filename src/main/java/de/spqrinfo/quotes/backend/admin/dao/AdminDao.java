@@ -1,8 +1,8 @@
 package de.spqrinfo.quotes.backend.admin.dao;
 
 import com.google.common.collect.ImmutableMap;
-import de.spqrinfo.quotes.backend.dao.GenericDao;
-import de.spqrinfo.quotes.backend.admin.entity.CustomUser;
+import de.spqrinfo.quotes.backend.admin.domain.CustomUser;
+import de.spqrinfo.quotes.backend.base.GenericDao;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;

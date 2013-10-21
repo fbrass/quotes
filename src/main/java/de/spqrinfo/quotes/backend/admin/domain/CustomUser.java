@@ -1,6 +1,6 @@
-package de.spqrinfo.quotes.backend.admin.entity;
+package de.spqrinfo.quotes.backend.admin.domain;
 
-import de.spqrinfo.quotes.backend.dao.DomainObject;
+import de.spqrinfo.quotes.backend.base.DomainObject;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;

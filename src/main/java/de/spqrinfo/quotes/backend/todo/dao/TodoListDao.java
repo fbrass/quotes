@@ -1,7 +1,8 @@
-package de.spqrinfo.quotes.backend.dao;
+package de.spqrinfo.quotes.backend.todo.dao;
 
 import com.google.common.collect.ImmutableMap;
-import de.spqrinfo.quotes.backend.entity.TodoList;
+import de.spqrinfo.quotes.backend.base.GenericDao;
+import de.spqrinfo.quotes.backend.todo.domain.TodoList;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;

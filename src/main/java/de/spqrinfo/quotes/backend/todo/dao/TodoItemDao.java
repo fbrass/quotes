@@ -1,6 +1,7 @@
-package de.spqrinfo.quotes.backend.dao;
+package de.spqrinfo.quotes.backend.todo.dao;
 
-import de.spqrinfo.quotes.backend.entity.TodoItem;
+import de.spqrinfo.quotes.backend.base.GenericDao;
+import de.spqrinfo.quotes.backend.todo.domain.TodoItem;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;

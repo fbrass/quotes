@@ -1,4 +1,4 @@
-package de.spqrinfo.quotes.backend.dao;
+package de.spqrinfo.quotes.backend.base;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;

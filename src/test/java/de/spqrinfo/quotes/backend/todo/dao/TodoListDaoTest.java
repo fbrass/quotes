@@ -1,7 +1,7 @@
-package de.spqrinfo.quotes.backend.dao;
+package de.spqrinfo.quotes.backend.todo.dao;
 
-import de.spqrinfo.quotes.backend.entity.TodoItem;
-import de.spqrinfo.quotes.backend.entity.TodoList;
+import de.spqrinfo.quotes.backend.todo.domain.TodoItem;
+import de.spqrinfo.quotes.backend.todo.domain.TodoList;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

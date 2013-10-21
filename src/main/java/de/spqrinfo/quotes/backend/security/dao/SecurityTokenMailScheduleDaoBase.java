@@ -1,7 +1,7 @@
 package de.spqrinfo.quotes.backend.security.dao;
 
 import com.google.common.collect.ImmutableMap;
-import de.spqrinfo.quotes.backend.dao.GenericDao;
+import de.spqrinfo.quotes.backend.base.GenericDao;
 import de.spqrinfo.quotes.backend.security.entity.SecurityTokenMailSchedule;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;

@@ -1,6 +1,6 @@
 package de.spqrinfo.quotes.backend.security.entity;
 
-import de.spqrinfo.quotes.backend.dao.DomainObject;
+import de.spqrinfo.quotes.backend.base.DomainObject;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

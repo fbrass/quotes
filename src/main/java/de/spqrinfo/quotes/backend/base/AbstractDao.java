@@ -1,4 +1,4 @@
-package de.spqrinfo.quotes.backend.dao;
+package de.spqrinfo.quotes.backend.base;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
