@@ -33,4 +33,8 @@ Open points
 
 * Check IntelliJ DevMode configuration to match README.md
 
+* Style with bootstrap the registration page.
+
+* Style with bootstrap the password change page.
+
 EOF

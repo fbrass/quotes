@@ -1,9 +1,9 @@
 package de.spqrinfo.quotes.backend.security.service.scheduling;
 
+import de.spqrinfo.quotes.backend.security.dao.CustomUserDetailsService;
 import de.spqrinfo.quotes.backend.security.dao.RegistrationMailScheduleDao;
 import de.spqrinfo.quotes.backend.security.entity.SecurityTokenMailSchedule;
 import de.spqrinfo.quotes.backend.security.service.RegistrationMail;
-import de.spqrinfo.quotes.backend.security.dao.CustomUserDetailsService;
 import de.spqrinfo.quotes.backend.security.service.SecurityMailSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,15 +62,15 @@ public class RegistrationMailScheduler {
                     log.warn("Failed processing scheduled registration mail " + srm, ex);
                 } finally {
                     if (success) {
-                        log.info("Done sending registration to mail to {}", srm.getEmail());
+                        log.info("Done sending registration to mail to {}", srm.getUserId());
                         this.registrationMailScheduleDao.delete(srm.getPK());
                     } else {
                         if (srm.getAttempts() < this.maxAttempts) {
                             this.registrationMailScheduleDao.update(srm);
                         } else {
-                            log.warn("Max attempts of scheduled registration mail reached, deleting user {}", srm.getEmail());
+                            log.warn("Max attempts of scheduled registration mail reached, deleting user {}", srm.getUserId());
                             // scheduled task will be deleted by dropping user
-                            this.userDetailsService.deleteUser(srm.getEmail());
+                            this.userDetailsService.deleteUser(srm.getUserId());
                         }
                     }
                 }
@@ -79,10 +79,10 @@ public class RegistrationMailScheduler {
     }
 
     public void processRegistrationMail(final SecurityTokenMailSchedule securityTokenMailSchedule) {
-        this.registrationMail.setEmail(securityTokenMailSchedule.getEmail());
+        this.registrationMail.setEmail(securityTokenMailSchedule.getUserId());
         this.registrationMail.setUrl(securityTokenMailSchedule.getUrl());
 
-        log.debug("Scheduled sending registration email to {}", securityTokenMailSchedule.getEmail());
+        log.debug("Scheduled sending registration email to {}", securityTokenMailSchedule.getUserId());
         this.mailSender.send(this.registrationMail);
     }
 }

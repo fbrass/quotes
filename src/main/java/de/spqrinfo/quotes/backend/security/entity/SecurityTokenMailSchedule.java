@@ -12,7 +12,7 @@ public class SecurityTokenMailSchedule implements DomainObject<Long> {
     private Long id;
 
     @NotNull
-    private String email;
+    private String userId;
 
     @NotNull
     private String url;
@@ -36,12 +36,12 @@ public class SecurityTokenMailSchedule implements DomainObject<Long> {
         this.id = pk;
     }
 
-    public String getEmail() {
-        return this.email;
+    public String getUserId() {
+        return this.userId;
     }
 
-    public void setEmail(final String email) {
-        this.email = email;
+    public void setUserId(final String userId) {
+        this.userId = userId;
     }
 
     public String getUrl() {
@@ -80,8 +80,8 @@ public class SecurityTokenMailSchedule implements DomainObject<Long> {
     public String toString() {
         return "UserRegistrationMailSchedule{" +
                 "id=" + this.id +
-                ", email='" + this.email + '\'' +
-                ", url='" + this.url + '\'' +
+                ", userId='" + this.userId +
+                ", url='" + this.url +
                 ", attempts=" + this.attempts +
                 ", firstAttempt=" + this.firstAttempt +
                 ", lastAttempt=" + this.lastAttempt +

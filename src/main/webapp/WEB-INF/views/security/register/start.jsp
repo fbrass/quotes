@@ -14,7 +14,7 @@
         </script>
     </jsp:attribute>
     <jsp:body>
-        <form:form name="registration" commandName="registration" action="/s/r" class="form-horizontal">
+        <form:form name="registration" commandName="registration" action="${pageContext.request.contextPath}/s/r" class="form-horizontal">
             <fieldset>
                 <legend><spring:message code="registration.legend"/></legend>
                 <div class="control-group">

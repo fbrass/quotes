@@ -24,7 +24,7 @@ public class TodoListDao extends GenericDao<TodoList, Long> {
 
     @NotNull
     public List<TodoList> findAllByUsername(@NotNull final String username) {
-        return getJdbcTemplate().query("SELECT * FROM " + getTableName() + " WHERE username = :user",
+        return getJdbcTemplate().query("SELECT * FROM " + getTableName() + " WHERE user_id = :user",
                 ImmutableMap.of("user", username),
                 newRowMapper());
     }
@@ -32,7 +32,7 @@ public class TodoListDao extends GenericDao<TodoList, Long> {
     @Null
     public TodoList findByListName(@NotNull final String username, @NotNull final String listName) {
         return getJdbcTemplate().queryForObject("SELECT * FROM " + getTableName()
-                + " WHERE username = :user AND listname = :listname",
+                + " WHERE user_id = :user AND listname = :listname",
                 ImmutableMap.of("user", username, "listname", listName),
                 newRowMapper());
     }

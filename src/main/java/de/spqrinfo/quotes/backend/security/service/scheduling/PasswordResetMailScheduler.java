@@ -1,8 +1,8 @@
 package de.spqrinfo.quotes.backend.security.service.scheduling;
 
-import de.spqrinfo.quotes.backend.security.service.PasswordResetMail;
 import de.spqrinfo.quotes.backend.security.dao.PasswordResetMailScheduleDao;
 import de.spqrinfo.quotes.backend.security.entity.SecurityTokenMailSchedule;
+import de.spqrinfo.quotes.backend.security.service.PasswordResetMail;
 import de.spqrinfo.quotes.backend.security.service.SecurityMailSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +58,7 @@ public class PasswordResetMailScheduler {
                     log.warn("Failed processing scheduled password reset mail " + srm, ex);
                 } finally {
                     if (success) {
-                        log.info("Done sending password reset mail to {}", srm.getEmail());
+                        log.info("Done sending password reset mail to {}", srm.getUserId());
                         this.passwordResetMailScheduleDao.delete(srm.getPK());
                     } else {
                         if (srm.getAttempts() < this.maxAttempts) {
@@ -74,10 +74,10 @@ public class PasswordResetMailScheduler {
     }
 
     public void processPasswordResetMail(final SecurityTokenMailSchedule securityTokenMailSchedule) {
-        this.passwordResetMail.setEmail(securityTokenMailSchedule.getEmail());
+        this.passwordResetMail.setEmail(securityTokenMailSchedule.getUserId());
         this.passwordResetMail.setUrl(securityTokenMailSchedule.getUrl());
 
-        log.debug("Sending scheduled password reset mail to {}", securityTokenMailSchedule.getEmail());
+        log.debug("Sending scheduled password reset mail to {}", securityTokenMailSchedule.getUserId());
         this.mailSender.send(this.passwordResetMail);
     }
 }

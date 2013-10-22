@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,17 +23,25 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
     private static final Logger log = LoggerFactory.getLogger(CustomUserDetailsServiceImpl.class);
 
     public CustomUserDetailsServiceImpl() {
-        super.setAuthoritiesByUsernameQuery("SELECT email,authority FROM authorities WHERE email = ?");
+        super.setAuthoritiesByUsernameQuery("SELECT user_id, authority FROM authority WHERE user_id = ?");
         super.setEnableAuthorities(true);
         super.setUsernameBasedPrimaryKey(true);
     }
 
     // --- Custom methods
 
+
     @Override
-    public boolean isExistingUser(final String email) {
-        final String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
-        final Integer count = getJdbcTemplate().queryForObject(sql, Integer.class, email.toLowerCase());
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+        final String sql = "SELECT * FROM user WHERE user_id = ?";
+        final UserDetails userDetails = getJdbcTemplate().queryForObject(sql, new CustomUserDetailsRowMapper(), username.toLowerCase());
+        return userDetails;
+    }
+
+    @Override
+    public boolean isExistingUser(final String userId) {
+        final String sql = "SELECT COUNT(*) FROM user WHERE user_id = ?";
+        final Integer count = getJdbcTemplate().queryForObject(sql, Integer.class, userId.toLowerCase());
         return count != null && count > 0;
     }
 
@@ -40,21 +49,21 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
     @Transactional(readOnly = false)
     public void createUser(final CustomUserDetails user) {
         getJdbcTemplate().update(
-                "INSERT INTO users (email,password,enabled,registrationtoken,registered_since) VALUES (?,?,?,?,?)",
+                "INSERT INTO user (user_id,password,enabled,registrationtoken,registered_since) VALUES (?,?,?,?,?)",
                 user.getUsername().toLowerCase(), user.getPassword(),
                 user.isEnabled(), user.getRegistrationToken(),
                 user.getRegisteredSince());
 
         getJdbcTemplate().update(
-                "INSERT INTO authorities (email, authority) VALUES (?, ?)",
+                "INSERT INTO authority (user_id, authority) VALUES (?, ?)",
                 user.getUsername().toLowerCase(), "ROLE_USER");
     }
 
     @Override
     public CustomUserDetails loadUserByRegistrationToken(final String registrationToken) {
         log.debug("loadUserByRegistrationToken {}", registrationToken);
-        final String query = "SELECT email,password,enabled,registrationtoken,registered_since,passwordresettoken,passwordreset_requested_at"
-                + " FROM users WHERE registrationtoken = ?";
+        final String query = "SELECT user_id,password,enabled,registrationtoken,registered_since,passwordresettoken,passwordreset_requested_at"
+                + " FROM user WHERE registrationtoken = ?";
 
         final List<UserDetails> userDetailsList = super.getJdbcTemplate().query(query,
                 new CustomUserDetailsRowMapper(), registrationToken);
@@ -68,55 +77,55 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
     @Override
     public List<UserDetails> loadUsersWithMissingActivation() {
         return super.getJdbcTemplate().query("SELECT"
-                + " email,password,enabled,registrationtoken,registered_since,passwordresettoken,passwordreset_requested_at"
-                + " FROM users WHERE enabled = 0 AND registrationtoken IS NOT NULL",
+                + " user_id,password,enabled,registrationtoken,registered_since,passwordresettoken,passwordreset_requested_at"
+                + " FROM user WHERE enabled = 0 AND registrationtoken IS NOT NULL",
                 new CustomUserDetailsRowMapper());
     }
 
     @Override
     public List<UserDetails> loadUsersWithMissingPasswordReset() {
         return super.getJdbcTemplate().query("SELECT"
-                + " email,password,enabled,registrationtoken,registered_since,passwordresettoken,passwordreset_requested_at"
-                + " FROM users WHERE enabled = 1 AND passwordresettoken IS NOT NULL",
+                + " user_id,password,enabled,registrationtoken,registered_since,passwordresettoken,passwordreset_requested_at"
+                + " FROM user WHERE enabled = 1 AND passwordresettoken IS NOT NULL",
                 new CustomUserDetailsRowMapper());
     }
 
     @Override
     @Transactional(readOnly = false)
-    public void enableUser(final String email) {
-        getJdbcTemplate().update("UPDATE users SET enabled = 1, registrationtoken = NULL WHERE email = ?",
-                email.toLowerCase());
+    public void enableUser(final String userId) {
+        getJdbcTemplate().update("UPDATE user SET enabled = 1, registrationtoken = NULL WHERE user_id = ?",
+                userId.toLowerCase());
     }
 
     @Override
-    public void clearPasswordResetToken(final String email) {
-        updatePasswordResetToken(email, null, null);
-    }
-
-    @Override
-    @Transactional(readOnly = false)
-    public void updatePasswordResetToken(final String email, final String passwordResetToken) {
-        updatePasswordResetToken(email, passwordResetToken, new Date());
+    public void clearPasswordResetToken(final String userId) {
+        updatePasswordResetToken(userId, null, null);
     }
 
     @Override
     @Transactional(readOnly = false)
-    public void updatePasswordResetToken(final String email, final String passwordResetToken,
+    public void updatePasswordResetToken(final String userId, final String passwordResetToken) {
+        updatePasswordResetToken(userId, passwordResetToken, new Date());
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void updatePasswordResetToken(final String userId, final String passwordResetToken,
                                          final Date passwordResetRequestedAt) {
-        getJdbcTemplate().update("UPDATE users SET passwordresettoken = ?, passwordreset_requested_at = ? WHERE email = ?", passwordResetToken, passwordResetRequestedAt, email.toLowerCase());
+        getJdbcTemplate().update("UPDATE user SET passwordresettoken = ?, passwordreset_requested_at = ? WHERE user_id = ?", passwordResetToken, passwordResetRequestedAt, userId.toLowerCase());
     }
 
     @Override
     @Transactional(readOnly = false)
     public void updatePassword(final CustomUserDetails user) {
-        getJdbcTemplate().update("UPDATE users SET password = ?, passwordresettoken = NULL, passwordreset_requested_at = NULL WHERE email = ?",
+        getJdbcTemplate().update("UPDATE user SET password = ?, passwordresettoken = NULL, passwordreset_requested_at = NULL WHERE user_id = ?",
                 user.getPassword(), user.getUsername().toLowerCase());
     }
 
     @Override
     @Transactional(readOnly = false)
-    public void deleteUser(final String email) {
-        getJdbcTemplate().update("DELETE FROM users WHERE email = ?", email.toLowerCase());
+    public void deleteUser(final String userId) {
+        getJdbcTemplate().update("DELETE FROM user WHERE user_id = ?", userId.toLowerCase());
     }
 
     // --- JdbcDaoImpl overrides
@@ -124,14 +133,15 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
     @Override
     protected List<UserDetails> loadUsersByUsername(final String username) {
         log.debug("loadUsersByUsername {}", username.toLowerCase());
-        final String query = "SELECT email,password,enabled,registrationtoken,registered_since,passwordresettoken,passwordreset_requested_at"
-                + " FROM users WHERE email = ?";
+        final String query = "SELECT user_id,password,enabled,registrationtoken,registered_since,passwordresettoken,passwordreset_requested_at"
+                + " FROM user WHERE user_id = ?";
 
         return super.getJdbcTemplate().query(query, new CustomUserDetailsRowMapper(), username.toLowerCase());
     }
 
     @Override
-    protected UserDetails createUserDetails(final String username, final UserDetails userFromUserQuery, final List<GrantedAuthority> combinedAuthorities) {
+    protected UserDetails createUserDetails(final String username, final UserDetails userFromUserQuery,
+                                            final List<GrantedAuthority> combinedAuthorities) {
         final CustomUserDetails user = (CustomUserDetails) userFromUserQuery;
 
         final Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
@@ -155,7 +165,7 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
         @Override
         public CustomUserDetails mapRow(final ResultSet rs, final int rowNum) throws SQLException {
             int n = 1;
-            final String email = rs.getString(n++).toLowerCase();
+            final String userId = rs.getString(n++).toLowerCase(); // userId
             final String password = rs.getString(n++);
             final boolean enabled = rs.getBoolean(n++);
             final String registrationToken = rs.getString(n++);
@@ -163,7 +173,7 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
             final String passwordResetToken = rs.getString(n++);
             final Date passwordResetRequestedAt = rs.getTimestamp(n);
 
-            return new CustomUserDetails(email,
+            return new CustomUserDetails(userId,
                     password,
                     enabled,
                     new HashSet<GrantedAuthority>(),
