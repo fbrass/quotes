@@ -16,6 +16,6 @@ public class SecurityMailSenderNullTestSupport implements SecurityMailSender {
     }
 
     public SecurityMail getSecurityMail() {
-        return securityMail;
+        return this.securityMail;
     }
 }

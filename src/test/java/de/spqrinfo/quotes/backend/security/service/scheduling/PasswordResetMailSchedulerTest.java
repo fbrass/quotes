@@ -1,9 +1,9 @@
 package de.spqrinfo.quotes.backend.security.service.scheduling;
 
 import de.spqrinfo.quotes.backend.security.beans.PasswordResetAttempt;
-import de.spqrinfo.quotes.backend.security.service.PasswordResetService;
 import de.spqrinfo.quotes.backend.security.dao.PasswordResetMailScheduleDao;
 import de.spqrinfo.quotes.backend.security.entity.SecurityTokenMailSchedule;
+import de.spqrinfo.quotes.backend.security.service.PasswordResetService;
 import de.spqrinfo.quotes.web.controller.security.PasswordResetController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,10 +44,10 @@ public class PasswordResetMailSchedulerTest {
         final List<SecurityTokenMailSchedule> passwordResetMailSchedules = this.passwordResetMailScheduleDao.findAll();
         assertThat(passwordResetMailSchedules.size(), equalTo(1));
 
-        for (int n = 1; n < passwordResetMailScheduler.getMaxAttempts(); n++) {
-            passwordResetMailScheduler.onSchedule();
+        for (int n = 1; n < this.passwordResetMailScheduler.getMaxAttempts(); n++) {
+            this.passwordResetMailScheduler.onSchedule();
         }
 
-        assertThat(passwordResetMailScheduleDao.findAll().size(), is(equalTo(0)));
+        assertThat(this.passwordResetMailScheduleDao.findAll().size(), is(equalTo(0)));
     }
 }

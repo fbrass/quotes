@@ -1,7 +1,7 @@
 package de.spqrinfo.quotes.backend.security.service.scheduling;
 
-import de.spqrinfo.quotes.backend.security.entity.CustomUserDetails;
 import de.spqrinfo.quotes.backend.security.dao.CustomUserDetailsService;
+import de.spqrinfo.quotes.backend.security.entity.CustomUserDetails;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +33,13 @@ public class ActivationOutstandingSchedulerTest {
         final GregorianCalendar past = new GregorianCalendar();
         past.add(Calendar.HOUR_OF_DAY, -6);
 
-        CustomUserDetails user = new CustomUserDetails("ignored@nowhere.tld", "ignored-token");
+        final CustomUserDetails user = new CustomUserDetails("ignored@nowhere.tld", "ignored-token");
         assertFalse(user.isEnabled());
         user.setPassword("secretPassword@IGNORED");
         user.setRegisteredSince(past.getTime());
         this.userDetailsService.createUser(user);
 
-        activationOutstandingScheduler.onSchedule();
+        this.activationOutstandingScheduler.onSchedule();
 
         // Throws UsernameNotFound because user has been deleted
         this.userDetailsService.loadUserByUsername(user.getUsername());
@@ -47,12 +47,12 @@ public class ActivationOutstandingSchedulerTest {
 
     @Test
     public void onScheduleDoNotDeleteTest() throws Exception {
-        CustomUserDetails user = new CustomUserDetails("ignored@nowhere.tld", "ignored-token");
+        final CustomUserDetails user = new CustomUserDetails("ignored@nowhere.tld", "ignored-token");
         assertFalse(user.isEnabled());
         user.setPassword("secretPassword@IGNORED");
         this.userDetailsService.createUser(user);
 
-        activationOutstandingScheduler.onSchedule();
+        this.activationOutstandingScheduler.onSchedule();
 
         final UserDetails userDetails = this.userDetailsService.loadUserByUsername(user.getUsername());
         assertNotNull(userDetails);

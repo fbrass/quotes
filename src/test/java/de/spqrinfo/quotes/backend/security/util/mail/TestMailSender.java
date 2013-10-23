@@ -17,6 +17,6 @@ public class TestMailSender implements MailSender {
     }
 
     public SimpleMailMessage getMessage() {
-        return message;
+        return this.message;
     }
 }

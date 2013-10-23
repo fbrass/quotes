@@ -68,6 +68,6 @@ public class PasswordChangeServiceTest {
         this.passwordChangeService.passwordChange(EMAIL, passwordChange);
 
         final UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(EMAIL, PASSWORD_NEW);
-        authenticationManager.authenticate(authenticationToken); // No exception: OK, authenticated
+        this.authenticationManager.authenticate(authenticationToken); // No exception: OK, authenticated
     }
 }

@@ -46,10 +46,10 @@ public class RegistrationMailSchedulerTest {
         final List<SecurityTokenMailSchedule> userRegistrationMailSchedules = this.registrationMailScheduleDao.findAll();
         assertThat(userRegistrationMailSchedules.size(), equalTo(1));
 
-        for (int n = 1; n < registrationMailScheduler.getMaxAttempts(); n++) {
-            registrationMailScheduler.onSchedule();
+        for (int n = 1; n < this.registrationMailScheduler.getMaxAttempts(); n++) {
+            this.registrationMailScheduler.onSchedule();
         }
 
-        assertThat(registrationMailScheduleDao.findAll().size(), is(equalTo(0)));
+        assertThat(this.registrationMailScheduleDao.findAll().size(), is(equalTo(0)));
     }
 }

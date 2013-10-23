@@ -31,7 +31,7 @@ public class PasswordResetOutstandingSchedulerTest {
         final GregorianCalendar past = new GregorianCalendar();
         past.add(Calendar.HOUR_OF_DAY, -6);
 
-        CustomUserDetails user = new CustomUserDetails("ignored@nowhere.tld", "ignored-token");
+        final CustomUserDetails user = new CustomUserDetails("ignored@nowhere.tld", "ignored-token");
         assertFalse(user.isEnabled());
         user.setPassword("secretPassword@IGNORED");
         user.setRegisteredSince(past.getTime());
@@ -49,7 +49,7 @@ public class PasswordResetOutstandingSchedulerTest {
 
     @Test
     public void onScheduleDoNotClearTest() throws Exception {
-        CustomUserDetails user = new CustomUserDetails("ignored@nowhere.tld", "ignored-token");
+        final CustomUserDetails user = new CustomUserDetails("ignored@nowhere.tld", "ignored-token");
         assertFalse(user.isEnabled());
         user.setPassword("secretPassword@IGNORED");
         this.userDetailsService.createUser(user);

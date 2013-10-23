@@ -1,8 +1,8 @@
 package de.spqrinfo.quotes.backend.security.service;
 
-import de.spqrinfo.quotes.backend.security.entity.CustomUserDetails;
 import de.spqrinfo.quotes.backend.security.beans.Registration;
 import de.spqrinfo.quotes.backend.security.dao.CustomUserDetailsService;
+import de.spqrinfo.quotes.backend.security.entity.CustomUserDetails;
 import de.spqrinfo.quotes.web.controller.security.RegistrationController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,7 +36,7 @@ public class RegistrationServiceTest {
         final String email = "alice@nowhere.tld";
         final String password = "secR3Tlf993";
 
-        assertTrue(((CustomUserDetails) this.userDetailsService.loadUserByUsername(email)).isEnabled());
+        assertTrue(this.userDetailsService.loadUserByUsername(email).isEnabled());
 
         this.registrationService.register(new Registration(email, password),
                 this.registrationController.getActivationUriComponents());
@@ -48,7 +48,7 @@ public class RegistrationServiceTest {
                 this.registrationController.getActivationUriComponents());
         final String actualToken = ((CustomUserDetails) this.userDetailsService.loadUserByUsername(EMAIL)).getRegistrationToken();
         assertEquals(expectedToken, actualToken);
-        assertFalse(((CustomUserDetails) this.userDetailsService.loadUserByUsername(EMAIL)).isEnabled());
+        assertFalse(this.userDetailsService.loadUserByUsername(EMAIL).isEnabled());
 
         this.userDetailsService.deleteUser(EMAIL);
     }
@@ -61,7 +61,7 @@ public class RegistrationServiceTest {
         assertNotNull(activationToken);
 
         this.registrationService.activate(activationToken);
-        assertTrue(((CustomUserDetails) this.userDetailsService.loadUserByUsername(EMAIL)).isEnabled());
+        assertTrue(this.userDetailsService.loadUserByUsername(EMAIL).isEnabled());
 
         this.userDetailsService.deleteUser(EMAIL);
     }

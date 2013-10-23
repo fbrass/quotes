@@ -3,6 +3,7 @@ package de.spqrinfo.quotes.backend.security.dao;
 import de.spqrinfo.quotes.backend.security.entity.CustomUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,8 +35,12 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         final String sql = "SELECT * FROM user WHERE user_id = ?";
-        final UserDetails userDetails = getJdbcTemplate().queryForObject(sql, new CustomUserDetailsRowMapper(), username.toLowerCase());
-        return userDetails;
+        try {
+            return getJdbcTemplate().queryForObject(sql, new CustomUserDetailsRowMapper(), username.toLowerCase());
+        } catch (EmptyResultDataAccessException ex) {
+            log.warn("User not found {}", username, ex);
+            throw new UsernameNotFoundException("User not found");
+        }
     }
 
     @Override
