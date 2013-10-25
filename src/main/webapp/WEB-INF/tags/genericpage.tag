@@ -4,7 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ attribute name="title" required="true" %>
 <%@ attribute name="head" fragment="true" required="false" %>
-<%@ attribute name="javascript" fragment="true" required="false" %>
+<%@ attribute name="afterScripts" fragment="true" required="false" %>
 
 <!DOCTYPE html>
 <html>
@@ -65,7 +65,8 @@
     <jsp:doBody/>
     <script src="${pageContext.request.contextPath}/js/jquery-2.0.3.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-    <jsp:invoke fragment="javascript"/>
+    <script src="${pageContext.request.contextPath}/js/main.js"></script>
+    <jsp:invoke fragment="afterScripts"/>
 </div>
 </body>
 </html>

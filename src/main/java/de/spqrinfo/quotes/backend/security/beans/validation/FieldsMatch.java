@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface FieldsMatch {
 
-    String message() default "{org.spqrinfo.security.fieldsMatch}";
+    String message() default "{de.spqrinfo.security.fieldsMatch}";
 
     Class<?>[] groups() default {};
 

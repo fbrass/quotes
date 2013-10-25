@@ -13,22 +13,11 @@ public class HomeController {
 
     private static final Logger log = LoggerFactory.getLogger(HomeController.class);
 
-//    @RequestMapping("/home")
-//    public ModelAndView home(final Principal principal) {
-//        log.debug("homeHandler called");
-//
-//        final ModelAndView mav = new ModelAndView("home");
-//        mav.addObject("username", principal.getName());
-//        mav.addObject("message", "Hello from authenticated controller call");
-//
-//        return mav;
-//    }
-
     @RequestMapping("/home")
     public ModelAndView home(final Principal principal) {
         log.debug("homeHandler called");
 
-        final ModelAndView mav = new ModelAndView("quotesStart");
+        final ModelAndView mav = new ModelAndView("home");
         mav.addObject("username", principal.getName());
         mav.addObject("message", "Hello from authenticated controller call");
 

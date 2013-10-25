@@ -4,69 +4,52 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<c:set var="appname"><spring:message code="app.name"/></c:set>
 <c:set var="title"><spring:message code='registration.title'/></c:set>
+<c:set var="formEmail"><spring:message code="form.email"/></c:set>
+<c:set var="formPassword"><spring:message code="form.password"/></c:set>
+<c:set var="formPassword2"><spring:message code="form.password2"/></c:set>
 
 <t:securitypage title="${title}">
     <jsp:attribute name="afterScripts">
         <script type="text/javascript">
             $('#email').focus();
-            $(".help-inline").each(function (i) { $(this).closest(".control-group").addClass("error") });
         </script>
     </jsp:attribute>
     <jsp:body>
-        <form:form name="registration" commandName="registration" action="${pageContext.request.contextPath}/s/r" class="form-horizontal">
+        <form:form name="registration" commandName="registration" action="${pageContext.request.contextPath}/s/r" role="form" cssClass="form-signin">
             <fieldset>
-                <legend><spring:message code="registration.legend"/></legend>
-                <div class="control-group">
-                    <label for="email" class="control-label"><spring:message code="form.email"/></label>
-
-                    <div class="controls">
-                        <form:input path="email" id="email"/>
-                        <spring:bind path="email">
-                            <c:if test="${status.error}">
-                                    <span class="help-inline">
-                                        <c:out value="${status.errorMessages[0]}"/>
-                                    </span>
-                            </c:if>
-                        </spring:bind>
-                    </div>
+                <legend><span class="brand">${appname}</span> ${title}</legend>
+                <div class="form-group">
+                    <label for="email" class="control-label">${formEmail}</label>
+                    <form:input path="email" id="email" type="email" placeholder="${formEmail}" cssClass="form-control"/>
+                    <spring:bind path="email">
+                        <c:if test="${status.error}">
+                            <span class="help-block"><c:out value="${status.errorMessages[0]}"/></span>
+                        </c:if>
+                    </spring:bind>
                 </div>
-                <div class="control-group">
-                    <label for="password" class="control-label"><spring:message code="form.password"/></label>
-
-                    <div class="controls">
-                        <form:password path="password" id="password"/>
-                        <spring:bind path="password">
-                            <c:if test="${status.error}">
-                                    <span class="help-inline">
-                                        <c:out value="${status.errorMessages[0]}"/>
-                                    </span>
-                            </c:if>
-                        </spring:bind>
-                    </div>
+                <div class="form-group">
+                    <label for="password" class="control-label">${formPassword}</label>
+                    <form:password path="password" id="password" placeholder="${formPassword}" cssClass="form-control"/>
+                    <spring:bind path="password">
+                        <c:if test="${status.error}">
+                            <span class="help-block"><c:out value="${status.errorMessages[0]}"/></span>
+                        </c:if>
+                    </spring:bind>
                 </div>
-                <div class="control-group">
-                    <label for="password2" class="control-label"><spring:message code="form.password2"/></label>
-
-                    <div class="controls">
-                        <form:password path="password2" id="password2"/>
-                        <form:errors path="password2" element="span" cssClass="help-inline"/>
-                        <form:errors path="" element="span"
-                                     cssClass="help-inline"/> <%-- show FieldsMatch validation  --%>
-                    </div>
+                <div class="form-group">
+                    <label for="password2" class="control-label">${formPassword2}</label>
+                    <form:password path="password2" id="password2" placeholder="${formPassword2}" cssClass="form-control"/>
+                    <form:errors path="password2" element="span" cssClass="help-block"/>
+                    <form:errors path="" element="span" cssClass="help-block"/> <%-- show FieldsMatch validation  --%>
                 </div>
-                <div class="control-group">
-                    <div class="controls">
-                        <button type="submit" class="btn btn-primary"><spring:message code="registration.submit"/></button>
-                        &nbsp; or <a href="<c:url value="/"/>"><spring:message code="login.title"/></a>
-                    </div>
+                <br/>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary"><spring:message code="registration.submit"/></button>
+                    &nbsp; or <a href="<c:url value="/"/>"><spring:message code="login.title"/></a>
                 </div>
             </fieldset>
-            <div class="alert alert-block alert-info">
-                <p>
-                    <spring:message code="registration.help"/>
-                </p>
-            </div>
         </form:form>
     </jsp:body>
 </t:securitypage>

@@ -26,12 +26,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * L--Number of charaters
  */
 @NotNull
-@Size(min = 10, max = 64, message = "{org.spqrinfo.security.password.size}")
+@Size(min = 10, max = 64, message = "{de.spqrinfo.security.password.size}")
 @Pattern.List({
-        @Pattern(regexp = "(?=.*[a-z]).*$",      message = "{org.spqrinfo.security.password.lowerCase}"),
-        @Pattern(regexp = "(?=.*[A-Z]).*$",      message = "{org.spqrinfo.security.password.upperCase}"),
-        @Pattern(regexp = "(?=.*[\\W_]).*$",     message = "{org.spqrinfo.security.password.nonWord}"),
-        @Pattern(regexp = "(?=^.*[^\\s].*$).*$", message = "{org.spqrinfo.security.password.whitespace}")
+        @Pattern(regexp = "(?=.*[a-z]).*$",      message = "{de.spqrinfo.security.password.lowerCase}"),
+        @Pattern(regexp = "(?=.*[A-Z]).*$",      message = "{de.spqrinfo.security.password.upperCase}"),
+        @Pattern(regexp = "(?=.*[\\W_]).*$",     message = "{de.spqrinfo.security.password.nonWord}"),
+        @Pattern(regexp = "(?=^.*[^\\s].*$).*$", message = "{de.spqrinfo.security.password.whitespace}")
 })
 @Constraint(validatedBy = {})
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})

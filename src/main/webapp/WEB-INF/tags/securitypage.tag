@@ -45,6 +45,7 @@
     <jsp:doBody/>
     <script src="${pageContext.request.contextPath}/js/jquery-2.0.3.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/main.js"></script>
     <jsp:invoke fragment="afterScripts"/>
 </div>
 </body>

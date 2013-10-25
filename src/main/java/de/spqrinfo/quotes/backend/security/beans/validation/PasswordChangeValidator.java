@@ -43,7 +43,7 @@ public class PasswordChangeValidator implements Validator {
                         passwordChange.getCurrentPassword());
 
         try {
-            authenticationManager.authenticate(authenticationToken);
+            this.authenticationManager.authenticate(authenticationToken);
             log.debug("Current user password is valid");
         } catch (AuthenticationException e) {
             if (log.isDebugEnabled()) {

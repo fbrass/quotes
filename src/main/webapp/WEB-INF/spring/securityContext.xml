@@ -35,7 +35,8 @@
                     authentication-failure-url="/loginfailed"/>
         <sec:logout logout-success-url="/" delete-cookies="true" invalidate-session="true"/>
 
-        <sec:remember-me data-source-ref="dataSource" user-service-ref="userDetailsService" key="tododont"/>
+        <!-- data-source-ref="dataSource" -->
+        <sec:remember-me user-service-ref="userDetailsService" key="quotes" token-repository-ref="tokenRepository"/>
 
         <sec:session-management invalid-session-url="/login">
             <sec:concurrency-control max-sessions="1" expired-url="/" error-if-maximum-exceeded="false"/>
@@ -43,6 +44,9 @@
     </sec:http>
 
     <bean id="userDetailsService" class="de.spqrinfo.quotes.backend.security.dao.CustomUserDetailsServiceImpl"
+          p:dataSource-ref="dataSource"/>
+
+    <bean id="tokenRepository" class="de.spqrinfo.quotes.backend.security.dao.CustomPersistentTokenRepository"
           p:dataSource-ref="dataSource"/>
 
     <bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource"

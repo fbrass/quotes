@@ -4,42 +4,37 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<c:set var="appname"><spring:message code="app.name"/></c:set>
 <c:set var="title"><spring:message code='passwordReset.title'/></c:set>
+<c:set var="formEmail"><spring:message code="form.email"/></c:set>
 
 <t:securitypage title="${title}">
     <jsp:attribute name="afterScripts">
         <script type="text/javascript">
             $('#email').focus();
-            $(".help-inline").each(function (i) { $(this).closest(".control-group").addClass("error") });
         </script>
     </jsp:attribute>
     <jsp:body>
-        <h2>${title}</h2>
-
-        <form:form name="passwordResetAttempt" commandName="passwordResetAttempt" action="/s/pwr" class="form-horizontal">
+        <form:form name="passwordResetAttempt" commandName="passwordResetAttempt"
+                   action="${pageContext.request.contextPath}/s/pwr" role="form" class="form-signin">
             <fieldset>
-                <legend><spring:message code='passwordReset.legend'/></legend>
-                <div class="control-group">
-                    <label for="email" class="control-label"><spring:message code="form.email"/></label>
-
-                    <div class="controls">
-                        <form:password path="email" id="email"/>
-                        <spring:bind path="email">
-                            <c:if test="${status.error}">
-                                    <span class="help-inline">
-                                        <c:out value="${status.errorMessages[0]}"/>
-                                    </span>
-                            </c:if>
-                        </spring:bind>
-                    </div>
+                <legend><span class="brand">${appname}</span> ${title}</legend>
+                <div class="form-group">
+                    <label for="email" class="control-label">${formEmail}</label>
+                    <form:input path="email" id="email" placeholder="${formEmail}" cssClass="form-control"/>
+                    <spring:bind path="email">
+                        <c:if test="${status.error}">
+                            <span class="help-block">
+                                <c:out value="${status.errorMessages[0]}"/>
+                            </span>
+                        </c:if>
+                    </spring:bind>
                 </div>
-                <div class="control-group">
-                    <div class="controls">
-                        <button type="submit" class="btn btn-primary">
-                            <spring:message code="passwordReset.submit"/>
-                        </button>
-                        &nbsp; or <a href="<c:url value="/"/>"><spring:message code="login.title"/></a>
-                    </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        <spring:message code="passwordReset.submit"/>
+                    </button>
+                    &nbsp; or <a href="<c:url value="/"/>"><spring:message code="login.title"/></a>
                 </div>
             </fieldset>
         </form:form>
