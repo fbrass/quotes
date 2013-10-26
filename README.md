@@ -56,4 +56,11 @@ With running HSQLDB server use the URL:
 3. Start page: http://localhost:8080/some.html
 4. Open in browser: Firefox
 
+
+## Mail based registration
+1. git clone https://github.com/bwolf/smtpconsole.git
+2. cd smtpconsole
+3. mvn package exec:java
+4. Watch the console for incoming messages.
+
 EOF

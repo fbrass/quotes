@@ -368,6 +368,7 @@
                 <db.username>SA</db.username>
                 <db.password></db.password>
                 <smtp.hostname>localhost</smtp.hostname>
+                <smtp.port>25000</smtp.port>
                 <app.mail.from>customerservice@quotes.nowhere.tld</app.mail.from>
                 <web.app.base.uri>http://localhost:8080/quotes/</web.app.base.uri>
             </properties>

@@ -42,7 +42,7 @@
     <bean id="mailSender" class="de.spqrinfo.quotes.backend.security.util.mail.MailSenderImpl"/>
 
     <bean class="org.springframework.mail.javamail.JavaMailSenderImpl"
-          p:host="${smtp.hostname}"/>
+          p:host="${smtp.hostname}" p:port="${smtp.port}"/>
 
     <bean id="mailTemplateMessage" class="org.springframework.mail.SimpleMailMessage"
           p:from="${app.mail.from}"/>
