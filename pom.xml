@@ -404,22 +404,8 @@
                         <configuration>
                             <port>8080</port>
                             <path>/${project.artifactId}</path>
-
                         </configuration>
                     </plugin>
-
-                    <!--<plugin>-->
-                        <!--<groupId>org.mortbay.jetty</groupId>-->
-                        <!--<artifactId>jetty-maven-plugin</artifactId>-->
-                        <!--<version>8.1.13.v20130916</version>-->
-                        <!--<configuration>-->
-                            <!--<webApp>-->
-                                <!--&lt;!&ndash;<contextPath>/${project.artifactId}</contextPath>&ndash;&gt;-->
-                            <!--</webApp>-->
-                            <!--<stopKey>foo</stopKey>-->
-                            <!--<stopPort>9666</stopPort>-->
-                        <!--</configuration>-->
-                    <!--</plugin>-->
                 </plugins>
             </build>
         </profile>
