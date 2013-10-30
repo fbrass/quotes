@@ -9,7 +9,7 @@
 <h1>Password successfully changed</h1>
 
 <p>
-    You may now <a href="/">login</a> with your new password.
+    You may now <a href="${pageContext.request.contextPath}">login</a> with your new password.
 </p>
 </body>
 </html>

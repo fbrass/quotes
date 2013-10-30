@@ -16,7 +16,7 @@ public class InformationWidget extends Composite {
     interface InformationWidgetUiBinder extends UiBinder<HTMLPanel, InformationWidget> {
     }
 
-    private static InformationWidgetUiBinder ourUiBinder = GWT.create(InformationWidgetUiBinder.class);
+    private static final InformationWidgetUiBinder ourUiBinder = GWT.create(InformationWidgetUiBinder.class);
 
     @UiField
     SpanElement message;

@@ -1,7 +1,7 @@
 package de.spqrinfo.quotes.gwt.quotes.client.listquotes;
 
 import com.google.gwt.user.client.ui.IsWidget;
-import de.spqrinfo.quotes.gwt.quotes.client.widgets.QuotationAuthorClickHandler;
+import de.spqrinfo.quotes.gwt.quotes.client.widgets.AuthorClickHandler;
 import de.spqrinfo.quotes.gwt.quotes.client.widgets.QuotationClickHandler;
 import de.spqrinfo.quotes.gwt.quotes.shared.Quotation;
 
@@ -11,7 +11,7 @@ public interface ListQuotesView extends IsWidget {
 
     void setData(List<Quotation> quotations,
                  QuotationClickHandler quotationClickHandler,
-                 QuotationAuthorClickHandler quotationAuthorClickHandler);
+                 AuthorClickHandler authorClickHandler);
 
     void setPresenter(Presenter presenter);
 

@@ -9,28 +9,7 @@ import com.google.gwt.place.shared.Prefix;
  */
 public class ListQuotesPlace extends Place {
 
-    private Integer singleQuoteId;
-
-    public ListQuotesPlace(final Integer singleQuoteId) {
-        this.singleQuoteId = singleQuoteId;
-    }
-
     public ListQuotesPlace() {
-        this.singleQuoteId = null;
-    }
-
-    public ListQuotesPlace(final String token) {
-        if (!token.isEmpty()) {
-            this.singleQuoteId = Integer.valueOf(token);
-        }
-    }
-
-    public boolean showSingleQuote() {
-        return this.singleQuoteId != null;
-    }
-
-    public Integer getSingleQuoteId() {
-        return this.singleQuoteId;
     }
 
     @Prefix("list")
@@ -38,12 +17,12 @@ public class ListQuotesPlace extends Place {
 
         @Override
         public String getToken(final ListQuotesPlace place) {
-            return place.singleQuoteId != null ? String.valueOf(place.singleQuoteId) : "";
+            return "";
         }
 
         @Override
         public ListQuotesPlace getPlace(final String token) {
-            return new ListQuotesPlace(token);
+            return new ListQuotesPlace();
         }
     }
 }

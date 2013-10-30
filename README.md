@@ -2,16 +2,24 @@
 
 # Running the beast
 1. Clone the repository `git clone https://github.com/bwolf/quotes/`
-2. Build `mvn package`
-3. Run the database server `mvn exec:java`
-4. In new Terminal run application server `mvn tomcat7:run-war`
-5. Browse to http://localhost:8080/quotes/
+2. Build it: `mvn package`
+3. Run the database server: `mvn exec:java`
+4. Run the application server in a new terminal window: `mvn tomcat7:run-war`
+5. Browse to [http://localhost:8080/quotes/](http://localhost:8080/quotes/)
 
 # IDE Setup
 
 ## Setup for IntelliJ
 1. Open project
-2. TODO
+2. Have fun
+
+### DevMode configuration
+1. Module to load: *All*
+2. VM options: `-Xmx512m`
+3. Dev mode parameters: `-noserver -logLevel INFO -codeServerPort 9997`
+4. Start page: http://localhost:8080/quotes/home
+5. Open in browser: *Firefox*
+6. Check: *Single instance only*
 
 ## Setup for Eclipse Kepler 4.3
 1. Download Eclipse IDE for Java EE Developers (i.e. Kepler). It comes with maven support which is used indirectly here.
@@ -32,13 +40,13 @@
 10. Select Run > Run Configurations… > Maven Build > Create New > Name: "HSQLDB", Browse Workspace "select eclipse basedir", Goal: "exec:java", click run.
 11. Select Data Source Explorer > Database Connections > New… HSQLDB
 12. Click next and chose Driver from ~/.m2/…
-13. Select driver settings such as '''jdbc:hsqldb:hsql://localhost/quotes'''
+13. Select driver settings such as `jdbc:hsqldb:hsql://localhost/quotes`
 14. Click OK
-15. Select file from workspace: "src/test/resources/schema-hsqldb.sql", followed by "src/test/resources/data.sql".
+15. Select file from workspace: `src/test/resources/schema-hsqldb.sql`, followed by `src/test/resources/data.sql`.
 16. Chose Run SQL Files via right click one by one.
 17. Select Servers > Tomcat v7 > Start server in debug mode
-18. Browse to http://localhost:8080/quotes and login.
-19. Note that registering a new user will not work, because a mail server is required for this to work.
+18. Browse to [http://localhost:8080/quotes](http://localhost:8080/quotes) and login.
+19. Note that registering a new user will require the use of a mail server: see the section _Mail based registration_ on how to do this.
 20. In Eclipse > Preferences > Google > Web Toolkit > set gwt SDK path, download SDK and unzip.
 21. In Eclipse > Project > Properties > Google > Web Application > 'This project has a WAR directory': 'src/main/webapp'.
 22. In Eclipse > Project > Properties > Google > Web Toolkit: 'Use Google Web Toolkit'.
@@ -50,17 +58,11 @@ With running HSQLDB server use the URL:
 
         jdbc:hsqldb:hsql://localhost/quotes
 
-## Dev Mode configuration in IntelliJ:
-1. Module to load: org.spqrinfo.first.first
-2. Dev mode parameters: -noserver -logLevel INFO -codeServerPort 9997
-3. Start page: http://localhost:8080/some.html
-4. Open in browser: Firefox
-
-
 ## Mail based registration
-1. git clone https://github.com/bwolf/smtpconsole.git
-2. cd smtpconsole
-3. mvn package exec:java
-4. Watch the console for incoming messages.
+Clone the the project [https://github.com/bwolf/smtpconsole.git](https://github.com/bwolf/smtpconsole.git), run it and watch the console for incoming messages.
+
+        git clone https://github.com/bwolf/smtpconsole.git
+        cd smtpconsole
+        mvn package exec:java
 
 EOF

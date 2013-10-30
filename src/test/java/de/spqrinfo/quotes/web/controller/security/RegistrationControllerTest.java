@@ -1,10 +1,9 @@
 package de.spqrinfo.quotes.web.controller.security;
 
 import de.spqrinfo.quotes.backend.security.beans.Registration;
-import de.spqrinfo.quotes.backend.security.entity.CustomUserDetails;
+import de.spqrinfo.quotes.backend.security.dao.CustomUserDetailsService;
 import de.spqrinfo.quotes.backend.security.service.SecurityMail;
 import de.spqrinfo.quotes.backend.security.service.SecurityMailSenderNullTestSupport;
-import de.spqrinfo.quotes.backend.security.dao.CustomUserDetailsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +53,7 @@ public class RegistrationControllerTest {
 
         // Perform the activation
         this.registrationController.performActivation(activationToken);
-        final boolean activeStateByUser = ((CustomUserDetails) this.userDetailsService.loadUserByUsername(email)).isEnabled();
+        final boolean activeStateByUser = this.userDetailsService.loadUserByUsername(email).isEnabled();
         assertTrue(activeStateByUser);
     }
 }

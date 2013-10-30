@@ -16,6 +16,8 @@ Open points
 * Create resource translation mechanism via DB (bootstrap on initial loading of the app)
 * Finish user administration
 * Update to spring-security 3.1.4.RELEASE, consider deprecated PasswordEncoder.
-* Check IntelliJ DevMode configuration to match README.md
+* Fix GWT warnings visible in devmode.
+* Discover GWT testing.
+* Generify displaying list of quotes.
 
 EOF

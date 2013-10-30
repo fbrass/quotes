@@ -11,6 +11,8 @@ import de.spqrinfo.quotes.gwt.quotes.client.listquotes.ListQuotesActivity;
 import de.spqrinfo.quotes.gwt.quotes.client.listquotes.ListQuotesPlace;
 import de.spqrinfo.quotes.gwt.quotes.client.listtagquotes.ListTagQuotesActivity;
 import de.spqrinfo.quotes.gwt.quotes.client.listtagquotes.ListTagQuotesPlace;
+import de.spqrinfo.quotes.gwt.quotes.client.showquote.ShowQuoteActivity;
+import de.spqrinfo.quotes.gwt.quotes.client.showquote.ShowQuotePlace;
 
 public class AppActivityMapper implements ActivityMapper {
 
@@ -30,6 +32,8 @@ public class AppActivityMapper implements ActivityMapper {
             return new ListAuthorQuotesActivity((ListAuthorQuotesPlace) place, this.clientFactory);
         } else if (place instanceof ListTagQuotesPlace) {
             return new ListTagQuotesActivity((ListTagQuotesPlace) place, this.clientFactory);
+        } else if (place instanceof ShowQuotePlace) {
+            return new ShowQuoteActivity((ShowQuotePlace) place, this.clientFactory);
         } else {
             return null;
         }

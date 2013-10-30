@@ -5,7 +5,7 @@ import com.google.gwt.dom.client.LabelElement;
 import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.Widget;
 
-public class HtmlTools {
+public final class HtmlTools {
 
     private HtmlTools() {}
 

@@ -8,15 +8,15 @@ public class ListTagQuotesPlace extends Place {
 
     private final String tagName;
 
-    public ListTagQuotesPlace(final String token) {
-        this.tagName = token;
+    public ListTagQuotesPlace(final String tagName) {
+        this.tagName = tagName;
     }
 
     public String getTagName() {
-        return this.tagName;
+        return tagName;
     }
 
-    @Prefix("tagQuotes")
+    @Prefix("tag")
     public static class Tokenizer implements PlaceTokenizer<ListTagQuotesPlace> {
 
         @Override

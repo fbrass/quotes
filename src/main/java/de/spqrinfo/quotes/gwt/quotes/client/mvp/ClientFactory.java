@@ -6,6 +6,7 @@ import de.spqrinfo.quotes.gwt.quotes.client.edit.EditQuoteView;
 import de.spqrinfo.quotes.gwt.quotes.client.listauthorquotes.ListAuthorQuotesView;
 import de.spqrinfo.quotes.gwt.quotes.client.listquotes.ListQuotesView;
 import de.spqrinfo.quotes.gwt.quotes.client.listtagquotes.ListTagQuotesView;
+import de.spqrinfo.quotes.gwt.quotes.client.showquote.ShowQuoteView;
 
 public interface ClientFactory {
     EventBus getEventBus();
@@ -14,4 +15,5 @@ public interface ClientFactory {
     ListQuotesView getListQuotesView();
     ListAuthorQuotesView getListAuthorQuotesView();
     ListTagQuotesView getListTagQuotesView();
+    ShowQuoteView getShowQuoteView();
 }

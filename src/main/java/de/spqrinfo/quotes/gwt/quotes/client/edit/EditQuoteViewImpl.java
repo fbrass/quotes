@@ -18,7 +18,7 @@ public class EditQuoteViewImpl extends Composite implements EditQuoteView {
     interface EditQuoteViewImplUiBinder extends UiBinder<HTMLPanel, EditQuoteViewImpl> {
     }
 
-    private static EditQuoteViewImplUiBinder ourUiBinder = GWT.create(EditQuoteViewImplUiBinder.class);
+    private static final EditQuoteViewImplUiBinder ourUiBinder = GWT.create(EditQuoteViewImplUiBinder.class);
 
     private Presenter presenter;
 

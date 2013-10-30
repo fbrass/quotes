@@ -37,8 +37,9 @@ public class CustomUserDetailsServiceImpl extends JdbcDaoImpl implements CustomU
         final String sql = "SELECT * FROM user WHERE user_id = ?";
         try {
             return getJdbcTemplate().queryForObject(sql, new CustomUserDetailsRowMapper(), username.toLowerCase());
-        } catch (EmptyResultDataAccessException ex) {
-            log.warn("User not found {}", username, ex);
+        } catch (EmptyResultDataAccessException ignored) {
+            // Not logging because it is no error and will irritate unit tests (it looks like an error).
+            //log.warn("User not found {}", username, ignored);
             throw new UsernameNotFoundException("User not found");
         }
     }

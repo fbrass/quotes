@@ -42,7 +42,7 @@ public class AdminDao extends GenericDao<CustomUser, String> {
     private static class CustomUserRowMapper implements RowMapper<CustomUser> {
 
         @Override
-        public CustomUser mapRow(ResultSet rs, int i) throws SQLException {
+        public CustomUser mapRow(final ResultSet rs, final int i) throws SQLException {
             final CustomUser u = new CustomUser();
             u.setPK(rs.getString(1));
             u.setEnabled(rs.getBoolean(3));

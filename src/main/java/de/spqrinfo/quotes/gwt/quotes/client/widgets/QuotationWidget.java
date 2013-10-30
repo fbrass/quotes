@@ -7,8 +7,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
@@ -19,7 +17,8 @@ public class QuotationWidget extends Composite {
     interface QuoteWidgetUiBinder extends UiBinder<HTMLPanel, QuotationWidget> {
 
     }
-    private static QuoteWidgetUiBinder ourUiBinder = GWT.create(QuoteWidgetUiBinder.class);
+
+    private static final QuoteWidgetUiBinder ourUiBinder = GWT.create(QuoteWidgetUiBinder.class);
 
     @UiField
     HTMLPanel quotationTextContainer;
@@ -30,24 +29,28 @@ public class QuotationWidget extends Composite {
     @UiField
     InlineLabel lastModifiedLabel;
 
+//    @UiField
+//    Anchor authorLink;
     @UiField
-    Anchor authorLink;
+    AuthorWidget author;
 
-    private final Quotation quotation;
-    private final QuotationAuthorClickHandler quotationAuthorClickHandler;
+//    private final Quotation quotation;
+//    private final AuthorClickHandler authorClickHandler;
 
     public QuotationWidget(final Quotation quotation,
                            final QuotationClickHandler quotationClickHandler,
-                           final QuotationAuthorClickHandler quotationAuthorClickHandler) {
-        this.quotation = quotation;
-        this.quotationAuthorClickHandler = quotationAuthorClickHandler;
+                           final AuthorClickHandler authorClickHandler) {
+//        this.quotation = quotation;
+//        this.authorClickHandler = authorClickHandler;
 
         initWidget(ourUiBinder.createAndBindUi(this));
 
         this.quotationText.setInnerText(quotation.getQuotationText());
         final DateTimeFormat format = DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.YEAR_MONTH_ABBR_DAY);
         this.lastModifiedLabel.setText(format.format(quotation.getLastModified()));
-        this.authorLink.setText(quotation.getAuthor().getName());
+//        this.authorLink.setText(quotation.getAuthor().getName());
+        this.author.setAuthor(quotation.getAuthor());
+        this.author.setAuthorClickHandler(authorClickHandler);
 
         // Cannot use @UiHandler on HTMLPanel
         this.quotationTextContainer.addDomHandler(new ClickHandler() {
@@ -58,13 +61,13 @@ public class QuotationWidget extends Composite {
         }, ClickEvent.getType());
 
         // Conditionally show the author link
-        if (quotationAuthorClickHandler == null) {
-            this.authorLink.setVisible(false);
-        }
+//        if (quotationAuthorClickHandler == null) {
+//            this.authorLink.setVisible(false);
+//        }
     }
 
-    @UiHandler("authorLink")
-    void authorLinkClick(final ClickEvent event) {
-        this.quotationAuthorClickHandler.onClick(this.quotation.getAuthor());
-    }
+//    @UiHandler("authorLink")
+//    void authorLinkClick(final ClickEvent event) {
+//        this.quotationAuthorClickHandler.onClick(this.quotation.getAuthor());
+//    }
 }

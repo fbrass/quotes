@@ -6,7 +6,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import de.spqrinfo.quotes.gwt.quotes.client.widgets.QuotationAuthorClickHandler;
+import de.spqrinfo.quotes.gwt.quotes.client.widgets.AuthorClickHandler;
 import de.spqrinfo.quotes.gwt.quotes.client.widgets.QuotationClickHandler;
 import de.spqrinfo.quotes.gwt.quotes.client.widgets.QuotationWidget;
 import de.spqrinfo.quotes.gwt.quotes.shared.Quotation;
@@ -17,7 +17,7 @@ public class ListQuotesViewImpl extends Composite implements ListQuotesView {
 
     interface QuotesListViewImplUiBinder extends UiBinder<HTMLPanel, ListQuotesViewImpl> {
     }
-    private static QuotesListViewImplUiBinder ourUiBinder = GWT.create(QuotesListViewImplUiBinder.class);
+    private static final QuotesListViewImplUiBinder ourUiBinder = GWT.create(QuotesListViewImplUiBinder.class);
 
     @SuppressWarnings("FieldCanBeLocal")
     private Presenter presenter;
@@ -35,12 +35,12 @@ public class ListQuotesViewImpl extends Composite implements ListQuotesView {
     @Override
     public void setData(final List<Quotation> quotations,
                         final QuotationClickHandler quotationClickHandler,
-                        final QuotationAuthorClickHandler quotationAuthorClickHandler) {
+                        final AuthorClickHandler authorClickHandler) {
         this.header.setInnerText("Your quotes"); // TODO i18n
         this.listQuotes.clear();
 
         for (final Quotation quot : quotations) {
-            final QuotationWidget quotationWidget = new QuotationWidget(quot, quotationClickHandler, quotationAuthorClickHandler);
+            final QuotationWidget quotationWidget = new QuotationWidget(quot, quotationClickHandler, authorClickHandler);
             this.listQuotes.add(quotationWidget);
         }
     }

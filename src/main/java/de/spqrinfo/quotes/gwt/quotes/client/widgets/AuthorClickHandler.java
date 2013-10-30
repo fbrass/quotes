@@ -2,7 +2,7 @@ package de.spqrinfo.quotes.gwt.quotes.client.widgets;
 
 import de.spqrinfo.quotes.gwt.quotes.shared.QuotationAuthor;
 
-public interface QuotationAuthorClickHandler {
+public interface AuthorClickHandler {
 
-    void onClick(QuotationAuthor quotationAuthor);
+    void onClick(QuotationAuthor author);
 }

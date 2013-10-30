@@ -1,0 +1,46 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+        xmlns:spqr='urn:import:de.spqrinfo.quotes.gwt.quotes.client.widgets'>
+    <ui:style>
+        .container {
+            position: relative;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            float: none;
+            text-align: center;
+        }
+
+        .blockquote {
+            border: none;
+        }
+
+        .author {
+            margin: 0;
+            padding: 0;
+            text-align: left;
+        }
+
+        .tags {
+            text-align: right;
+        }
+
+        .tags span {
+            margin-left: .4em;
+        }
+    </ui:style>
+
+    <g:HTMLPanel ui:field="wrapper">
+        <div ui:field="container" class="{style.container}">
+            <div class="row">
+                <blockquote class="{style.blockquote}">
+                    <p ui:field="text" class="quotetext"/>
+                </blockquote>
+            </div>
+            <div class="row">
+                <spqr:AuthorWidget ui:field="author" addStyleNames="col-md-6 {style.author}"/>
+                <spqr:TagWidget ui:field="tags" addStyleNames="col-md-6 {style.tags}"/>
+            </div>
+        </div>
+    </g:HTMLPanel>
+</ui:UiBinder>

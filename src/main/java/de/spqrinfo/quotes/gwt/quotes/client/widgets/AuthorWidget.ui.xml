@@ -1,8 +1,6 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <g:HTMLPanel styleName="listQuotes" ui:field="listQuotes">
-        <div class="page-header">
-            <h1 ui:field="header"></h1>
-        </div>
+    <g:HTMLPanel>
+        <g:Anchor ui:field="authorLink"/>
     </g:HTMLPanel>
 </ui:UiBinder>

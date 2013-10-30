@@ -16,7 +16,7 @@ public class RatingWidget extends Composite {
     interface RatingWidgetUiBinder extends UiBinder<Widget, RatingWidget> {
     }
 
-    private static RatingWidgetUiBinder ourUiBinder = GWT.create(RatingWidgetUiBinder.class);
+    private static final RatingWidgetUiBinder ourUiBinder = GWT.create(RatingWidgetUiBinder.class);
 
     @UiField
     Button starButton1;

@@ -1,36 +1,32 @@
-package de.spqrinfo.quotes.gwt.quotes.client.edit;
+package de.spqrinfo.quotes.gwt.quotes.client.showquote;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import de.spqrinfo.quotes.gwt.quotes.client.QuotesAppEvent;
-import de.spqrinfo.quotes.gwt.quotes.client.listquotes.ListQuotesPlace;
+import de.spqrinfo.quotes.gwt.quotes.client.listauthorquotes.ListAuthorQuotesPlace;
+import de.spqrinfo.quotes.gwt.quotes.client.listtagquotes.ListTagQuotesPlace;
 import de.spqrinfo.quotes.gwt.quotes.client.mvp.ClientFactory;
-import de.spqrinfo.quotes.gwt.quotes.shared.Quotation;
-import de.spqrinfo.quotes.gwt.quotes.shared.QuotesService;
-import de.spqrinfo.quotes.gwt.quotes.shared.QuotesServiceAsync;
+import de.spqrinfo.quotes.gwt.quotes.shared.*;
 
-public class EditQuoteActivity extends AbstractActivity implements EditQuoteView.Presenter {
+public class ShowQuoteActivity extends AbstractActivity implements ShowQuoteView.Presenter {
 
     private final Integer quotationId;
     private final ClientFactory clientFactory;
-    private Quotation quotation;
 
-    public EditQuoteActivity(final EditQuotePlace place, final ClientFactory clientFactory) {
+    public ShowQuoteActivity(final ShowQuotePlace place, final ClientFactory clientFactory) {
         this.quotationId = place.getQuotationId();
         this.clientFactory = clientFactory;
     }
 
     @Override
     public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
-        final EditQuoteView view = this.clientFactory.getEditQuoteView();
+        final ShowQuoteView view = this.clientFactory.getShowQuoteView();
         view.setPresenter(this);
         panel.setWidget(view.asWidget());
 
         if (this.quotationId == null) {
-            this.quotation = null;
             return;
         }
 
@@ -39,25 +35,22 @@ public class EditQuoteActivity extends AbstractActivity implements EditQuoteView
             @Override
             public void onFailure(final Throwable caught) {
                 GWT.log("Failed to get quote by id"); // TODO reflect this in UI somehow
-                EditQuoteActivity.this.quotation = null;
             }
 
             @Override
             public void onSuccess(final Quotation result) {
-                EditQuoteActivity.this.quotation = result;
-                view.setData("Edit quote", result); // TODO i18n
+                view.setData(result);
             }
         });
     }
 
     @Override
-    public void save() {
-        // TODO save quote
+    public void gotoTag(final QuotationTag tag) {
+        this.clientFactory.getPlaceController().goTo(new ListTagQuotesPlace(tag.getTagName()));
+    }
 
-        // Notify application that we saved
-        this.clientFactory.getEventBus().fireEvent(new QuotesAppEvent());
-
-        // Navigate to next view
-        this.clientFactory.getPlaceController().goTo(new ListQuotesPlace());
+    @Override
+    public void gotoAuthor(final QuotationAuthor author) {
+        this.clientFactory.getPlaceController().goTo(new ListAuthorQuotesPlace(author.getId()));
     }
 }

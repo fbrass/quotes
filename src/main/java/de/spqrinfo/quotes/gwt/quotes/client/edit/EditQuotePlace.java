@@ -6,7 +6,7 @@ import com.google.gwt.place.shared.Prefix;
 
 public class EditQuotePlace extends Place {
 
-    private Integer quotationId;
+    private final Integer quotationId;
 
     public EditQuotePlace(final String token) {
         this.quotationId = Integer.valueOf(token);

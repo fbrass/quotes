@@ -11,6 +11,8 @@ import de.spqrinfo.quotes.gwt.quotes.client.listquotes.ListQuotesView;
 import de.spqrinfo.quotes.gwt.quotes.client.listquotes.ListQuotesViewImpl;
 import de.spqrinfo.quotes.gwt.quotes.client.listtagquotes.ListTagQuotesView;
 import de.spqrinfo.quotes.gwt.quotes.client.listtagquotes.ListTagQuotesViewImpl;
+import de.spqrinfo.quotes.gwt.quotes.client.showquote.ShowQuoteView;
+import de.spqrinfo.quotes.gwt.quotes.client.showquote.ShowQuoteViewImpl;
 
 public class ClientFactoryImpl implements ClientFactory {
 
@@ -20,6 +22,7 @@ public class ClientFactoryImpl implements ClientFactory {
     private final ListQuotesView listQuotesView = new ListQuotesViewImpl();
     private final ListAuthorQuotesView listAuthorQuotesView = new ListAuthorQuotesViewImpl();
     private final ListTagQuotesView listTagQuotesView = new ListTagQuotesViewImpl();
+    private final ShowQuoteView showQuoteView = new ShowQuoteViewImpl();
 
     @Override
     public EventBus getEventBus() {
@@ -49,5 +52,10 @@ public class ClientFactoryImpl implements ClientFactory {
     @Override
     public ListTagQuotesView getListTagQuotesView() {
         return this.listTagQuotesView;
+    }
+
+    @Override
+    public ShowQuoteView getShowQuoteView() {
+        return showQuoteView;
     }
 }

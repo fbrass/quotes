@@ -8,15 +8,16 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import de.spqrinfo.quotes.gwt.quotes.client.widgets.QuotationClickHandler;
 import de.spqrinfo.quotes.gwt.quotes.client.widgets.QuotationWidget;
+import de.spqrinfo.quotes.gwt.quotes.shared.KeyedQuotationCollection;
 import de.spqrinfo.quotes.gwt.quotes.shared.Quotation;
-import de.spqrinfo.quotes.gwt.quotes.shared.QuotationsOfAuthor;
+import de.spqrinfo.quotes.gwt.quotes.shared.QuotationAuthor;
 
 public class ListAuthorQuotesViewImpl extends Composite implements ListAuthorQuotesView {
 
     interface ListAuthorQuotesViewImplUiBinder extends UiBinder<HTMLPanel, ListAuthorQuotesViewImpl> {
     }
 
-    private static ListAuthorQuotesViewImplUiBinder ourUiBinder = GWT.create(ListAuthorQuotesViewImplUiBinder.class);
+    private static final ListAuthorQuotesViewImplUiBinder ourUiBinder = GWT.create(ListAuthorQuotesViewImplUiBinder.class);
 
     @UiField
     HeadingElement header;
@@ -32,17 +33,17 @@ public class ListAuthorQuotesViewImpl extends Composite implements ListAuthorQuo
     }
 
     @Override
-    public void setData(final QuotationsOfAuthor quotationsOfAuthor,
+    public void setData(final KeyedQuotationCollection<QuotationAuthor> quotationCollection,
                         final QuotationClickHandler quotationClickHandler) {
         this.header.setInnerText("");
         this.listQuotes.clear();
 
-        if (quotationsOfAuthor == null) {
+        if (quotationCollection == null) {
             return;
         }
 
-        this.header.setInnerText("Quotes of " + quotationsOfAuthor.getQuotationAuthor().getName()); // TODO i18n
-        for (final Quotation quotation : quotationsOfAuthor.getQuotations()) {
+        this.header.setInnerText("Quotes of " + quotationCollection.getKey().getName()); // TODO i18n
+        for (final Quotation quotation : quotationCollection.getQuotations()) {
             final QuotationWidget quotationWidget = new QuotationWidget(quotation, quotationClickHandler, null);
             this.listQuotes.add(quotationWidget);
         }

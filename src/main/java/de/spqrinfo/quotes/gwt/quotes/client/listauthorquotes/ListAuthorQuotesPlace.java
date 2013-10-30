@@ -20,7 +20,7 @@ public class ListAuthorQuotesPlace extends Place {
         return this.authorId;
     }
 
-    @Prefix("authorQuotes")
+    @Prefix("author")
     public static class Tokenizer implements PlaceTokenizer<ListAuthorQuotesPlace> {
 
         @Override

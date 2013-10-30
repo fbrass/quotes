@@ -10,7 +10,9 @@ public interface QuotesService extends RemoteService {
 
     List<Quotation> getQuotes();
 
-    QuotationsOfAuthor getQuotesByAuthor(Integer authorId);
+    KeyedQuotationCollection<QuotationAuthor> getQuotesByAuthor(Integer authorId);
+
+    KeyedQuotationCollection<QuotationTag> getQuotesByTagName(String tagName);
 
     Quotation getQuote(Integer quoteId);
 }

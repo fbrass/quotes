@@ -7,6 +7,7 @@
 <body>
     <h1>Password reset error</h1>
 
+    <%--@elvariable id="errorMessageKey" type="java.lang.String"--%>
     <spring:message code="${errorMessageKey}"/>
 
 </body>
