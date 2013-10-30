@@ -19,5 +19,7 @@ Open points
 * Fix GWT warnings visible in devmode.
 * Discover GWT testing.
 * Generify displaying list of quotes.
+* Make whole page controlled by GWT.
+* Rename packages like 'listauthorquotes' to 'author' …
 
 EOF
